@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Signup
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding="true" class="has-header">
+    <form id="signup-form2" class="list">
+      <ion-list id="signup-list3">
+        <label class="item item-input" id="signup-input3" name="fullName">
+          <span class="input-label">Pet Parent's Name</span>
+          <input type="text" placeholder="" ng-model="data.fullName">
+        </label>
+        <label class="item item-input" id="signup-input4" name="email">
+          <span class="input-label">Email</span>
+          <input type="email" placeholder="" ng-model="data.email">
+        </label>
+        <label class="item item-input" id="signup-input5" name="password">
+          <span class="input-label">Password</span>
+          <input type="text" placeholder="" ng-model="data.password">
+        </label>
+        <label class="item item-input" id="signup-input6" name="zipCode">
+          <span class="input-label">Zip Code</span>
+          <input type="text" placeholder="" ng-model="data.zipCode">
+        </label>
+        <label class="item item-input" id="signup-input7" name="birthdate">
+          <span class="input-label">Birthdate</span>
+          <input type="date" placeholder="" ng-model="data.birthdate">
+        </label>
+        <label class="item item-select" id="signup-select1" name="gender">
+          <span class="input-label">Gender</span>
+          <select ng-model="data.gender">
+            <option>Female</option>
+            <option>Male</option>
+          </select>
+        </label>
+      </ion-list>
+      <a ui-sref="tabsController.createDogProfile()" id="signup-button3" class="button gradient-button button-block">Sign up</a>
+    </form>
+  </ion-content>
