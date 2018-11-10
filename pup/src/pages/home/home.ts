@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, App } from 'ionic-angular';
+import { DogProfilePage } from '../dogProfile/dogProfile';
 
 @Component({
   selector: 'page-home',
@@ -16,4 +17,14 @@ logout(){
     const root = this.app.getRootNav();
     root.popToRoot();
   }
+
+createNewDogProfile() {
+  console.log("Create New Dog Profile Button Pressed on Home Page"); 
+  this.navCtrl.push(DogProfilePage, {});
+}
+
+editCurrentDogProfile(){
+  console.log("Edit Current Dog Profile Button Pressed on Home Page"); 
+  this.navCtrl.push(DogProfilePage, {});
+}
 }

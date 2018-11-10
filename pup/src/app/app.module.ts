@@ -10,10 +10,12 @@ import { MatchingPage } from '../pages/matching/matching';
 import { MessagingPage } from '../pages/messaging/messaging';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
+import { DogProfilePage} from '../pages/dogProfile/dogProfile'
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPageModule } from '../pages/login/login.module';
+
 //import { SignaturePadModule } from 'angular2-signaturepad';
 
 @NgModule({
@@ -25,7 +27,8 @@ import { LoginPageModule } from '../pages/login/login.module';
     WelcomePage,
     LoginPage,
     SignupPage,
-    TabsPage
+    TabsPage,
+    DogProfilePage
   ],
   imports: [
     BrowserModule,
@@ -40,7 +43,8 @@ import { LoginPageModule } from '../pages/login/login.module';
     WelcomePage,
     LoginPage,
     SignupPage,
-    TabsPage
+    TabsPage,
+    DogProfilePage
   ],
   providers: [
     StatusBar,
