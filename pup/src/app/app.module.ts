@@ -6,8 +6,8 @@ import { WelcomePage } from '../pages/welcome/welcome';
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
 
-import { AboutPage } from '../pages/about/about';
-import { ContactPage } from '../pages/contact/contact';
+import { MatchingPage } from '../pages/matching/matching';
+import { MessagingPage } from '../pages/messaging/messaging';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 
@@ -19,8 +19,8 @@ import { LoginPageModule } from '../pages/login/login.module';
 @NgModule({
   declarations: [
     MyApp,
-    AboutPage,
-    ContactPage,
+    MatchingPage,
+    MessagingPage,
     HomePage,
     WelcomePage,
     LoginPage,
@@ -34,8 +34,8 @@ import { LoginPageModule } from '../pages/login/login.module';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AboutPage,
-    ContactPage,
+    MatchingPage,
+    MessagingPage,
     HomePage,
     WelcomePage,
     LoginPage,
