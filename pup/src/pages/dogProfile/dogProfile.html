@@ -1,11 +1,78 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      DogProfilePage
+      Pupper Profile
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
+    <ion-list>   
+        <ion-item>
+            <ion-label fixed>Pup Name</ion-label>
+            <ion-input type="text" value=""></ion-input>
+          </ion-item>
 
+          <ion-item>
+            <ion-label fixed>Pup Breed</ion-label>
+            <ion-input type="text" value=""></ion-input>
+          </ion-item>
+
+          <!--Energy Level Dropdown-->
+          <ion-list>
+              <ion-item>
+                <ion-label>Energy Level</ion-label>
+                <ion-select [(ngModel)]="energyLevel">
+                  <ion-option value="min">Minimal</ion-option>
+                  <ion-option value="low">Low</ion-option>
+                  <ion-option value="med">Medium</ion-option>
+                  <ion-option value="high">High</ion-option>
+                  <ion-option value="extreme">Extreme</ion-option>
+                </ion-select>
+              </ion-item>
+            </ion-list>
+
+          <!--Life Stage Dropdown-->
+          <ion-list>
+              <ion-item>
+                <ion-label>Life Stage</ion-label>
+                <ion-select [(ngModel)]="lifeStage">
+                  <ion-option value="puppy">Puppy</ion-option>
+                  <ion-option value="young">Young</ion-option>
+                  <ion-option value="adult">Adult</ion-option>
+                  <ion-option value="mature">Mature</ion-option>
+                </ion-select>
+              </ion-item>
+            </ion-list>
+
+          <!--Sex-->
+          <ion-list>
+              <ion-item>
+                <ion-label>Gender</ion-label>
+                <ion-select [(ngModel)]="pupperSex">
+                  <ion-option value="female">Female</ion-option>
+                  <ion-option value="male">Male</ion-option>
+                </ion-select>
+              </ion-item>
+            </ion-list>
+
+          <!--Neutered/Spayed-->
+          <ion-list>
+              <ion-item>
+                <ion-label>Is Neutered/Spayed?</ion-label>
+                <ion-select [(ngModel)]="pupperNeutered">
+                  <ion-option value="yes">Yes</ion-option>
+                  <ion-option value="no">No</ion-option>
+                </ion-select>
+              </ion-item>
+            </ion-list>
+
+          <ion-item>
+            <ion-label fixed>Birthdate</ion-label>
+            <ion-input type="date" value=""></ion-input>
+          </ion-item>
+
+          
+          <button ion-button block color="primary" (click)="createDogProfileBtnClick()">Sign Up</button>
+          </ion-list>
 </ion-content>

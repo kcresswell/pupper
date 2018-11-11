@@ -11,4 +11,9 @@ export class DogProfilePage {
 
   }
 
+
+  createDogProfileBtnClick(){
+    console.log("Create Dog Profile Button Clicked on Dog Profile Page");
+  }
 }
+
