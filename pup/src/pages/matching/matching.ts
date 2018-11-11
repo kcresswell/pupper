@@ -1,13 +1,13 @@
-import { Component, EventEmitter } from '@angular/core';
+import { Component,EventEmitter } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { DomSanitizer } from '@angular/platform-browser'
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'page-matching',
   templateUrl: 'matching.html'
 })
 export class MatchingPage {
-  
+
   ready = false;
   attendants = [];
   cardDirection = "xy";
@@ -20,7 +20,7 @@ export class MatchingPage {
       }
   };
 
-images=["assets/imgs/indy.jpeg", "assets/imgs/boston.jpeg"]
+  images=["assets/imgs/indy.jpeg","assets/imgs/jax.jpeg", "assets/imgs/boston.jpeg"]
   constructor(private sanitizer: DomSanitizer) {
 
       for (let i = 0; i < this.images.length; i++) {
@@ -39,5 +39,4 @@ images=["assets/imgs/indy.jpeg", "assets/imgs/boston.jpeg"]
     console.log(event);
   }
 
-  
 }
