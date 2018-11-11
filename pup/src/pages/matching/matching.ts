@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { DomSanitizer } from '@angular/platform-browser'
 
 @Component({
   selector: 'page-matching',
