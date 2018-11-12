@@ -11,4 +11,6 @@ export class MessagingPage {
 
   }
 
+  //TODO: Utilize this file for the messaging features, all hardcoded in the html file currently
+  //TODO: JSON requests after this is sorted out
 }

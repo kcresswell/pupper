@@ -1,7 +1,9 @@
 page-welcome {
     #welcome{
         // background: color($colors, dark);
-        background-image: url(assets/imgs/gradient.jpg);
+        background-image: url("../assets/imgs/gradient.jpg");
+        background-repeat: no-repeat; 
+        background-size: cover; 
 
         h1{
             font-size: 52px;
@@ -15,4 +17,4 @@ page-welcome {
         }
     }
     }
-    
+        

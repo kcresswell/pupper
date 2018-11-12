@@ -24,6 +24,7 @@ export class SignupPage {
   }
 
   signup(){
+    //TODO: Send JSON Request with signup info
     console.log("Signup Button Was Pressed on Signup Page");  
     this.navCtrl.push(TabsPage, {}, {animate: false});
   }

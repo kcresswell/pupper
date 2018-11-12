@@ -15,10 +15,10 @@ export class WelcomePage {
     console.log('ionViewDidLoad Welcome Page');
   }
   login(){
-    this.navCtrl.push(LoginPage, {});
+    this.navCtrl.push(LoginPage);
   }
 
   signup(){
-    this.navCtrl.push(SignupPage, {});
+    this.navCtrl.push(SignupPage);
   }
 }

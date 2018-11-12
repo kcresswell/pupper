@@ -19,12 +19,13 @@ logout(){
   }
 
 createNewDogProfile() {
-  console.log("Create New Dog Profile Button Pressed on Settings Page"); 
+  //TODO: JSON Request With Dog Profile Info
+  console.log("Create New Dog Profile Button Pressed on Settings Page");
   this.navCtrl.push(DogProfilePage, {});
 }
 
-editCurrentDogProfile(){
-  console.log("Edit Current Dog Profile Button Pressed on Settings Page"); 
-  this.navCtrl.push(DogProfilePage, {});
-}
+// editCurrentDogProfile(){
+//   console.log("Edit Current Dog Profile Button Pressed on Settings Page"); 
+//   this.navCtrl.push(DogProfilePage, {});
+// }
 }

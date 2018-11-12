@@ -12,7 +12,7 @@ export class LoginPage {
   }
 
   login(){
-    // Your app login API web service call triggers 
+    //TODO: JSON Request with login info
     this.navCtrl.push(TabsPage, {});
   }
 
