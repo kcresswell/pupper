@@ -1,6 +1,7 @@
 page-welcome {
     #welcome{
-        background: color($colors, dark);
+        // background: color($colors, dark);
+        background-image: url(assets/imgs/gradient.jpg);
 
         h1{
             font-size: 52px;
