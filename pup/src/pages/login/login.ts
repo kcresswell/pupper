@@ -17,7 +17,15 @@ export class LoginPage {
 
   responseData : any; 
 
+  
+
   constructor(public navCtrl: NavController, public http: Http) {
+    let myUsername = $('#unamePwd').get(0).id;
+    let myPassword = $('#unamePwd').get(1).id;
+    console.log("My username: " + myUsername);
+    console.log("My password: " + myPassword); 
+
+
     // this.http.get('https://www.reddit.com/r/gifs/new/.json?limit=10').map(res => res.json()).subscribe(data => {
     //     this.posts = data.data.children;
     // });
