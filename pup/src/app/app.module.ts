@@ -16,8 +16,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPageModule } from '../pages/login/login.module';
 import { SwipeCardsModule } from 'ng2-swipe-cards';
-
-//import { SignaturePadModule } from 'angular2-signaturepad';
+import { HttpModule } from '@angular/http';
 
 @NgModule({
   declarations: [
@@ -32,7 +31,7 @@ import { SwipeCardsModule } from 'ng2-swipe-cards';
     DogProfilePage
   ],
   imports: [
-    BrowserModule,
+    BrowserModule, HttpModule,
     IonicModule.forRoot(MyApp),
     SwipeCardsModule
   ],
