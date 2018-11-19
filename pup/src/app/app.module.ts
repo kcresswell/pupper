@@ -16,41 +16,44 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPageModule } from '../pages/login/login.module';
 import { SwipeCardsModule } from 'ng2-swipe-cards';
+import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 
 @NgModule({
-  declarations: [
-    MyApp,
-    MatchingPage,
-    MessagingPage,
-    SettingsPage,
-    WelcomePage,
-    LoginPage,
-    SignupPage,
-    TabsPage,
-    DogProfilePage
-  ],
-  imports: [
-    BrowserModule, HttpModule,
-    IonicModule.forRoot(MyApp),
-    SwipeCardsModule
-  ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-    MatchingPage,
-    MessagingPage,
-    SettingsPage,
-    WelcomePage,
-    LoginPage,
-    SignupPage,
-    TabsPage,
-    DogProfilePage
-  ],
-  providers: [
-    StatusBar,
-    SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
-  ]
+  declarations: [
+    MyApp,
+    MatchingPage,
+    MessagingPage,
+    SettingsPage,
+    WelcomePage,
+    LoginPage,
+    SignupPage,
+    TabsPage,
+    DogProfilePage
+  ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    HttpModule,
+    IonicModule.forRoot(MyApp),
+    SwipeCardsModule
+  ],
+  bootstrap: [IonicApp],
+  entryComponents: [
+    MyApp,
+    MatchingPage,
+    MessagingPage,
+    SettingsPage,
+    WelcomePage,
+    LoginPage,
+    SignupPage,
+    TabsPage,
+    DogProfilePage
+  ],
+  providers: [
+    StatusBar,
+    SplashScreen,
+    {provide: ErrorHandler, useClass: IonicErrorHandler}
+  ]
 })
 export class AppModule {}
