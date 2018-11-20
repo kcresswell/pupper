@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
+import { SignupDetailsPage } from '../signupDetails/signupDetails';
 
 /**
  * Generated class for the SignupPage page.
@@ -15,6 +16,10 @@ import { TabsPage } from '../tabs/tabs';
   templateUrl: 'signup.html',
 })
 export class SignupPage {
+  
+  email: string; 
+  password: string;
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
@@ -24,9 +29,15 @@ export class SignupPage {
   }
 
   signup(){
+    let signupDetails = {
+      email: this.email, 
+      password: this.password
+    };
+    console.log(signupDetails.email, signupDetails.password); 
+
     //TODO: Send JSON Request with signup info
     console.log("Signup Button Was Pressed on Signup Page");  
-    this.navCtrl.push(TabsPage, {}, {animate: false});
+    this.navCtrl.push(SignupDetailsPage, {}, {animate: true});
   }
 
 }
