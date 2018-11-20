@@ -50,7 +50,8 @@ import { HttpModule } from '@angular/http';
     LoginPage,
     SignupPage,
     TabsPage,
-    DogProfilePage
+    DogProfilePage,
+    SignupDetailsPage
   ],
   providers: [
     StatusBar,

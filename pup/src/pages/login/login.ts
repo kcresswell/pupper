@@ -12,7 +12,6 @@ export class LoginPage {
   responseData: any;
   username: string;
   password: string;
-  responseData : any;
 
   constructor(public navCtrl: NavController, public http: Http) {
     console.log('Login page constructor');
