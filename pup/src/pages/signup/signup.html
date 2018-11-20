@@ -17,38 +17,33 @@
     <ion-list>   
         <ion-item>
             <ion-label fixed>First Name</ion-label>
-            <ion-input type="text" value=""></ion-input>
+            <ion-input [(ngModel)]="firstName" [ngModelOptions]="{standalone: true}" type="text" value=""></ion-input>
           </ion-item>
 
           <ion-item>
             <ion-label fixed>Last Name</ion-label>
-            <ion-input type="text" value=""></ion-input>
+            <ion-input [(ngModel)]="lastName" [ngModelOptions]="{standalone: true}" type="text" value=""></ion-input>
           </ion-item>
 
           <ion-item>
             <ion-label fixed>Birthdate</ion-label>
-            <ion-input type="date" value=""></ion-input>
+            <ion-input [(ngModel)]="birthdate" [ngModelOptions]="{standalone: true}" type="date" value=""></ion-input>
           </ion-item>
 
           <ion-item>
             <ion-label fixed>Zip</ion-label>
-            <ion-input type="text" value=""></ion-input>
+            <ion-input [(ngModel)]="zip" [ngModelOptions]="{standalone: true}" type="text" value=""></ion-input>
           </ion-item>
 
           <!--User Account Data 1-->
           <ion-item>
               <ion-label fixed>Email</ion-label>
-              <ion-input type="email" value=""></ion-input>
+              <ion-input [(ngModel)]="email" [ngModelOptions]="{standalone: true}" type="email" value=""></ion-input>
             </ion-item>
-        <!--User Account Data 2-->    
-        <ion-item>
-          <ion-label fixed>Username</ion-label>
-          <ion-input type="text" value=""></ion-input>
-        </ion-item>
       
         <ion-item>
             <ion-label fixed>Password</ion-label>
-            <ion-input type="password" value=""></ion-input>
+            <ion-input [(ngModel)]="password" [ngModelOptions]="{standalone: true}"  type="password" value=""></ion-input>
           </ion-item>
 
           <!--Marital Status-->

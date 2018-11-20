@@ -15,6 +15,15 @@ import { TabsPage } from '../tabs/tabs';
   templateUrl: 'signup.html',
 })
 export class SignupPage {
+  firstName: string;
+  lastName: string; 
+  birthdate: Date; 
+  zip: string; 
+  email: string; 
+  password: string;
+  maritalStatus: any; 
+  userSex: any; 
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
@@ -24,6 +33,18 @@ export class SignupPage {
   }
 
   signup(){
+    let signupDetails = {
+      firstName: this.firstName,
+      lastName: this.lastName, 
+      birthdate: this.birthdate, 
+      zip: this.zip, 
+      email: this.email, 
+      password: this.password,
+      maritalStatus: this.maritalStatus, 
+      userSex: this.userSex 
+    };
+    console.log(signupDetails); 
+
     //TODO: Send JSON Request with signup info
     console.log("Signup Button Was Pressed on Signup Page");  
     this.navCtrl.push(TabsPage, {}, {animate: false});
