@@ -26,15 +26,15 @@ export class LoginPage {
     //   'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiZXhwIjoxNTQyNzUxOTQ5fQ.I5trsD_WZDMXEiaXELNjuQA9LaYwzCx9xuLGWb9a8BULSa3R7KLulliZ54-d8jGsJFi1gddOpYgs0hgkJ8S9jA'});
     console.log(headers.get('Content-Type'));
 
-    let loginData = JSON.stringify({
-      username: "test@test.com",
-      password: "password"
-    });
+    // let loginData = JSON.stringify({
+    //   username: "test@test.com",
+    //   password: "password"
+    // });
 
-    // let loginData = {
-    //     username: this.username,
-    //     password: this.password
-    // };
+    let loginData = JSON.stringify({
+        username: this.username,
+        password: this.password
+    });
 
     // console.log(loginData);
 
