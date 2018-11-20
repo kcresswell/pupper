@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
-import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
+import { HttpClientModule, HttpHeaders } from '@angular/common/http';
+import { Http, Response } from '@angular/http';
+// import 'rxjs/add/operator/map';
+import { map } from 'rxjs/operators/map';
+
 
 @Component({
   selector: 'page-login',
@@ -10,54 +13,45 @@ import 'rxjs/add/operator/map';
 })
 export class LoginPage {
 
-  loginData = {
-    "username": "",
-    "password": ""
-  };
-
-  responseData : any; 
+  responseData : any;
 
   constructor(public navCtrl: NavController, public http: Http) {
-    // this.http.get('https://www.reddit.com/r/gifs/new/.json?limit=10').map(res => res.json()).subscribe(data => {
-    //     this.posts = data.data.children;
-    // });
+    console.log('Login page constructor');
 
-    //https://www.joshmorony.com/using-http-to-fetch-remote-data-from-a-server-in-ionic-2/
-    //TODO: See if we can use this format to pass in the URL and get out username and pwd
-    this.http.request('https://www.reddit.com/r/gifs/new/.json?limit=10').map(res => res.json()).subscribe(data => {
-        this.loginData = data.data.children;
-        console.log(this.loginData);
-    },
-    err => {
-        console.log("JSON Request failed, login.ts");
-    });
   }
 
 
 
   login(){
-    //TODO: JSON Request with login info
-    this.navCtrl.push(TabsPage, {});
+    console.log('Login button clicked');
+
+    let headers = new HttpHeaders({'Content-Type':'application/json'});
+    //    let headers = new HttpHeaders({'Content-Type':'application/json' ,
+    //   'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiZXhwIjoxNTQyNzUxOTQ5fQ.I5trsD_WZDMXEiaXELNjuQA9LaYwzCx9xuLGWb9a8BULSa3R7KLulliZ54-d8jGsJFi1gddOpYgs0hgkJ8S9jA'});
+    console.log(headers.get('Content-Type'));
+
+    let loginData = JSON.stringify({
+      username: "test@test.com",
+      password: "password"
+    });
+
+    this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/login', loginData, headers)
+    .subscribe(result => {
+      console.log('response received');
+      console.log(result);
+      // console.log(result['_body']);
+      console.log('Response status code: ' + result['status']);
+      let responseHeaders = result.headers;
+      console.log(responseHeaders);
+      // console.log(responseHeaders['Authorization']);
+
+
+      if (result['status'] == "200") {
+        //TODO: send the user account id to the next page so that you display the right profile
+        this.navCtrl.push(TabsPage, {});
+      }
+    });
+
   }
-
-
-  //https://www.9lessons.info/2017/06/ionic-angular-php-login-restful-api.html
-  //need to figure out what our service is, authService comes from import { AuthService } from '../../providers/auth-service';
-  
-  // signup(){
-  //   this.authService.postData(this.loginData,'signup').then((result) => {
-  //    this.responseData = result;
-  //    if(this.responseData.loginData){
-  //    console.log(this.responseData);
-  //    localStorage.setItem('loginData', JSON.stringify(this.responseData));
-  //    this.navCtrl.push(TabsPage);
-  //    }
-  //    else{ console.log("User already exists"); }
-  //  }, (err) => {
-  //    // Error log
-  //  });
-  // }
-
-  
 
 }
