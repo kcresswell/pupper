@@ -14,61 +14,20 @@
 
 
 <ion-content padding>
-    <ion-list>   
-        <ion-item>
-            <ion-label fixed>First Name</ion-label>
-            <ion-input [(ngModel)]="firstName" [ngModelOptions]="{standalone: true}" type="text" value=""></ion-input>
-          </ion-item>
+  <ion-list>
 
-          <ion-item>
-            <ion-label fixed>Last Name</ion-label>
-            <ion-input [(ngModel)]="lastName" [ngModelOptions]="{standalone: true}" type="text" value=""></ion-input>
-          </ion-item>
+    <!--User Account Data 1-->
+    <ion-item>
+      <ion-label fixed>Email</ion-label>
+      <ion-input [(ngModel)]="email" [ngModelOptions]="{standalone: true}" type="email" value=""></ion-input>
+    </ion-item>
 
-          <ion-item>
-            <ion-label fixed>Birthdate</ion-label>
-            <ion-input [(ngModel)]="birthdate" [ngModelOptions]="{standalone: true}" type="date" value=""></ion-input>
-          </ion-item>
+    <ion-item>
+      <ion-label fixed>Password</ion-label>
+      <ion-input [(ngModel)]="password" [ngModelOptions]="{standalone: true}" type="password" value=""></ion-input>
+    </ion-item>
 
-          <ion-item>
-            <ion-label fixed>Zip</ion-label>
-            <ion-input [(ngModel)]="zip" [ngModelOptions]="{standalone: true}" type="text" value=""></ion-input>
-          </ion-item>
-
-          <!--User Account Data 1-->
-          <ion-item>
-              <ion-label fixed>Email</ion-label>
-              <ion-input [(ngModel)]="email" [ngModelOptions]="{standalone: true}" type="email" value=""></ion-input>
-            </ion-item>
-      
-        <ion-item>
-            <ion-label fixed>Password</ion-label>
-            <ion-input [(ngModel)]="password" [ngModelOptions]="{standalone: true}"  type="password" value=""></ion-input>
-          </ion-item>
-
-          <!--Marital Status-->
-          <ion-list>
-            <ion-item>
-              <ion-label>Marital Status</ion-label>
-              <ion-select [(ngModel)]="maritalStatus">
-                <ion-option value="single">Unmarried</ion-option>
-                <ion-option value="married">Married</ion-option>
-              </ion-select>
-            </ion-item>
-          </ion-list>
-
-          <!--Sex-->
-          <ion-list>
-            <ion-item>
-              <ion-label>Gender</ion-label>
-              <ion-select [(ngModel)]="userSex">
-                <ion-option value="female">Female</ion-option>
-                <ion-option value="male">Male</ion-option>
-              </ion-select>
-            </ion-item>
-          </ion-list>
-      
-          <button ion-button block color="primary" (click)="signup()">Sign Up</button>
-          </ion-list>
+    <button ion-button block color="primary" (click)="signup()">Next</button>
+  </ion-list>
 
 </ion-content>
