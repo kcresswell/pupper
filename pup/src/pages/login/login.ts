@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
-import { HttpClientModule, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import { Http, Response } from '@angular/http';
 
 @Component({
@@ -17,8 +17,6 @@ export class LoginPage {
     console.log('Login page constructor');
 
   }
-
-
 
   login(){
     console.log('Login button clicked');
@@ -38,7 +36,9 @@ export class LoginPage {
         password: this.password
     };
 
-    this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/login', loginData, headers)
+    console.log(loginDetails); 
+    
+    this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/login', loginDetails, headers)
     .subscribe(result => {
       console.log('response received');
       console.log(result);
