@@ -13,21 +13,21 @@
 </ion-header>
 
 
-<ion-content padding>
-<ion-list>
-  <div id="unamePwd">
-  <ion-item>
-    <ion-label fixed id="usernameID">Username</ion-label>
-    <ion-input type="text" value=""></ion-input>
-  </ion-item>
-
-  <ion-item>
-      <ion-label fixed id="passwordID">Password</ion-label>
-      <ion-input type="password" value=""></ion-input>
+  <ion-content padding>
+  <ion-list>
+    <div id="unamePwd">
+    <ion-item>
+      <ion-label>Username</ion-label>
+      <ion-input [(ngModel)]="username" [ngModelOptions]="{standalone: true}" type="text" value="" [(ngModel)]="login.username"></ion-input>
     </ion-item>
-  </div>
-    <button ion-button block color="primary" (click)="login()">Login</button>
-    </ion-list>
+
+    <ion-item>
+        <ion-label>Password</ion-label>
+        <ion-input [(ngModel)]="password" [ngModelOptions]="{standalone: true}" type="password" value="" [(ngModel)]="login.password"></ion-input>
+      </ion-item>
+    </div>
+      <button ion-button block color="primary" (click)="login()">Login</button>
+      </ion-list>
 
 
 </ion-content>
