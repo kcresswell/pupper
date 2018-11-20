@@ -21,7 +21,7 @@ export class LoginPage {
   login(){
     console.log('Login button clicked');
 
-    let headers = new HttpHeaders({'Content-Type':'application/json'});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
     //    let headers = new HttpHeaders({'Content-Type':'application/json' ,
     //   'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiZXhwIjoxNTQyNzUxOTQ5fQ.I5trsD_WZDMXEiaXELNjuQA9LaYwzCx9xuLGWb9a8BULSa3R7KLulliZ54-d8jGsJFi1gddOpYgs0hgkJ8S9jA'});
     console.log(headers.get('Content-Type'));
@@ -38,7 +38,7 @@ export class LoginPage {
 
     // console.log(loginData);
 
-    this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/login', loginData, headers)
+    this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/login', loginData)
     .subscribe(result => {
       console.log('response received');
       console.log(result);
@@ -49,7 +49,7 @@ export class LoginPage {
       // console.log(responseHeaders['Authorization']);
 
 
-      if (result['status'] == "200") {
+      if (result['status'] == 200) {
         //TODO: send the user account id to the next page so that you display the right profile
         this.navCtrl.push(TabsPage, {});
       }
