@@ -3,9 +3,6 @@ import { NavController } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
 import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { Http, Response } from '@angular/http';
-// import 'rxjs/add/operator/map';
-import { map } from 'rxjs/operators/map';
-
 
 @Component({
     selector: 'page-login',
@@ -41,7 +38,7 @@ export class LoginPage {
         username: this.username,
         password: this.password
     };
-    
+
     this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/login', loginData, headers)
     .subscribe(result => {
       console.log('response received');
