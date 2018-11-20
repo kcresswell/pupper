@@ -26,19 +26,19 @@ export class LoginPage {
     //   'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiZXhwIjoxNTQyNzUxOTQ5fQ.I5trsD_WZDMXEiaXELNjuQA9LaYwzCx9xuLGWb9a8BULSa3R7KLulliZ54-d8jGsJFi1gddOpYgs0hgkJ8S9jA'});
     console.log(headers.get('Content-Type'));
 
-    // let loginData = JSON.stringify({
-    //   username: "test@test.com",
-    //   password: "password"
-    // });
+    let loginData = JSON.stringify({
+      username: "test@test.com",
+      password: "password"
+    });
 
-    let loginDetails = {
-        username: this.username,
-        password: this.password
-    };
+    // let loginData = {
+    //     username: this.username,
+    //     password: this.password
+    // };
 
-    console.log(loginDetails); 
-    
-    this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/login', loginDetails, headers)
+    // console.log(loginData);
+
+    this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/login', loginData, headers)
     .subscribe(result => {
       console.log('response received');
       console.log(result);
