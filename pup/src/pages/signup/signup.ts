@@ -41,13 +41,13 @@ export class SignupPage {
       email: this.email, 
       password: this.password,
       maritalStatus: this.maritalStatus, 
-      userSex: this.userSex 
+      pupperSex: this.userSex 
     };
     console.log(signupDetails); 
 
     //TODO: Send JSON Request with signup info
     console.log("Signup Button Was Pressed on Signup Page");  
-    this.navCtrl.push(TabsPage, {}, {animate: false});
+    this.navCtrl.push(TabsPage, {}, {animate: true});
   }
 
 }
