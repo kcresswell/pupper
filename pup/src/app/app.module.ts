@@ -21,42 +21,41 @@ import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 
 @NgModule({
-  declarations: [
-    MyApp,
-    MatchingPage,
-    MessagingPage,
-    SettingsPage,
-    WelcomePage,
-    LoginPage,
-    SignupPage,
-    TabsPage,
-    DogProfilePage,
+  declarations: [
+    MyApp,
+    MatchingPage,
+    MessagingPage,
+    SettingsPage,
+    WelcomePage,
+    LoginPage,
+    SignupPage,
+    TabsPage,
+    DogProfilePage,
     SignupDetailsPage
-  ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    HttpModule,
-    IonicModule.forRoot(MyApp),
-    SwipeCardsModule
-  ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-    MatchingPage,
-    MessagingPage,
-    SettingsPage,
-    WelcomePage,
-    LoginPage,
-    SignupPage,
-    TabsPage,
-    DogProfilePage,
-    SignupDetailsPage
-  ],
-  providers: [
-    StatusBar,
-    SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
-  ]
+  ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    HttpModule,
+    IonicModule.forRoot(MyApp),
+    SwipeCardsModule
+  ],
+  bootstrap: [IonicApp],
+  entryComponents: [
+    MyApp,
+    MatchingPage,
+    MessagingPage,
+    SettingsPage,
+    WelcomePage,
+    LoginPage,
+    SignupPage,
+    TabsPage,
+    DogProfilePage
+  ],
+  providers: [
+    StatusBar,
+    SplashScreen,
+    {provide: ErrorHandler, useClass: IonicErrorHandler}
+  ]
 })
 export class AppModule {}

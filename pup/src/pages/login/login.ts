@@ -1,59 +1,64 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
-// import { HttpClientModule, HttpHeaders } from '@angular/common/http';
-import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
+import { HttpClientModule, HttpHeaders } from '@angular/common/http';
+import { Http, Response } from '@angular/http';
+// import 'rxjs/add/operator/map';
+import { map } from 'rxjs/operators/map';
+
 
 @Component({
     selector: 'page-login',
     templateUrl: 'login.html'
 })
 export class LoginPage {
+  responseData: any;
+  username: string;
+  password: string;
+  responseData : any;
 
-    responseData: any;
-    username: string;
-    password: string; 
+  constructor(public navCtrl: NavController, public http: Http) {
+    console.log('Login page constructor');
 
-
-    constructor(public navCtrl: NavController, public http: Http) {
-        console.log('Login page constructor');
-    }
+  }
 
 
 
-    login() {
-        console.log('Login button clicked');
+  login(){
+    console.log('Login button clicked');
 
-        let loginDetails = {
-            username: this.username, 
-            password: this.password
-        };
+    let headers = new HttpHeaders({'Content-Type':'application/json'});
+    //    let headers = new HttpHeaders({'Content-Type':'application/json' ,
+    //   'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiZXhwIjoxNTQyNzUxOTQ5fQ.I5trsD_WZDMXEiaXELNjuQA9LaYwzCx9xuLGWb9a8BULSa3R7KLulliZ54-d8jGsJFi1gddOpYgs0hgkJ8S9jA'});
+    console.log(headers.get('Content-Type'));
 
-        console.log("USERNAME: " + loginDetails.username); 
-        console.log("PASSWORD: " + loginDetails.password);  
+    // let loginData = JSON.stringify({
+    //   username: "test@test.com",
+    //   password: "password"
+    // });
 
+    let loginDetails = {
+        username: this.username,
+        password: this.password
+    };
+    
+    this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/login', loginData, headers)
+    .subscribe(result => {
+      console.log('response received');
+      console.log(result);
+      // console.log(result['_body']);
+      console.log('Response status code: ' + result['status']);
+      let responseHeaders = result.headers;
+      console.log(responseHeaders);
+      // console.log(responseHeaders['Authorization']);
+
+
+      if (result['status'] == "200") {
+        //TODO: send the user account id to the next page so that you display the right profile
         this.navCtrl.push(TabsPage, {});
+      }
+    });
 
-        // //   console.log('usernameID', this.usernameID);
-        // //   console.log('passwordID', this.passwordID);
-
-        // let loginData = {
-        //     "username": "test@test.com",
-        //     "password": "password"
-        // };
-
-        // this.http.post('https://pupper.us-east-1.elasticbeanstalk.com/login', loginData)
-        //     //this.http.post('http://localhost:5000/login', loginData, new HttpHeaders().set('Content-Type', 'application/json'))
-        //     .subscribe(data => {
-        //         console.log('response received');
-        //         //TODO: ONLY DO THIS ACTION IF LOGIN IS SUCCESSFUL
-        //         this.navCtrl.push(TabsPage, {});
-        //         console.log(data['_body']);
-        //     }, error => {
-        //         console.log(error);
-        //     });
-
-    }
+  }
 
 }
