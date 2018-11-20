@@ -31,14 +31,14 @@ export class LoginPage {
     //   password: "password"
     // });
 
-    let loginDetails = {
+    let loginData = JSON.stringify({
         username: this.username,
         password: this.password
-    };
+    });
 
-    console.log(loginDetails); 
-    
-    this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/login', loginDetails, headers)
+    // console.log(loginData);
+
+    this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/login', loginData, headers)
     .subscribe(result => {
       console.log('response received');
       console.log(result);
