@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
-import { HttpHeaders } from '@angular/common/http';
-import { Http, Response } from '@angular/http';
+import { HttpHeaders, HttpParams } from '@angular/common/http';
+import { Http, Response, Headers } from '@angular/http';
 
 @Component({
     selector: 'page-login',
@@ -21,9 +21,10 @@ export class LoginPage {
   login(){
     console.log('Login button clicked');
 
-    const headers = new HttpHeaders({'Content-Type':'application/json'});
-    //    let headers = new HttpHeaders({'Content-Type':'application/json' ,
-    //   'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiZXhwIjoxNTQyNzUxOTQ5fQ.I5trsD_WZDMXEiaXELNjuQA9LaYwzCx9xuLGWb9a8BULSa3R7KLulliZ54-d8jGsJFi1gddOpYgs0hgkJ8S9jA'});
+    // let headers = new HttpHeaders({'Content-Type':'application/json'});
+    let headers = new Headers({'Content-Type':'application/json'});
+
+    // let headers = new Headers({'Content-Type':'application/json', 'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiZXhwIjoxNTQyOTEwNjcwfQ.XQusMM72cqkrGY0oOWGrfbejQxDcDCIGDZoIITtc06xuIXQ59U3CM34IfreVbFlQ8yBdpDYKqH58zUECqbtKHA'});
 
     // let loginData = JSON.stringify({
     //   username: "test@test.com",
@@ -33,6 +34,10 @@ export class LoginPage {
     if (!this.username || !this.password) {
       console.log("Please enter a valid email and password.");
       return;
+
+      //Uncomment below for auto filling username/password fields
+      // this.username = "test@test.com";
+      // this.password = "password";
     }
 
     let loginData = JSON.stringify({
@@ -42,7 +47,8 @@ export class LoginPage {
 
     // console.log(loginData);
 
-    this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/login', loginData)
+    this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/login', loginData, {headers: headers})
+    // this.http.get('http://pupper.us-east-1.elasticbeanstalk.com/user', {headers: headers})
     .subscribe(result => {
       console.log('response received');
       console.log(result);
