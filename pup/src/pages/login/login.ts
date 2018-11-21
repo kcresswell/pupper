@@ -24,12 +24,16 @@ export class LoginPage {
     const headers = new HttpHeaders({'Content-Type':'application/json'});
     //    let headers = new HttpHeaders({'Content-Type':'application/json' ,
     //   'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiZXhwIjoxNTQyNzUxOTQ5fQ.I5trsD_WZDMXEiaXELNjuQA9LaYwzCx9xuLGWb9a8BULSa3R7KLulliZ54-d8jGsJFi1gddOpYgs0hgkJ8S9jA'});
-    console.log(headers.get('Content-Type'));
 
     // let loginData = JSON.stringify({
     //   username: "test@test.com",
     //   password: "password"
     // });
+
+    if (!this.username || !this.password) {
+      console.log("Please enter a valid email and password.");
+      return;
+    }
 
     let loginData = JSON.stringify({
         username: this.username,
@@ -48,8 +52,11 @@ export class LoginPage {
       console.log(responseHeaders);
       // console.log(responseHeaders['Authorization']);
 
-
-      if (result['status'] == 200) {
+      if (result['status'] == 403) {
+        console.log("Invalid login credentials.");
+      }
+      else if (result['status'] == 200) {
+        console.log("Login success");
         //TODO: send the user account id to the next page so that you display the right profile
         this.navCtrl.push(TabsPage, {});
       }
