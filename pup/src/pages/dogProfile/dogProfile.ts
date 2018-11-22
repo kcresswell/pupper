@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { MatchingPage } from '../matching/matching';
 import { TabsPage } from '../tabs/tabs';
 import { AlertController } from 'ionic-angular';
@@ -16,7 +16,7 @@ export class DogProfilePage {
   pupperSex: any; 
   pupperNeutered: any;
 
-  constructor(public navCtrl: NavController, public alertCtrl : AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl : AlertController) {
   }
 
   tab = new TabsPage(); 

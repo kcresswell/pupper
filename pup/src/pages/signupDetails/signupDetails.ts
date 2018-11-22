@@ -45,6 +45,7 @@ export class SignupDetailsPage {
     //proper date format: MM/DD/YY
     //returns true if the date is formatted correctly
     validateDateInput(dateToCheck) {
+        // if(dateToCheck == '') { return false; }
         let splitDate = dateToCheck.split('/'); 
         var date = new Date(splitDate[2] + '/' + splitDate[0] + '/' + splitDate[1]);
         return (date && (date.getMonth() + 1) == splitDate[0] && date.getDate() == Number(splitDate[1]) && date.getFullYear() == Number(splitDate[2]));
@@ -71,7 +72,7 @@ export class SignupDetailsPage {
         }
 
         //check that a date has been entered and that it is in the proper format
-        if(!this.validateDateInput || !this.validateDateInput(this.birthdate)) {
+        if(!this.birthdate || !this.validateDateInput(this.birthdate)) {
             let errorMsg = "Proper Date Format: MM/DD/YYYY"; 
             console.log(errorMsg);
             this.presentToast(errorMsg);
