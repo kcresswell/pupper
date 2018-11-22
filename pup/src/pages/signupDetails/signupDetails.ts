@@ -1,5 +1,5 @@
 import { Component, EventEmitter } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TabsPage } from '../tabs/tabs';
 
@@ -8,6 +8,8 @@ import { TabsPage } from '../tabs/tabs';
     templateUrl: 'signupDetails.html'
 })
 export class SignupDetailsPage {
+    email: string;
+    password: string;
     firstName: string;
     lastName: string;
     birthdate: Date;
@@ -15,11 +17,16 @@ export class SignupDetailsPage {
     maritalStatus: any;
     userSex: any;
 
-    constructor(public navCtrl: NavController) {
+    constructor(public navCtrl: NavController, public navParams : NavParams) {
+        //email and password input validated on the signup page before
+        this.email = navParams.get('param1');
+        this.password = navParams.get('param2');
     }
 
     signupDetails() {
         let signupInfo = {
+            email: this.email, 
+            password: this.password,
             firstName: this.firstName,
             lastName: this.lastName,
             birthdate: this.birthdate,

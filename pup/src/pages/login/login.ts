@@ -49,7 +49,7 @@ export class LoginPage {
     // });
 
     //Check if email or password are empty, make sure email is a valid format
-    if (!this.email || !this.password && !this.validateEmail(this.email)) {
+    if (!this.email || !this.password || !this.validateEmail(this.email)) {
       let errorMsg = "Please enter a valid email and password.";
       console.log(errorMsg);
       this.presentToast(errorMsg);
@@ -91,7 +91,8 @@ export class LoginPage {
           console.log("Login success");
           //TODO: send the user account id to the next page so that you display the right profile
           //TODO: another call to get the user profile from the user account
-          this.navCtrl.push(TabsPage, {});
+          this.navCtrl.push(TabsPage); 
+          //, {param1: this.email, param2: this.password});
         }
       });
 

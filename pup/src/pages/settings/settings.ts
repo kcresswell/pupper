@@ -12,20 +12,15 @@ export class SettingsPage {
 
   }
 
-logout(){
-    console.log("Logout Button Pressed on Settings Page"); 
+  logout() {
+    console.log("Logout Button Pressed on Settings Page");
     const root = this.app.getRootNav();
     root.popToRoot();
   }
 
-createNewDogProfile() {
-  //TODO: JSON Request With Dog Profile Info
-  console.log("Create New Dog Profile Button Pressed on Settings Page");
-  this.navCtrl.push(DogProfilePage, {});
-}
-
-// editCurrentDogProfile(){
-//   console.log("Edit Current Dog Profile Button Pressed on Settings Page"); 
-//   this.navCtrl.push(DogProfilePage, {});
-// }
+  myPupperProfile() {
+    //TODO: JSON Request With Dog Profile Info
+    console.log("My Pupper Profile Button Pressed on Settings Page");
+    this.navCtrl.push(DogProfilePage, {});
+  }
 }
