@@ -23,8 +23,6 @@ export class DogProfilePage {
 
   }
 
-  tab = new TabsPage();
-
   showConfirmAlert() {
     let alertConfirm = this.alertCtrl.create({
       title: 'Pup Profile Created!',
@@ -35,7 +33,7 @@ export class DogProfilePage {
           handler: () => {
             console.log('Find Friendogs Clicked');
             //pup name, breed, life stage, energy level
-            this.navCtrl.push(this.tab.tab2Root, {param1: this.pupName, param2: this.pupBreed, param3: this.lifeStage, param4: this.energyLevel, param5: "assets/imgs/indy.jpeg"});
+            this.navCtrl.push(MatchingPage, {param1: this.pupName, param2: this.pupBreed, param3: this.lifeStage, param4: this.energyLevel, param5: "assets/imgs/indy.jpeg"});
           }
         }
       ]
@@ -53,7 +51,6 @@ export class DogProfilePage {
   //proper date format: MM/DD/YY
   //returns true if the date is formatted correctly
   validateDateInput(dateToCheck) {
-    // if(dateToCheck == '') { return false; }
     let splitDate = dateToCheck.split('/');
     var date = new Date(splitDate[2] + '/' + splitDate[0] + '/' + splitDate[1]);
     return (date && (date.getMonth() + 1) == splitDate[0] && date.getDate() == Number(splitDate[1]) && date.getFullYear() == Number(splitDate[2]));
@@ -80,7 +77,7 @@ export class DogProfilePage {
     }
 
     //check that a date has been entered and that it is in the proper format
-    if (!this.pupBirthdate || this.validateDateInput(this.pupBirthdate)) {
+    if (!this.pupBirthdate || !this.validateDateInput(this.pupBirthdate)) {
       let errorMsg = "Proper Date Format: MM/DD/YYYY";
       console.log(errorMsg);
       this.presentToast(errorMsg);
