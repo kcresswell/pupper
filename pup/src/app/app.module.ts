@@ -11,7 +11,6 @@ import { MessagingPage } from '../pages/messaging/messaging';
 import { SettingsPage } from '../pages/settings/settings';
 import { TabsPage } from '../pages/tabs/tabs';
 import { DogProfilePage} from '../pages/dogProfile/dogProfile';
-import { SignupDetailsPage } from '../pages/signupDetails/signupDetails'
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -30,8 +29,7 @@ import { HttpModule } from '@angular/http';
     LoginPage,
     SignupPage,
     TabsPage,
-    DogProfilePage,
-    SignupDetailsPage
+    DogProfilePage
   ],
   imports: [
     BrowserModule,
@@ -50,8 +48,7 @@ import { HttpModule } from '@angular/http';
     LoginPage,
     SignupPage,
     TabsPage,
-    DogProfilePage,
-    SignupDetailsPage
+    DogProfilePage
   ],
   providers: [
     StatusBar,
