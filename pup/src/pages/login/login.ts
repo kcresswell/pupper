@@ -102,7 +102,7 @@ export class LoginPage {
   userInputIsValid(): boolean {
     if (!this.email || !this.password || !this.validateEmailFormat(this.email)) {
       let errorMsg = "Please enter a valid email and password.";
-      console.log(errorMsg);
+      // console.log(errorMsg);
       this.presentToast(errorMsg);
 
       return false;
@@ -111,11 +111,9 @@ export class LoginPage {
   }
 
   validateEmailFormat(emailIn): boolean {
-    //string@string.string
-    // let format = /\S+@{1}\S+\.\S+/;
     let emailRegEx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (emailRegEx.test(emailIn)) {
-      console.log("valid email was entered.");
+      // console.log("A valid email was entered.");
     }
     return emailRegEx.test(emailIn);
   }
