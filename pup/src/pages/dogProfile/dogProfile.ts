@@ -4,6 +4,7 @@ import { MatchingPage } from '../matching/matching';
 import { TabsPage } from '../tabs/tabs';
 import { AlertController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular'
+import { DogProfilePicPage } from '../dogProfilePic/dogProfilePic';
 
 
 @Component({
@@ -66,6 +67,9 @@ export class DogProfilePage {
     toast.present();
   }
 
+  addDogProfilePic() {
+    this.navCtrl.push(DogProfilePicPage, {});
+  }
 
   createDogProfileBtnClick() {
     if (this.validateStringInput(this.pupName) || this.validateStringInput(this.pupBreed)) {

@@ -11,6 +11,7 @@ import { MessagingPage } from '../pages/messaging/messaging';
 import { SettingsPage } from '../pages/settings/settings';
 import { TabsPage } from '../pages/tabs/tabs';
 import { DogProfilePage} from '../pages/dogProfile/dogProfile';
+import { DogProfilePicPage } from '../pages/dogProfilePic/dogProfilePic'
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -18,6 +19,8 @@ import { LoginPageModule } from '../pages/login/login.module';
 import { SwipeCardsModule } from 'ng2-swipe-cards';
 import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
+import {Camera} from '@ionic-native/camera';
+
 
 @NgModule({
   declarations: [
@@ -29,7 +32,8 @@ import { HttpModule } from '@angular/http';
     LoginPage,
     SignupPage,
     TabsPage,
-    DogProfilePage
+    DogProfilePage,
+    DogProfilePicPage
   ],
   imports: [
     BrowserModule,
@@ -48,11 +52,13 @@ import { HttpModule } from '@angular/http';
     LoginPage,
     SignupPage,
     TabsPage,
-    DogProfilePage
+    DogProfilePage,
+    DogProfilePicPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
