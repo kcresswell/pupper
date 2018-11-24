@@ -81,7 +81,7 @@ export class DogProfilePage {
     }
 
     //check that a date has been entered and that it is in the proper format
-    if (!this.pupBirthdate || !this.validateDateInput(this.pupBirthdate)) {
+    if (!this.pupBirthdate || this.validateDateInput(this.pupBirthdate)) {
       let errorMsg = "Proper Date Format: MM/DD/YYYY";
       console.log(errorMsg);
       this.presentToast(errorMsg);
