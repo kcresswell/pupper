@@ -81,7 +81,7 @@ export class SignupPage {
     let day = splitDate[1];
     let year = splitDate[2];
 
-    return year + "/" + month + "/" + day; 
+    return year + "-" + month + "-" + day; 
   }
 
   // ionViewDidLoad() {
@@ -121,9 +121,9 @@ export class SignupPage {
       );
 
       //---------createUserProfile--------
-      //[Log] {"username":"yo@ho.com","password":"hi","firstName":"hi",
-      //"lastName":"hi","birthdate":"08,30,1995/08,30/08,30","zip":"84095","maritalStatus":"married","dateJoin":"2018-11-25",
-      //"lastLogin":"2018-11-25T04:04:52.355Z","userAccount":["yo@ho.com","hi"]} (main.js, line 206)
+      // [Log] {"username":"hi@hello.com","password":"hi","firstName":"hi","lastName":"hello",
+      // "birthdate":"1995-08-30","zip":"84095","maritalStatus":"single",
+      // "dateJoin":"2018-11-25","lastLogin":"2018-11-25T04:58:12.829Z","userAccount":["hi@hello.com","hi"]} (main.js, line 200)
 
       let dateJoinFormatted = new Date().toISOString().slice(0,10);
       let birthdateFormatted = this.formatBirthday(this.birthdate); 
