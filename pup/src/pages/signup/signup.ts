@@ -18,7 +18,6 @@ import { Http, Response, Headers } from '@angular/http';
   templateUrl: 'signup.html',
 })
 export class SignupPage {
-
   email: string;
   password: string;
   // firstName: string;
@@ -80,11 +79,11 @@ export class SignupPage {
 
   signup() {
     console.log("Signup button clicked");
+
     const headers = new Headers({ 'Content-Type': 'application/json' });
 
-
     let signupData = JSON.stringify({
-      email: this.email,
+      username: this.email,
       password: this.password
       // firstName: this.firstName
       // lastName: this.lastName,
@@ -95,15 +94,14 @@ export class SignupPage {
     });
     console.log(signupData);
 
-    //this.http.post('http://localhost:5000/login', loginData, { headers: headers }) //For running back-end locally
-    this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/register', signupData, { headers: headers }) //For running back-end in AWS
+    this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/account/register', signupData, { headers: headers }) //For running back-end in AWS
       .subscribe(result => {
         console.log("IM PRINTING THIS"); 
         // console.log(result['_body']);
         console.log('Response status code: ' + result['status']);
 
         if (result['status'] == 403) {
-          //Invalid credentials
+          //failed to load resource 
           let errorMsg = "Hmm, something went wrong. Please try again.";
           this.presentToast(errorMsg);
         }
@@ -111,6 +109,7 @@ export class SignupPage {
           //Success! navigate user to the next page
           let signupSuccess = "User Created! Please wait . . .";
           this.presentToast(signupSuccess);
+          
           this.navCtrl.push(TabsPage, {}, { animate: true });
         }
       },
