@@ -99,13 +99,16 @@ export class SignupPage {
     // var dateWithouthSecond = new Date();
     // return dateWithouthSecond.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
 
-    var dt = new Date();
-    var d = dt.toLocaleDateString();
-    var t = dt.toLocaleTimeString();
+    let dt = new Date();
+    let d = dt.toLocaleDateString();
+    let t = dt.toLocaleTimeString();
     t = t.replace(/\u200E/g, '');
     t = t.replace(/^([^\d]*\d{1,2}:\d{1,2}):\d{1,2}([^\d]*)$/, '$1$2');
-    var result = d + ' ' + t;
-    return result;
+    let dDash = d.split("/"); 
+    let month = dDash[0];
+    let day = dDash[1];
+    let year = dDash[2]; 
+    return year + "-" + month + "-" + day + " " + t;
   }
 
   // ionViewDidLoad() {
@@ -145,11 +148,10 @@ export class SignupPage {
       );
 
       //---------createUserProfile--------
-      //[Log] {"username":"yello@yello.com","password":"hi",
-      //"firstName":"hi","lastName":"hello","birthdate":"1995-08-30",
-      //"zip":"84095","maritalStatus":"married","dateJoin":"2018-11-25",
-      //"lastLogin":"11/25/2018 10:20 AM",
-      //"userAccount":["yello@yello.com","hi"]} (main.js, line 220)
+      // [Log] {"username":"hello@gmail.com","password":"hi","firstName":"Kayla",
+      // "lastName":"Butt","birthdate":"1995-08-30","zip":"84095",
+      // "maritalStatus":"married","dateJoin":"2018-11-25",
+      // "lastLogin":"2018-11-25 10:25 AM","userAccount":["hello@gmail.com","hi"]} (main.js, line 223)
       let dateJoinFormatted = new Date().toISOString().slice(0,10);
       let birthdateFormatted = this.formatBirthday(this.birthdate); 
 
