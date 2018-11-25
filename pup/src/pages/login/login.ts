@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
-import { HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpHeaders, HttpParams, HttpClient } from '@angular/common/http';
 import { Http, Response, Headers } from '@angular/http';
-import { ToastController } from 'ionic-angular'
+import { ToastController } from 'ionic-angular';
+import { GlobalvarsProvider } from '../../providers/globalvars/globalvars';
 
 @Component({
   selector: 'page-login',
@@ -14,9 +15,8 @@ export class LoginPage {
   email: string;
   password: string;
 
-  constructor(public navCtrl: NavController, public http: Http, private toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public http: Http, private toastCtrl: ToastController, public globalVarsProvider: GlobalvarsProvider) {
     console.log('Login page constructor');
-
   }
 
   login() {
@@ -65,6 +65,7 @@ export class LoginPage {
 
 retrieveUserProfile(response) {
   let jwtAccessToken = response.headers.get("Authorization");
+  this.globalVarsProvider.setJwtAccessToken(jwtAccessToken);
   console.log(jwtAccessToken);
 
   let headers = new Headers({'Content-Type':'application/json', 'Authorization': jwtAccessToken});

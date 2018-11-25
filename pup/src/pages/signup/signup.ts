@@ -141,7 +141,7 @@ export class SignupPage {
           let signupSuccess = "User Created! Please wait . . .";
           this.presentToast(signupSuccess);
           
-          this.navCtrl.push(TabsPage, {}, { animate: true });
+          // this.navCtrl.push(TabsPage, {}, { animate: true });
         }
       },
         error => console.log(error)
@@ -185,13 +185,52 @@ export class SignupPage {
             let signupSuccess = "User Created! Please wait . . .";
             this.presentToast(signupSuccess);
             
+            this.retrieveUserProfile(result); 
             this.navCtrl.push(TabsPage, {}, { animate: true });
           }
         },
           error => console.log(error)
         );
   }
+  retrieveUserProfile(response) {
+    let jwtAccessToken = response.headers.get("Authorization");
+    console.log(jwtAccessToken);
+  
+    let headers = new Headers({'Content-Type':'application/json', 'Authorization': jwtAccessToken});
+  
+    this.http.get('http://pupper.us-east-1.elasticbeanstalk.com/user', {headers: headers})
+    .subscribe(resp => {
+      if (resp['status'] == 403) {
+        this.presentToast("Your session has expired. Please log in again.");
+        return;
+      }
+      else if (resp['status'] == 400 || resp['status'] == 404 || resp['status'] == 422) {
+        let errorMsg = "Error loading Create Profile data.";
+        this.presentToast(errorMsg);
+        return;
+      }
+      else if (resp['status'] == 200) {
+        console.log("Generic response message: " + resp);
+        console.log("response body: " + resp['_body']);
+  
+        let jsonResponseObj = JSON.parse((resp['_body'])); //Parse response body string resp['_body']into JSON object to extract data
+        let userProfileData = jsonResponseObj['userProfiles'][0]; //User profile data is contained in 'userProfiles' as arraylist
+        console.log("User profile: '" + JSON.stringify(userProfileData) + "'");
+  
+        //this.updateLastLoginTimestampForUserProfile(userProfileData, headers);
+  
+        //TODO: Make a second update call to userProfile table to update lastLogin for userProfile.
+  
+        this.navCtrl.push(TabsPage, userProfileData); //Pass userProfile object to next page using NavController.push()
+      }
+    },
+    error => console.log(error)
+  );
+  
+  }
 }
+
+
 
     //TODO: Move these back up over the signupData when the JSON stuff is working
     //Check if email or password are empty, make sure email is a valid format

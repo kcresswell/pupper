@@ -20,7 +20,7 @@ import { SwipeCardsModule } from 'ng2-swipe-cards';
 import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import {Camera} from '@ionic-native/camera';
-import { ChatProvider } from '../providers/chat/chat';
+import { GlobalvarsProvider } from '../providers/globalvars/globalvars';
 
 
 @NgModule({
@@ -61,7 +61,7 @@ import { ChatProvider } from '../providers/chat/chat';
     SplashScreen,
     Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ChatProvider
+    GlobalvarsProvider
   ]
 })
 export class AppModule {}
