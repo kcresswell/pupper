@@ -84,6 +84,15 @@ export class SignupPage {
     return year + "-" + month + "-" + day; 
   }
 
+  //expected format: yyyy-MM-dd HH:mm a
+  getLastLogin() {
+    //2018-11-25T04:58:12.829Z
+    //yyyy-MM-dd HH:mm a
+    //let date = timestamp.split("T"); 
+    let timestamp = new Date(); 
+    return timestamp.toLocaleString().replace(new RegExp("/", 'g'), "-");
+  }
+
   // ionViewDidLoad() {
   //   console.log('ionViewDidLoad SignupPage');
   // }
@@ -121,10 +130,11 @@ export class SignupPage {
       );
 
       //---------createUserProfile--------
-      // [Log] {"username":"hi@hello.com","password":"hi","firstName":"hi","lastName":"hello",
-      // "birthdate":"1995-08-30","zip":"84095","maritalStatus":"single",
-      // "dateJoin":"2018-11-25","lastLogin":"2018-11-25T04:58:12.829Z","userAccount":["hi@hello.com","hi"]} (main.js, line 200)
-
+      // [Log] {"username":"kayla@test.com","password":"password",
+      // "firstName":"Kayla","lastName":"Test","birthdate":"1995-08-30",
+      // "zip":"84095","maritalStatus":"married",
+      // "dateJoin":"2018-11-25","lastLogin":"11-25-2018, 9:54:32 AM",
+      // "userAccount":["kayla@test.com","password"]} (main.js, line 208)
       let dateJoinFormatted = new Date().toISOString().slice(0,10);
       let birthdateFormatted = this.formatBirthday(this.birthdate); 
 
@@ -138,7 +148,7 @@ export class SignupPage {
         maritalStatus: this.maritalStatus,
         sex: this.sex,
         dateJoin: dateJoinFormatted, //yyyy-MM-dd
-        lastLogin: new Date(), //yyyy-MM-dd HH:mm a
+        lastLogin: this.getLastLogin(), //yyyy-MM-dd HH:mm a
         userAccount: [this.email, this.password]
       });
       console.log(userProfileData);
