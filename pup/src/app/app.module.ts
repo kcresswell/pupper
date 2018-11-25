@@ -20,6 +20,7 @@ import { SwipeCardsModule } from 'ng2-swipe-cards';
 import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import {Camera} from '@ionic-native/camera';
+import { ChatProvider } from '../providers/chat/chat';
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import {Camera} from '@ionic-native/camera';
     StatusBar,
     SplashScreen,
     Camera,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    ChatProvider
   ]
 })
 export class AppModule {}

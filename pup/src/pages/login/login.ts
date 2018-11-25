@@ -39,8 +39,8 @@ export class LoginPage {
         password: this.password
       });
 
-      this.http.post('http://localhost:5000/login', loginData, { headers: headers }) //For running back-end locally
-      // this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/login', loginData, { headers: headers }) //For running back-end in AWS
+      //this.http.post('http://localhost:5000/login', loginData, { headers: headers }) //For running back-end locally
+      this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/login', loginData, { headers: headers }) //For running back-end in AWS
       .subscribe(result => {
         // console.log(result['_body']);
         console.log('Response status code: ' + result['status']);
@@ -69,8 +69,8 @@ retrieveUserProfile(response) {
 
   let headers = new Headers({'Content-Type':'application/json', 'Authorization': jwtAccessToken});
 
-  // this.http.get('http://pupper.us-east-1.elasticbeanstalk.com/user', {headers: headers})
-  this.http.get('http://localhost:5000/user?email=' + this.email, {headers: headers})
+  this.http.get('http://pupper.us-east-1.elasticbeanstalk.com/user', {headers: headers})
+  //this.http.get('http://localhost:5000/user?email=' + this.email, {headers: headers})
   .subscribe(resp => {
     if (resp['status'] == 403) {
       this.presentToast("Your session has expired. Please log in again.");
