@@ -11,6 +11,7 @@ import { Injectable } from '@angular/core';
 export class GlobalvarsProvider {
 
   jwtAccessToken: any;
+  serverBaseUrl: any; 
 
   constructor(public http: HttpClient) {
     console.log('Hello GlobalvarsProvider Provider');
