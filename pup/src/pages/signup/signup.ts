@@ -4,6 +4,7 @@ import { TabsPage } from '../tabs/tabs';
 import { ToastController } from 'ionic-angular';
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Http, Response, Headers } from '@angular/http';
+import { min } from 'rxjs/operator/min';
 
 /**
  * Generated class for the SignupPage page.
@@ -89,8 +90,22 @@ export class SignupPage {
     //2018-11-25T04:58:12.829Z
     //yyyy-MM-dd HH:mm a
     //let date = timestamp.split("T"); 
-    let timestamp = new Date(); 
-    return timestamp.toLocaleString().replace(new RegExp("/", 'g'), "-");
+
+
+    // let timestamp = new Date(); 
+    // timestamp.toLocaleString().replace(new RegExp("/", 'g'), "-");
+    //now looks like: "11-25-2018, 9:54:32 AM"
+
+    // var dateWithouthSecond = new Date();
+    // return dateWithouthSecond.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+
+    var dt = new Date();
+    var d = dt.toLocaleDateString();
+    var t = dt.toLocaleTimeString();
+    t = t.replace(/\u200E/g, '');
+    t = t.replace(/^([^\d]*\d{1,2}:\d{1,2}):\d{1,2}([^\d]*)$/, '$1$2');
+    var result = d + ' ' + t;
+    return result;
   }
 
   // ionViewDidLoad() {
@@ -130,11 +145,11 @@ export class SignupPage {
       );
 
       //---------createUserProfile--------
-      // [Log] {"username":"kayla@test.com","password":"password",
-      // "firstName":"Kayla","lastName":"Test","birthdate":"1995-08-30",
-      // "zip":"84095","maritalStatus":"married",
-      // "dateJoin":"2018-11-25","lastLogin":"11-25-2018, 9:54:32 AM",
-      // "userAccount":["kayla@test.com","password"]} (main.js, line 208)
+      //[Log] {"username":"yello@yello.com","password":"hi",
+      //"firstName":"hi","lastName":"hello","birthdate":"1995-08-30",
+      //"zip":"84095","maritalStatus":"married","dateJoin":"2018-11-25",
+      //"lastLogin":"11/25/2018 10:20 AM",
+      //"userAccount":["yello@yello.com","hi"]} (main.js, line 220)
       let dateJoinFormatted = new Date().toISOString().slice(0,10);
       let birthdateFormatted = this.formatBirthday(this.birthdate); 
 
