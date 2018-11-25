@@ -20,12 +20,12 @@ import { Http, Response, Headers } from '@angular/http';
 export class SignupPage {
   email: string;
   password: string;
-  // firstName: string;
-  // lastName: string;
-  // birthdate: Date;
-  // zip: string;
-  // maritalStatus: any;
-  // sex: any;
+  firstName: string;
+  lastName: string;
+  birthdate: Date;
+  zip: string;
+  maritalStatus: any;
+  sex: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http, private toastCtrl: ToastController) {
 
@@ -73,6 +73,17 @@ export class SignupPage {
     toast.present();
   }
 
+  formatBirthday(date) {
+    //from MM-dd-yyyy to yyyy-MM-dd
+    // 08/30/1995
+    let splitDate = date.split("/");
+    let month = splitDate[0];
+    let day = splitDate[1];
+    let year = splitDate[2];
+
+    return year + "/" + month + "/" + day; 
+  }
+
   // ionViewDidLoad() {
   //   console.log('ionViewDidLoad SignupPage');
   // }
@@ -85,18 +96,11 @@ export class SignupPage {
     let signupData = JSON.stringify({
       username: this.email,
       password: this.password
-      // firstName: this.firstName
-      // lastName: this.lastName,
-      // birthdate: this.birthdate,
-      // zip: this.zip,
-      // maritalStatus: this.maritalStatus,
-      // sex: this.sex
     });
     console.log(signupData);
 
     this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/account/register', signupData, { headers: headers }) //For running back-end in AWS
       .subscribe(result => {
-        console.log("IM PRINTING THIS"); 
         // console.log(result['_body']);
         console.log('Response status code: ' + result['status']);
 
@@ -115,8 +119,53 @@ export class SignupPage {
       },
         error => console.log(error)
       );
+
+      //---------createUserProfile--------
+      //[Log] {"username":"yo@ho.com","password":"hi","firstName":"hi",
+      //"lastName":"hi","birthdate":"08,30,1995/08,30/08,30","zip":"84095","maritalStatus":"married","dateJoin":"2018-11-25",
+      //"lastLogin":"2018-11-25T04:04:52.355Z","userAccount":["yo@ho.com","hi"]} (main.js, line 206)
+
+      let dateJoinFormatted = new Date().toISOString().slice(0,10);
+      let birthdateFormatted = this.formatBirthday(this.birthdate); 
+
+      let userProfileData = JSON.stringify({
+        username: this.email,
+        password: this.password,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        birthdate: birthdateFormatted, 
+        zip: this.zip,
+        maritalStatus: this.maritalStatus,
+        sex: this.sex,
+        dateJoin: dateJoinFormatted, //yyyy-MM-dd
+        lastLogin: new Date(), //yyyy-MM-dd HH:mm a
+        userAccount: [this.email, this.password]
+      });
+      console.log(userProfileData);
+  
+      this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/account/user', userProfileData, { headers: headers }) //For running back-end in AWS
+        .subscribe(result => {
+          // console.log(result['_body']);
+          console.log('Response status code: ' + result['status']);
+  
+          if (result['status'] == 403) {
+            //failed to load resource 
+            let errorMsg = "Hmm, something went wrong. Please try again.";
+            this.presentToast(errorMsg);
+          }
+          else if (result['status'] == 200) {
+            //Success! navigate user to the next page
+            let signupSuccess = "User Created! Please wait . . .";
+            this.presentToast(signupSuccess);
+            
+            this.navCtrl.push(TabsPage, {}, { animate: true });
+          }
+        },
+          error => console.log(error)
+        );
   }
 }
+
     //TODO: Move these back up over the signupData when the JSON stuff is working
     //Check if email or password are empty, make sure email is a valid format
     // if (!this.email || !this.password || !this.validateEmail(this.email)) {
