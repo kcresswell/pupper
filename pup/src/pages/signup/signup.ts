@@ -7,18 +7,12 @@ import { Http, Response, Headers } from '@angular/http';
 import { min } from 'rxjs/operator/min';
 import { GlobalvarsProvider } from '../../providers/globalvars/globalvars';
 
-/**
-* Generated class for the SignupPage page.
-*
-* See https://ionicframework.com/docs/components/#navigation for more info on
-* Ionic pages and navigation.
-*/
-
 @IonicPage()
 @Component({
   selector: 'page-signup',
   templateUrl: 'signup.html',
 })
+
 export class SignupPage {
   email: string;
   password: string;
@@ -84,24 +78,6 @@ export class SignupPage {
     return year + "-" + month + "-" + day;
   }
 
-  //expected format: yyyy-MM-dd HH:mm a
-  getLastLogin() {
-    let dt = new Date();
-    let d = dt.toLocaleDateString();
-    let t = dt.toLocaleTimeString();
-    t = t.replace(/\u200E/g, '');
-    t = t.replace(/^([^\d]*\d{1,2}:\d{1,2}):\d{1,2}([^\d]*)$/, '$1$2');
-    let dDash = d.split("/");
-    let month = dDash[0];
-    let day = dDash[1];
-    let year = dDash[2];
-    return year + "-" + month + "-" + day + " " + t;
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SignupPage');
-  }
-
   signup() {
     console.log("Signup button clicked");
     this.createUserAccountAndProfile();
@@ -125,8 +101,8 @@ export class SignupPage {
     });
     console.log(signupData);
 
-    this.http.post('http://localhost:5000/account/register', signupData, { headers: headers }) //For running back-end in AWS
-    // this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/account/register', signupData, { headers: headers }) //For running back-end in AWS
+    // this.http.post('http://localhost:5000/account/register', signupData, { headers: headers }) //For running back-end in AWS
+    this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/account/register', signupData, { headers: headers }) //For running back-end in AWS
     .subscribe(result => {
       // console.log(result['_body']);
       console.log('Response status code: ' + result['status']);
@@ -152,8 +128,8 @@ export class SignupPage {
 userLogin(userCredentials, userAccountObj) {
   const headers = new Headers({ 'Content-Type': 'application/json' });
 
-  this.http.post('http://localhost:5000/login', userCredentials, { headers: headers })
-  // this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/login', userCredentials, { headers: headers }) //For running back-end in AWS
+  // this.http.post('http://localhost:5000/login', userCredentials, { headers: headers })
+  this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/login', userCredentials, { headers: headers }) //For running back-end in AWS
   .subscribe(response => {
     if (response['status'] == 403) {
       this.presentToast("Invalid login credentials.");
@@ -172,15 +148,13 @@ userLogin(userCredentials, userAccountObj) {
 }
 
 createUserProfile(userAccountObj, headersWithAuthToken) {
-  //---------createUserProfile--------
-  // [Log] {"username":"hello@gmail.com","password":"hi","firstName":"Kayla",
-  // "lastName":"Butt","birthdate":"1995-08-30","zip":"84095",
-  // "maritalStatus":"married","dateJoin":"2018-11-25",
-  // "lastLogin":"2018-11-25 10:25 AM","userAccount":["hello@gmail.com","hi"]} (main.js, line 223)
   let dateJoinFormatted = new Date().toISOString().slice(0, 10);
   let birthdateFormatted = this.formatBirthday(this.birthdate);
 
   let autoFill = false;
+
+  // [Log] {"username":"lovesToTest@test.com","password":"hi","firstName":"Hello","lastName":"Bob","birthdate":"1995-08-30","zip":"84095",
+  // "maritalStatus":"Single","sex":"M","dateJoin":"2018-11-26","lastLogin":"2018-11-26 2:58 PM","userAccount":["lovesToTest@test.com","hi"]} (main.js, line 311)
 
   if (autoFill) {
     let userProfileData = JSON.stringify({
@@ -191,14 +165,14 @@ createUserProfile(userAccountObj, headersWithAuthToken) {
       maritalStatus: "Single",
       sex: "F",
       dateJoin: "2018-11-25", //yyyy-MM-dd
-      lastLogin: "2018-11-25 11:03 PM",//yyyy-MM-dd HH:mm a
+      lastLogin: "2018-11-25",//yyyy-MM-dd
       userAccount: userAccountObj
     });
   }
 
   let userProfileData = JSON.stringify({
-    username: this.email,
-    password: this.password,
+    // username: this.email,
+    // password: this.password,
     firstName: this.firstName,
     lastName: this.lastName,
     birthdate: birthdateFormatted,
@@ -206,14 +180,14 @@ createUserProfile(userAccountObj, headersWithAuthToken) {
     maritalStatus: this.maritalStatus,
     sex: this.sex,
     dateJoin: dateJoinFormatted, //yyyy-MM-dd
-    lastLogin: this.getLastLogin(),//yyyy-MM-dd HH:mm a
-    userAccount: [this.email, this.password]
+    lastLogin: dateJoinFormatted,
+    userAccount: userAccountObj
   });
 
   console.log(userProfileData);
 
-  this.http.post('http://localhost:5000/user', userProfileData, { headers: headersWithAuthToken }) //For running back-end in AWS
-  // this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/user', userProfileData, { headers: headersWithAuthToken }) //For running back-end in AWS
+  // this.http.post('http://localhost:5000/user', userProfileData, { headers: headersWithAuthToken }) //For running back-end in AWS
+  this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/user', userProfileData, { headers: headersWithAuthToken }) //For running back-end in AWS
   .subscribe(result => {
     if (result['status'] == 200) {
       console.log(result);
