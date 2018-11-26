@@ -51,7 +51,7 @@ export class LoginPage {
           this.presentToast(errorMsg);
         }
         else if (response['status'] == 200) {
-          //Success! navigate user to the next page
+
           let loginSuccess = "Login success. Please wait . . .";
           this.presentToast(loginSuccess);
 
@@ -98,6 +98,7 @@ retrieveUserProfileForLastLoginUpdate(authHeaders) {
 
       this.updateLastLoginTimestampForUserProfile(userProfileData, authHeaders);
 
+      //Navigate to the next page after updating the lastLogin for the user
       this.navCtrl.push(TabsPage, userProfileData); //Pass userProfile object to next page using NavController.push()
     }
   },
