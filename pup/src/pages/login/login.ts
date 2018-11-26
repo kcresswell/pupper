@@ -41,21 +41,23 @@ export class LoginPage {
 
       this.http.post('http://localhost:5000/login', loginData, { headers: headers }) //For running back-end locally
       // this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/login', loginData, { headers: headers }) //For running back-end in AWS
-      .subscribe(result => {
+      .subscribe(response => {
         // console.log(result['_body']);
-        console.log('Response status code: ' + result['status']);
+        console.log('Response status code: ' + response['status']);
 
-        if (result['status'] == 403) {
+        if (response['status'] == 403) {
           //Invalid credentials
           let errorMsg = "Invalid login credentials, please try again.";
           this.presentToast(errorMsg);
         }
-        else if (result['status'] == 200) {
+        else if (response['status'] == 200) {
           //Success! navigate user to the next page
           let loginSuccess = "Login success. Please wait . . .";
           this.presentToast(loginSuccess);
 
-          this.retrieveUserProfile(result);
+          //If login was successful, retrieve user profile then update lastLogin for user
+          const authHeaders = this.extractAuthHeadersFromLoginSuccessResponse(response);
+          this.retrieveUserProfileForLastLoginUpdate(authHeaders);
         }
       },
       error => console.log(error)
@@ -63,15 +65,21 @@ export class LoginPage {
   }
 }
 
-retrieveUserProfile(response) {
-  let jwtAccessToken = response.headers.get("Authorization");
+/*
+Helper method that retrieves the Authoriation: Bearer headers from a successful login response.
+*/
+extractAuthHeadersFromLoginSuccessResponse(response) {
+  const jwtAccessToken = response.headers.get("Authorization");
   this.globalVarsProvider.setJwtAccessToken(jwtAccessToken);
   console.log(jwtAccessToken);
 
   let headers = new Headers({'Content-Type':'application/json', 'Authorization': jwtAccessToken});
+  return headers;
+}
 
+retrieveUserProfileForLastLoginUpdate(authHeaders) {
   // this.http.get('http://pupper.us-east-1.elasticbeanstalk.com/user', {headers: headers})
-  this.http.get('http://localhost:5000/user?email=' + this.email, {headers: headers})
+  this.http.get('http://localhost:5000/user?email=' + this.email, {headers: authHeaders})
   .subscribe(resp => {
     if (resp['status'] == 403) {
       this.presentToast("Your session has expired. Please log in again.");
@@ -83,16 +91,12 @@ retrieveUserProfile(response) {
       return;
     }
     else if (resp['status'] == 200) {
-      console.log("Generic response message: " + resp);
       console.log("response body: " + resp['_body']);
 
       let jsonResponseObj = JSON.parse((resp['_body'])); //Parse response body string resp['_body']into JSON object to extract data
       let userProfileData = jsonResponseObj['userProfiles'][0]; //User profile data is contained in 'userProfiles' as arraylist
-      console.log("User profile: '" + JSON.stringify(userProfileData) + "'");
 
-      this.updateLastLoginTimestampForUserProfile(userProfileData, headers);
-
-      //TODO: Make a second update call to userProfile table to update lastLogin for userProfile.
+      this.updateLastLoginTimestampForUserProfile(userProfileData, authHeaders);
 
       this.navCtrl.push(TabsPage, userProfileData); //Pass userProfile object to next page using NavController.push()
     }
@@ -103,13 +107,11 @@ retrieveUserProfile(response) {
 }
 
 updateLastLoginTimestampForUserProfile(userProfileObj, headersWithAuth) {
-  // console.log(headersWithAuth.get('Authorization'));
   console.log("Previous last login: '" + userProfileObj['lastLogin'] + "'");
 
   let userAccountObj = userProfileObj['userAccount'];
   const userAccountId = userAccountObj['id'];
 
-  //TODO: figure out how to pass user account field in without nulled out password field and with hashed value instead
   userAccountObj = JSON.stringify({
     id: userAccountId,
     username: this.email,
@@ -117,7 +119,7 @@ updateLastLoginTimestampForUserProfile(userProfileObj, headersWithAuth) {
   });
 
   const updatedLastLogin = new Date();
-  //Months are 0 indexed
+  //Months are 0 indexed so increment month by 1
   const monthVal = updatedLastLogin.getMonth() + 1;
   const lastLoginString = updatedLastLogin.getFullYear() + "-" + monthVal + "-" + updatedLastLogin.getDate();
   console.log("Updating last login value to " + lastLoginString);
