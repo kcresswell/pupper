@@ -4,7 +4,6 @@ import { TabsPage } from '../tabs/tabs';
 import { ToastController } from 'ionic-angular';
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Http, Response, Headers } from '@angular/http';
-import { min } from 'rxjs/operator/min';
 import { GlobalvarsProvider } from '../../providers/globalvars/globalvars';
 
 /**
@@ -158,7 +157,7 @@ export class SignupPage {
     });
     console.log(userProfileData);
 
-    this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/account/user', userProfileData, { headers: headers }) //For running back-end in AWS
+    this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/user', userProfileData, { headers: headers }) //For running back-end in AWS
       .subscribe(result => {
         // console.log(result['_body']);
         console.log('Response status code: ' + result['status']);
