@@ -117,7 +117,9 @@ updateLastLoginTimestampForUserProfile(userProfileObj, headersWithAuth) {
   });
 
   const updatedLastLogin = new Date();
-  const lastLoginString = updatedLastLogin.getFullYear() + "-" + updatedLastLogin.getMonth() + "-" + updatedLastLogin.getDate();
+  //Months are 0 indexed
+  const monthVal = updatedLastLogin.getMonth() + 1;
+  const lastLoginString = updatedLastLogin.getFullYear() + "-" + monthVal + "-" + updatedLastLogin.getDate();
   console.log("Updating last login value to " + lastLoginString);
 
   const baseUrl = "http://localhost:5000";
@@ -126,7 +128,7 @@ updateLastLoginTimestampForUserProfile(userProfileObj, headersWithAuth) {
   // userProfileObj['lastLogin'] = lastLoginUpdatedValue;
   console.log("sending put request to " + updateLastLoginUrlString);
   console.log(headersWithAuth);
-  this.http.put(updateLastLoginUrlString, userProfileObj, headersWithAuth)
+  this.http.put(updateLastLoginUrlString, userProfileObj, {headers: headersWithAuth})
   .subscribe(resp => {
     if (resp['status'] == 200) {
       console.log('Update to lastLogin for user was successful.');
