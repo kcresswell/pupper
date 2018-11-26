@@ -6,22 +6,35 @@
   </ion-navbar>
 </ion-header>
 
-
-<div class="list card">
-  <div ng-repeat="destination in destinations | isActive">
-      <div class="item item-divider">
-          <span>{{title}}</span>
-      </div>
-      <div class="item item-icon-left item-icon-right item-balanced">
-          <a href="#" class="icon ion-ios-home"></a>
-          <div>
-              <div>{{text1}}</div>
-              <div><b>{{text2}}</b>
-              </div>
-              <div>{{text3()}}</div>
-              <div>{{text4()}}</div>
-          </div>
-          <a href="" class="icon ion-ios-filing"></a>
-      </div>
+<ion-content>
+<div padding>
+    <ion-segment [(ngModel)]="pet">
+      <ion-segment-button value="messages">
+        Messages
+      </ion-segment-button>
+      <ion-segment-button value="matches">
+        Matches
+      </ion-segment-button>
+    </ion-segment>
   </div>
-</div>
+  
+  <div [ngSwitch]="pet">
+    <ion-list *ngSwitchCase="'messages'">
+      <ion-item>
+        <ion-thumbnail item-start>
+          <img src="assets/imgs/boston.jpeg" alt="boston">
+        </ion-thumbnail>
+        <h2>Boston</h2>
+      </ion-item>
+    </ion-list>
+  
+    <ion-list *ngSwitchCase="'matches'">
+        <ion-item>
+            <ion-thumbnail item-start>
+              <img src="assets/imgs/indy.jpeg" alt="boston">
+            </ion-thumbnail>
+            <h2>Indy</h2>
+          </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

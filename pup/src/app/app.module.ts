@@ -19,7 +19,10 @@ import { LoginPageModule } from '../pages/login/login.module';
 import { SwipeCardsModule } from 'ng2-swipe-cards';
 import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
-import {Camera} from '@ionic-native/camera';
+import { File } from '@ionic-native/file';
+import { Transfer } from '@ionic-native/transfer';
+import { FilePath } from '@ionic-native/file-path';
+import { Camera } from '@ionic-native/camera';
 import { GlobalvarsProvider } from '../providers/globalvars/globalvars';
 
 
@@ -59,7 +62,10 @@ import { GlobalvarsProvider } from '../providers/globalvars/globalvars';
   providers: [
     StatusBar,
     SplashScreen,
+    File,
+    Transfer,
     Camera,
+    FilePath,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     GlobalvarsProvider
   ]

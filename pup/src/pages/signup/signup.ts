@@ -129,7 +129,7 @@ export class SignupPage {
           let signupSuccess = "User Created! Please wait . . .";
           this.presentToast(signupSuccess);
 
-          // this.navCtrl.push(TabsPage, {}, { animate: true });
+           this.navCtrl.push(TabsPage, {}, { animate: true });
         }
       },
         error => console.log(error)
