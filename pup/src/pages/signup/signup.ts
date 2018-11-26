@@ -4,6 +4,7 @@ import { TabsPage } from '../tabs/tabs';
 import { ToastController } from 'ionic-angular';
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Http, Response, Headers } from '@angular/http';
+import { min } from 'rxjs/operator/min';
 import { GlobalvarsProvider } from '../../providers/globalvars/globalvars';
 
 /**
@@ -130,84 +131,7 @@ export class SignupPage {
       // console.log(result['_body']);
       console.log('Response status code: ' + result['status']);
 
-<<<<<<< HEAD
-    let userProfileData = JSON.stringify({
-      username: this.email,
-      password: this.password,
-      firstName: this.firstName,
-      lastName: this.lastName,
-      birthdate: birthdateFormatted,
-      zip: this.zip,
-      maritalStatus: this.maritalStatus,
-      sex: this.sex,
-      dateJoin: dateJoinFormatted, //yyyy-MM-dd
-      lastLogin: this.getLastLogin(), //yyyy-MM-dd HH:mm a
-      userAccount: [this.email, this.password]
-    });
-    console.log(userProfileData);
-
-    this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/user', userProfileData, { headers: headers }) //For running back-end in AWS
-      .subscribe(result => {
-        // console.log(result['_body']);
-        console.log('Response status code: ' + result['status']);
-
-        if (result['status'] == 403) {
-          //failed to load resource 
-          let errorMsg = "Hmm, something went wrong. Please try again.";
-          this.presentToast(errorMsg);
-        }
-        else if (result['status'] == 200) {
-          //Success! navigate user to the next page
-          let signupSuccess = "User Created! Please wait . . .";
-          this.presentToast(signupSuccess);
-
-          this.retrieveUserProfile(result);
-          this.navCtrl.push(TabsPage, {}, { animate: true });
-        }
-      },
-        error => console.log(error)
-      );
-  }
-  
-  retrieveUserProfile(response) {
-
-    let jwtAccessToken = response.headers.get("Authorization");
-    this.globalVarsProvider.setJwtAccessToken(jwtAccessToken);
-    console.log(jwtAccessToken);
-
-    let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': jwtAccessToken });
-
-    this.http.get('http://pupper.us-east-1.elasticbeanstalk.com/user', { headers: headers })
-      .subscribe(resp => {
-        if (resp['status'] == 403) {
-          this.presentToast("Your session has expired. Please log in again.");
-          return;
-        }
-        else if (resp['status'] == 400 || resp['status'] == 404 || resp['status'] == 422) {
-          let errorMsg = "Error loading Create Profile data.";
-          this.presentToast(errorMsg);
-          return;
-        }
-        else if (resp['status'] == 200) {
-          console.log("Generic response message: " + resp);
-          console.log("response body: " + resp['_body']);
-
-          let jsonResponseObj = JSON.parse((resp['_body'])); //Parse response body string resp['_body']into JSON object to extract data
-          let userProfileData = jsonResponseObj['userProfiles'][0]; //User profile data is contained in 'userProfiles' as arraylist
-          console.log("User profile: '" + JSON.stringify(userProfileData) + "'");
-
-          //this.updateLastLoginTimestampForUserProfile(userProfileData, headers);
-
-          //TODO: Make a second update call to userProfile table to update lastLogin for userProfile.
-
-          this.navCtrl.push(TabsPage, userProfileData); //Pass userProfile object to next page using NavController.push()
-        }
-      },
-        error => console.log(error)
-      );
-=======
       if (result['status'] == 409) {
->>>>>>> bf89d3aaaa915aa4d4c82a5e191f75bbe46d3b02
 
         this.presentToast("A user account with your selected username already exists. Please login as an existing user or create a profile with a unique username.");
         return;
