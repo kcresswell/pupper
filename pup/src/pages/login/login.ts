@@ -21,7 +21,7 @@ export class LoginPage {
 
   login() {
 
-    const autoFillFieldsForTesting = false;
+    const autoFillFieldsForTesting = true;
 
     if (autoFillFieldsForTesting) {
       this.email = "test@test.com";
@@ -39,8 +39,8 @@ export class LoginPage {
         password: this.password
       });
 
-      //this.http.post('http://localhost:5000/login', loginData, { headers: headers }) //For running back-end locally
-      this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/login', loginData, { headers: headers }) //For running back-end in AWS
+      this.http.post('http://localhost:5000/login', loginData, { headers: headers }) //For running back-end locally
+      // this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/login', loginData, { headers: headers }) //For running back-end in AWS
       .subscribe(result => {
         // console.log(result['_body']);
         console.log('Response status code: ' + result['status']);
@@ -70,8 +70,8 @@ retrieveUserProfile(response) {
 
   let headers = new Headers({'Content-Type':'application/json', 'Authorization': jwtAccessToken});
 
-  this.http.get('http://pupper.us-east-1.elasticbeanstalk.com/user', {headers: headers})
-  //this.http.get('http://localhost:5000/user?email=' + this.email, {headers: headers})
+  // this.http.get('http://pupper.us-east-1.elasticbeanstalk.com/user', {headers: headers})
+  this.http.get('http://localhost:5000/user?email=' + this.email, {headers: headers})
   .subscribe(resp => {
     if (resp['status'] == 403) {
       this.presentToast("Your session has expired. Please log in again.");
@@ -90,7 +90,7 @@ retrieveUserProfile(response) {
       let userProfileData = jsonResponseObj['userProfiles'][0]; //User profile data is contained in 'userProfiles' as arraylist
       console.log("User profile: '" + JSON.stringify(userProfileData) + "'");
 
-      //this.updateLastLoginTimestampForUserProfile(userProfileData, headers);
+      this.updateLastLoginTimestampForUserProfile(userProfileData, headers);
 
       //TODO: Make a second update call to userProfile table to update lastLogin for userProfile.
 
@@ -116,12 +116,17 @@ updateLastLoginTimestampForUserProfile(userProfileObj, headersWithAuth) {
     password: this.password
   });
 
-  const lastLoginUpdatedValue = new Date();
-  console.log("Updating last login value to " + lastLoginUpdatedValue.toLocaleString().replace(new RegExp("/", 'g'), "-"));
+  const updatedLastLogin = new Date();
+  const lastLoginString = updatedLastLogin.getFullYear() + "-" + updatedLastLogin.getMonth() + "-" + updatedLastLogin.getDate();
+  console.log("Updating last login value to " + lastLoginString);
 
-  userProfileObj['lastLogin'] = lastLoginUpdatedValue;
-
-  this.http.put('http://localhost:5000/user/' + userProfileObj['id'], userProfileObj, headersWithAuth)
+  const baseUrl = "http://localhost:5000";
+  // const baseUrl = "http://pupper.us-east-1.elasticbeanstalk.com";
+  const updateLastLoginUrlString = baseUrl + "/user/" + userProfileObj['id'] + "?lastLogin=" + lastLoginString;
+  // userProfileObj['lastLogin'] = lastLoginUpdatedValue;
+  console.log("sending put request to " + updateLastLoginUrlString);
+  console.log(headersWithAuth);
+  this.http.put(updateLastLoginUrlString, userProfileObj, headersWithAuth)
   .subscribe(resp => {
     if (resp['status'] == 200) {
       console.log('Update to lastLogin for user was successful.');
