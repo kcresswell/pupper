@@ -204,7 +204,7 @@ createUserProfile(userAccountObj, headersWithAuthToken) {
     maritalStatus: this.maritalStatus,
     sex: this.sex,
     dateJoin: dateJoinFormatted, //yyyy-MM-dd
-    lastLogin: "2018-11-25",//yyyy-MM-dd HH:mm a
+    lastLogin: this.getLastLogin(),//yyyy-MM-dd HH:mm a
     userAccount: [this.email, this.password]
   });
 
