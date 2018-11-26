@@ -52,8 +52,11 @@
       <ion-item>
         <ion-label>Marital Status</ion-label>
         <ion-select [(ngModel)]="maritalStatus">
-          <ion-option value="single">Unmarried</ion-option>
-          <ion-option value="married">Married</ion-option>
+          <ion-option value="Single">Single</ion-option>
+          <ion-option value="In a relationship">In a relationship</ion-option>
+          <ion-option value="Married">Married</ion-option>
+          <ion-option value="Divorced">Divorced</ion-option>
+
         </ion-select>
       </ion-item>
     </ion-list>
@@ -62,9 +65,9 @@
     <ion-list>
       <ion-item>
         <ion-label>Gender</ion-label>
-        <ion-select [(ngModel)]="userSex">
-          <ion-option value="female">Female</ion-option>
-          <ion-option value="male">Male</ion-option>
+        <ion-select [(ngModel)]="sex">
+          <ion-option value="F">Female</ion-option>
+          <ion-option value="M">Male</ion-option>
         </ion-select>
       </ion-item>
     </ion-list>

@@ -8,11 +8,11 @@ import { min } from 'rxjs/operator/min';
 import { GlobalvarsProvider } from '../../providers/globalvars/globalvars';
 
 /**
- * Generated class for the SignupPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+* Generated class for the SignupPage page.
+*
+* See https://ionicframework.com/docs/components/#navigation for more info on
+* Ionic pages and navigation.
+*/
 
 @IonicPage()
 @Component({
@@ -44,8 +44,8 @@ export class SignupPage {
   validateStringInput(strToCheck) {
     let validStringFormat = /^[a-zA-Z\s]*$/;
     // if(!validStringFormat.test(strToCheck)) {
-    //     return false; 
-    // } 
+    //     return false;
+    // }
     // return true;
 
     return (!validStringFormat.test(strToCheck));
@@ -104,9 +104,20 @@ export class SignupPage {
 
   signup() {
     console.log("Signup button clicked");
+    this.createUserAccountAndProfile();
+  }
 
-    //------Create User Account---------  
+  createUserAccountAndProfile() {
+    let autoFillFieldsForTesting = false;
+
     const headers = new Headers({ 'Content-Type': 'application/json' });
+
+    if (autoFillFieldsForTesting) {
+      let signupData = JSON.stringify({
+        username: "fml@jaxel.com",
+        password: "password"
+      });
+    }
 
     let signupData = JSON.stringify({
       username: this.email,
@@ -114,164 +125,159 @@ export class SignupPage {
     });
     console.log(signupData);
 
-    this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/account/register', signupData, { headers: headers }) //For running back-end in AWS
-      .subscribe(result => {
-        // console.log(result['_body']);
-        console.log('Response status code: ' + result['status']);
+    this.http.post('http://localhost:5000/account/register', signupData, { headers: headers }) //For running back-end in AWS
+    // this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/account/register', signupData, { headers: headers }) //For running back-end in AWS
+    .subscribe(result => {
+      // console.log(result['_body']);
+      console.log('Response status code: ' + result['status']);
 
-        if (result['status'] == 403) {
-          //failed to load resource 
-          let errorMsg = "Hmm, something went wrong. Please try again.";
-          this.presentToast(errorMsg);
-        }
-        else if (result['status'] == 200) {
-          //Success! navigate user to the next page
-          let signupSuccess = "User Created! Please wait . . .";
-          this.presentToast(signupSuccess);
+      if (result['status'] == 409) {
 
-           this.navCtrl.push(TabsPage, {}, { animate: true });
-        }
-      },
-        error => console.log(error)
-      );
+        this.presentToast("A user account with your selected username already exists. Please login as an existing user or create a profile with a unique username.");
+        return;
+      }
+      else if (result['status'] == 200) {
+        console.log("User account created successfully.");
 
-    //---------createUserProfile--------
-    // [Log] {"username":"hello@gmail.com","password":"hi","firstName":"Kayla",
-    // "lastName":"Butt","birthdate":"1995-08-30","zip":"84095",
-    // "maritalStatus":"married","dateJoin":"2018-11-25",
-    // "lastLogin":"2018-11-25 10:25 AM","userAccount":["hello@gmail.com","hi"]} (main.js, line 223)
-    let dateJoinFormatted = new Date().toISOString().slice(0, 10);
-    let birthdateFormatted = this.formatBirthday(this.birthdate);
+        let jsonResponseObj = JSON.parse((result['_body'])); //Parse response body string resp['_body']into JSON object to extract data
+        let userAccountObj = jsonResponseObj['userAccounts'][0]; //Pass the userAccount in the response to createUserProfile()
 
-    let userProfileData = JSON.stringify({
-      username: this.email,
-      password: this.password,
-      firstName: this.firstName,
-      lastName: this.lastName,
-      birthdate: birthdateFormatted,
-      zip: this.zip,
-      maritalStatus: this.maritalStatus,
-      sex: this.sex,
-      dateJoin: dateJoinFormatted, //yyyy-MM-dd
-      lastLogin: this.getLastLogin(), //yyyy-MM-dd HH:mm a
-      userAccount: [this.email, this.password]
-    });
-    console.log(userProfileData);
-
-    this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/account/user', userProfileData, { headers: headers }) //For running back-end in AWS
-      .subscribe(result => {
-        // console.log(result['_body']);
-        console.log('Response status code: ' + result['status']);
-
-        if (result['status'] == 403) {
-          //failed to load resource 
-          let errorMsg = "Hmm, something went wrong. Please try again.";
-          this.presentToast(errorMsg);
-        }
-        else if (result['status'] == 200) {
-          //Success! navigate user to the next page
-          let signupSuccess = "User Created! Please wait . . .";
-          this.presentToast(signupSuccess);
-
-          this.retrieveUserProfile(result);
-          this.navCtrl.push(TabsPage, {}, { animate: true });
-        }
-      },
-        error => console.log(error)
-      );
-  }
-  
-  retrieveUserProfile(response) {
-
-    let jwtAccessToken = response.headers.get("Authorization");
-    this.globalVarsProvider.setJwtAccessToken(jwtAccessToken);
-    console.log(jwtAccessToken);
-
-    let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': jwtAccessToken });
-
-    this.http.get('http://pupper.us-east-1.elasticbeanstalk.com/user', { headers: headers })
-      .subscribe(resp => {
-        if (resp['status'] == 403) {
-          this.presentToast("Your session has expired. Please log in again.");
-          return;
-        }
-        else if (resp['status'] == 400 || resp['status'] == 404 || resp['status'] == 422) {
-          let errorMsg = "Error loading Create Profile data.";
-          this.presentToast(errorMsg);
-          return;
-        }
-        else if (resp['status'] == 200) {
-          console.log("Generic response message: " + resp);
-          console.log("response body: " + resp['_body']);
-
-          let jsonResponseObj = JSON.parse((resp['_body'])); //Parse response body string resp['_body']into JSON object to extract data
-          let userProfileData = jsonResponseObj['userProfiles'][0]; //User profile data is contained in 'userProfiles' as arraylist
-          console.log("User profile: '" + JSON.stringify(userProfileData) + "'");
-
-          //this.updateLastLoginTimestampForUserProfile(userProfileData, headers);
-
-          //TODO: Make a second update call to userProfile table to update lastLogin for userProfile.
-
-          this.navCtrl.push(TabsPage, userProfileData); //Pass userProfile object to next page using NavController.push()
-        }
-      },
-        error => console.log(error)
-      );
-
-  }
+        this.userLogin(signupData, userAccountObj);
+      }
+    },
+    error => console.log(error)
+  );
 }
 
+userLogin(userCredentials, userAccountObj) {
+  const headers = new Headers({ 'Content-Type': 'application/json' });
 
+  this.http.post('http://localhost:5000/login', userCredentials, { headers: headers })
+  // this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/login', userCredentials, { headers: headers }) //For running back-end in AWS
+  .subscribe(response => {
+    if (response['status'] == 403) {
+      this.presentToast("Invalid login credentials.");
+    }
+    else if (response['status'] == 200) {
+      console.log("login success.");
+      const jwtAccessToken = response.headers.get("Authorization");
+      const headersWithAuth = new Headers({ 'Content-Type': 'application/json', 'Authorization': jwtAccessToken });
 
-    //TODO: Move these back up over the signupData when the JSON stuff is working
-    //Check if email or password are empty, make sure email is a valid format
-    // if (!this.email || !this.password || !this.validateEmail(this.email)) {
-    //   let errorMsg = "Please enter a valid email and password.";
-    //   console.log(errorMsg);
-    //   this.presentToast(errorMsg);
+      this.createUserProfile(userAccountObj, headersWithAuth);
+    }
+  },
+  error => console.log(error)
+);
 
-    //   return;
-    // }
+}
 
-    // if (!this.firstName || !this.lastName) {
-    //   let errorMsg = "Please enter your first and last name.";
-    //   console.log(errorMsg);
-    //   this.presentToast(errorMsg);
+createUserProfile(userAccountObj, headersWithAuthToken) {
+  //---------createUserProfile--------
+  // [Log] {"username":"hello@gmail.com","password":"hi","firstName":"Kayla",
+  // "lastName":"Butt","birthdate":"1995-08-30","zip":"84095",
+  // "maritalStatus":"married","dateJoin":"2018-11-25",
+  // "lastLogin":"2018-11-25 10:25 AM","userAccount":["hello@gmail.com","hi"]} (main.js, line 223)
+  let dateJoinFormatted = new Date().toISOString().slice(0, 10);
+  let birthdateFormatted = this.formatBirthday(this.birthdate);
 
-    //   return;
-    // }
+  let autoFill = false;
 
-    // if (this.validateStringInput(this.firstName) || this.validateStringInput(this.lastName)) {
-    //   let errorMsg = "Acceptable Input Limited to Letters and Spaces";
-    //   console.log(errorMsg);
-    //   this.presentToast(errorMsg);
+  if (autoFill) {
+    let userProfileData = JSON.stringify({
+      firstName: "testFirst",
+      lastName: "testLast",
+      birthdate: "2000-05-05",
+      zip: "84095",
+      maritalStatus: "Single",
+      sex: "F",
+      dateJoin: "2018-11-25", //yyyy-MM-dd
+      lastLogin: "2018-11-25 11:03 PM",//yyyy-MM-dd HH:mm a
+      userAccount: userAccountObj
+    });
+  }
 
-    //   return;
-    // }
+  let userProfileData = JSON.stringify({
+    firstName: this.firstName,
+    lastName: this.lastName,
+    birthdate: birthdateFormatted,
+    zip: this.zip,
+    maritalStatus: this.maritalStatus,
+    sex: this.sex,
+    dateJoin: dateJoinFormatted, //yyyy-MM-dd
+    lastLogin: "2018-11-25",//yyyy-MM-dd HH:mm a
+    userAccount: [this.email, this.password]
+  });
 
-    // //check that a date has been entered and that it is in the proper format
-    // if (!this.birthdate || !this.validateDateInput(this.birthdate)) {
-    //   let errorMsg = "Proper Date Format: MM/DD/YYYY";
-    //   console.log(errorMsg);
-    //   this.presentToast(errorMsg);
+  console.log(userProfileData);
 
-    //   return;
-    // }
+  this.http.post('http://localhost:5000/user', userProfileData, { headers: headersWithAuthToken }) //For running back-end in AWS
+  // this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/user', userProfileData, { headers: headersWithAuthToken }) //For running back-end in AWS
+  .subscribe(result => {
+    if (result['status'] == 200) {
+      console.log(result);
+      //Success! navigate user to the next page
+      let signupSuccess = "User Profile Created! Please wait . . .";
+      this.presentToast(signupSuccess);
 
-    // if (!this.validateUSZipCode(this.zip)) {
-    //   let errorMsg = "Invalid Zip Code, Must be in USA";
-    //   console.log(errorMsg);
-    //   this.presentToast(errorMsg);
+      this.navCtrl.push(TabsPage, {}, { animate: true });
+    }
+    else if (result['status'] == 400 || result['status'] == 404) {
+      //REMOVE THIS LATER
+      this.presentToast("There's an error with one of your userProfile fields, this status code should never happen.");
+    }
+  },
+  error => console.log(error)
+);
+}
+}
 
-    //   return;
-    // }
+//TODO: Move these back up over the signupData when the JSON stuff is working
+//Check if email or password are empty, make sure email is a valid format
+// if (!this.email || !this.password || !this.validateEmail(this.email)) {
+//   let errorMsg = "Please enter a valid email and password.";
+//   console.log(errorMsg);
+//   this.presentToast(errorMsg);
 
-    // if (!this.maritalStatus || !this.userSex) {
-    //   let errorMsg = "Please complete entire form";
-    //   console.log(errorMsg);
-    //   this.presentToast(errorMsg);
+//   return;
+// }
 
-    //   return;
-    // }
+// if (!this.firstName || !this.lastName) {
+//   let errorMsg = "Please enter your first and last name.";
+//   console.log(errorMsg);
+//   this.presentToast(errorMsg);
 
+//   return;
+// }
 
+// if (this.validateStringInput(this.firstName) || this.validateStringInput(this.lastName)) {
+//   let errorMsg = "Acceptable Input Limited to Letters and Spaces";
+//   console.log(errorMsg);
+//   this.presentToast(errorMsg);
+
+//   return;
+// }
+
+// //check that a date has been entered and that it is in the proper format
+// if (!this.birthdate || !this.validateDateInput(this.birthdate)) {
+//   let errorMsg = "Proper Date Format: MM/DD/YYYY";
+//   console.log(errorMsg);
+//   this.presentToast(errorMsg);
+
+//   return;
+// }
+
+// if (!this.validateUSZipCode(this.zip)) {
+//   let errorMsg = "Invalid Zip Code, Must be in USA";
+//   console.log(errorMsg);
+//   this.presentToast(errorMsg);
+
+//   return;
+// }
+
+// if (!this.maritalStatus || !this.userSex) {
+//   let errorMsg = "Please complete entire form";
+//   console.log(errorMsg);
+//   this.presentToast(errorMsg);
+
+//   return;
+// }
