@@ -197,6 +197,8 @@ createUserProfile(userAccountObj, headersWithAuthToken) {
   }
 
   let userProfileData = JSON.stringify({
+    username: this.email,
+    password: this.password,
     firstName: this.firstName,
     lastName: this.lastName,
     birthdate: birthdateFormatted,
