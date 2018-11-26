@@ -13,7 +13,7 @@ export class MatchingPage {
     energyLevel: any;
     lifeStage: any;
     pupperPic: any;
-    pupArray: any = 'Pup Info!';
+    pupArray: any;
 
     ready = false;
     attendants = [];
@@ -31,10 +31,16 @@ export class MatchingPage {
     images = ["assets/imgs/indy.jpeg", "assets/imgs/jax.jpeg", "assets/imgs/boston.jpeg"]
     constructor(private sanitizer: DomSanitizer, public navParams: NavParams) {
 
-        this.pupName = navParams.get('param1');
-        this.pupBreed = navParams.get('param2');
-        this.lifeStage = navParams.get('param3');
-        this.energyLevel = navParams.get('param4');
+        // this.pupName = navParams.get('param1');
+        // this.pupBreed = navParams.get('param2');
+        // this.lifeStage = navParams.get('param3');
+        // this.energyLevel = navParams.get('param4');
+        // this.pupperPic = "assets/imgs/indy.jpeg"; 
+
+        this.pupName = "Indy"; 
+        this.pupBreed = "Shiba Inu"; 
+        this.lifeStage = "Young"; 
+        this.energyLevel = "Active"
         this.pupperPic = "assets/imgs/indy.jpeg"; 
 
         this.pupArray = [this.pupName, this.pupBreed, this.lifeStage, this.energyLevel, this.pupperPic];
