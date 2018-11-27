@@ -21,7 +21,7 @@ export class LoginPage {
 
   login() {
 
-    const autoFillFieldsForTesting = true;
+    const autoFillFieldsForTesting = false;
 
     if (autoFillFieldsForTesting) {
       this.email = "test@test.com";
@@ -39,8 +39,8 @@ export class LoginPage {
         password: this.password
       });
 
-      this.http.post('http://localhost:5000/login', loginData, { headers: headers }) //For running back-end locally
-      // this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/login', loginData, { headers: headers }) //For running back-end in AWS
+      // this.http.post('http://localhost:5000/login', loginData, { headers: headers }) //For running back-end locally
+      this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/login', loginData, { headers: headers }) //For running back-end in AWS
       .subscribe(response => {
         // console.log(result['_body']);
         console.log('Response status code: ' + response['status']);
@@ -78,8 +78,8 @@ extractAuthHeadersFromLoginSuccessResponse(response) {
 }
 
 retrieveUserProfileForLastLoginUpdate(authHeaders) {
-  // this.http.get('http://pupper.us-east-1.elasticbeanstalk.com/user', {headers: headers})
-  this.http.get('http://localhost:5000/user?email=' + this.email, {headers: authHeaders})
+  this.http.get('http://pupper.us-east-1.elasticbeanstalk.com/user', {headers: authHeaders})
+  // this.http.get('http://localhost:5000/user?email=' + this.email, {headers: authHeaders})
   .subscribe(resp => {
     if (resp['status'] == 403) {
       this.presentToast("Your session has expired. Please log in again.");
@@ -125,8 +125,8 @@ updateLastLoginTimestampForUserProfile(userProfileObj, headersWithAuth) {
   const lastLoginString = updatedLastLogin.getFullYear() + "-" + monthVal + "-" + updatedLastLogin.getDate();
   console.log("Updating last login value to " + lastLoginString);
 
-  const baseUrl = "http://localhost:5000";
-  // const baseUrl = "http://pupper.us-east-1.elasticbeanstalk.com";
+  // const baseUrl = "http://localhost:5000";
+  const baseUrl = "http://pupper.us-east-1.elasticbeanstalk.com";
   const updateLastLoginUrlString = baseUrl + "/user/" + userProfileObj['id'] + "?lastLogin=" + lastLoginString;
   // userProfileObj['lastLogin'] = lastLoginUpdatedValue;
   console.log("sending put request to " + updateLastLoginUrlString);
