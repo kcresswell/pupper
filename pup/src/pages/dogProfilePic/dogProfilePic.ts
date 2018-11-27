@@ -54,7 +54,6 @@ export class DogProfilePicPage {
 
     // Get the data of an image
     this.camera.getPicture(options).then((imagePath) => {
-      // Special handling for Android library
       if (this.platform.is('android') && sourceType === this.camera.PictureSourceType.PHOTOLIBRARY) {
         this.filePath.resolveNativePath(imagePath)
           .then(filePath => {
@@ -78,6 +77,7 @@ export class DogProfilePicPage {
     var d = new Date(),
       n = d.getTime(),
       newFileName = n + ".jpg";
+      console.log("filename: " + newFileName);
     return newFileName;
   }
 

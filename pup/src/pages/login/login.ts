@@ -79,6 +79,7 @@ extractAuthHeadersFromLoginSuccessResponse(response) {
 
 retrieveUserProfileForLastLoginUpdate(authHeaders) {
   this.http.get('http://pupper.us-east-1.elasticbeanstalk.com/user', {headers: authHeaders})
+  this.http.get('http://pupper.us-east-1.elasticbeanstalk.com/user?email=' + this.email, {headers: authHeaders})
   // this.http.get('http://localhost:5000/user?email=' + this.email, {headers: authHeaders})
   .subscribe(resp => {
     if (resp['status'] == 403) {

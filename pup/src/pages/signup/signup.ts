@@ -18,7 +18,7 @@ export class SignupPage {
   password: string;
   firstName: string;
   lastName: string;
-  birthdate: Date;
+  birthdate: string;
   zip: string;
   maritalStatus: any;
   sex: any;
@@ -83,6 +83,22 @@ export class SignupPage {
 
     return year + "-" + month + "-" + day;
   }
+
+  //Jan 1, 2014
+  // formatBirthdaySlider(date) {
+  //   if()
+  //   let splitDate = date.split(" ");
+  //   let month = splitDate[0];
+  //   let day = splitDate[1];
+  //   let dayWOComma = day.split(",");
+  //   let year = splitDate[2];
+
+  //   if(dayWOComma < 10) {
+  //     dayWOComma = "0" + dayWOComma; 
+  //   }
+
+  //   return year + "-" + month + "-" + dayWOComma;
+  // }
 
   userInputIsValid() {
     // Check if email is empty, make sure email is a valid format
