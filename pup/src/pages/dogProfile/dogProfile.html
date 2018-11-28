@@ -69,10 +69,8 @@
 
           <ion-item>
             <ion-label fixed>Birthdate</ion-label>
-            <ion-input [(ngModel)]="birthdate" [ngModelOptions]="{standalone: true}" type="date" value=""></ion-input>
+            <ion-input [(ngModel)]="pupBirthdate" [ngModelOptions]="{standalone: true}" type="date" value=""></ion-input>
           </ion-item>
-
-          <img ion-right src="assets/imgs/logo.png" class="pupImage" width="50" height="50" />
 
           <button ion-button block color="primary" (click)="addDogProfilePic()">Add Photo</button>
           <button ion-button block color="primary" (click)="createDogProfileBtnClick()">Create Profile</button>

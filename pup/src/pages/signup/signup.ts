@@ -103,13 +103,13 @@ export class SignupPage {
     }
 
     //check that a date has been entered and that it is in the proper format
-    if (!this.birthdate) {
-      let errorMsg = "Please enter your birthdate.";
-      console.log(errorMsg);
-      this.presentToast(errorMsg);
+    // if (!this.birthdate) {
+    //   let errorMsg = "Please enter your birthdate.";
+    //   console.log(errorMsg);
+    //   this.presentToast(errorMsg);
 
-      return false;
-    }
+    //   return false;
+    // }
 
     if (!this.validateUSZipCode(this.zip)) {
       let errorMsg = "Invalid Zip Code, Must be in USA";

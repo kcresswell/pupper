@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { MatchingPage } from '../matching/matching';
 import { TabsPage } from '../tabs/tabs';
 import { AlertController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular'
@@ -20,26 +19,15 @@ export class DogProfilePage {
   pupperNeutered: any;
   pupBirthdate: Date;
 
+  //createPupperProfileByUserProfileIdAndMatchProfileId POST
+  //get the user id 
+  //{matchProfileId}, not sure where this needs to come from
+  //define pupper profile
+  // --> contains match profile
+  // ------> contains user profile
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, private toastCtrl: ToastController) {
 
-  }
-
-  showConfirmAlert() {
-    let alertConfirm = this.alertCtrl.create({
-      title: 'Pup Profile Created!',
-      message: '',
-      buttons: [
-        {
-          text: 'Find Friendogs!',
-          handler: () => {
-            console.log('Find Friendogs Clicked');
-            //pup name, breed, life stage, energy level
-            this.navCtrl.push(MatchingPage, {param1: this.pupName, param2: this.pupBreed, param3: this.lifeStage, param4: this.energyLevel, param5: "assets/imgs/indy.jpeg"});
-          }
-        }
-      ]
-    });
-    alertConfirm.present();
   }
 
   //only allow lowercase letters, uppercase letters, and spaces to be accepted as valid input
@@ -81,13 +69,13 @@ export class DogProfilePage {
     }
 
     //check that a date has been entered and that it is in the proper format
-    if (!this.pupBirthdate || this.validateDateInput(this.pupBirthdate)) {
-      let errorMsg = "Proper Date Format: MM/DD/YYYY";
-      console.log(errorMsg);
-      this.presentToast(errorMsg);
+    // if (!this.pupBirthdate || this.validateDateInput(this.pupBirthdate)) {
+    //   let errorMsg = "Proper Date Format: MM/DD/YYYY";
+    //   console.log(errorMsg);
+    //   this.presentToast(errorMsg);
 
-      return;
-    }
+    //   return;
+    // }
 
     if (!this.energyLevel || !this.lifeStage || !this.pupperSex || !this.pupperNeutered) {
       let errorMsg = "Please complete entire form";
@@ -113,8 +101,6 @@ export class DogProfilePage {
     //TODO: Have Matching Tab Selected Showing Blue When Nav to this page
     console.log("Create Dog Profile Button Clicked on Dog Profile Page");
 
-
-    this.showConfirmAlert();
     this.navCtrl.push(TabsPage, {});
   }
 }
