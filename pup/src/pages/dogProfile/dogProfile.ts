@@ -31,7 +31,7 @@ export class DogProfilePage {
   //define pupper profile
   // --> contains match profile
   // ------> contains user profile
-  createPupperProfileByUserProfileIdAndMatchProfileId() {
+  public createPupperProfileByUserProfileIdAndMatchProfileId() {
     if (this.userInputIsValid()) {
       let pupProfileDetails = {
         pupName: this.pupName,
@@ -42,6 +42,26 @@ export class DogProfilePage {
         pupperNeutered: this.pupperNeutered,
         pupBirthdate: this.pupBirthdate
       };
+
+      //TODO: get the user id -- integer (int64)
+
+      //TODO: get the matchProfileId -- integer (int64)
+
+      //TODO: define pupper profile
+          //pupperProfile: birthdate (string), 
+          //breed, [altName, id, name, size enum]
+          //energy (enum (MIN, LOW, MED, HIGH, EXTREME)), 
+          //fixed (boolean), id (integer (int64)), lifeStage (enum (PUPPY, YOUNG, ADULT, MATURE)),
+          
+          // matchProfile
+          // [aboutMe, birthdate, breed, energyLevel, id, lifeStage enum, names, numDogs, 
+          // profileImage, score, sex, size, userProfile]
+          
+          //name (string), sex (string)
+
+      //TODO: get match profile
+
+      //TODO: get user profile
 
       console.log(pupProfileDetails);
       console.log("Create Dog Profile Button Clicked on Dog Profile Page");
