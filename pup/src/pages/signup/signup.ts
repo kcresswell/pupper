@@ -37,11 +37,6 @@ export class SignupPage {
   //returns true if the input is good
   validateStringInput(strToCheck) {
     let validStringFormat = /^[a-zA-Z\s]*$/;
-    // if(!validStringFormat.test(strToCheck)) {
-    //     return false;
-    // }
-    // return true;
-
     return (!validStringFormat.test(strToCheck));
   }
 

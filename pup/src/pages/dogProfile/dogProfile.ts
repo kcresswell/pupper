@@ -18,16 +18,34 @@ export class DogProfilePage {
   pupperSex: any;
   pupperNeutered: any;
   pupBirthdate: Date;
+  matchProfileId: any;
 
-  //createPupperProfileByUserProfileIdAndMatchProfileId POST
+  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, private toastCtrl: ToastController) {
+
+  }
+
+  //createPupperProfileByUserProfileIdAndMatchProfileId POST'
+  //POST /user/{userId}/matchProfile/{matchProfileId}/pupper
   //get the user id 
   //{matchProfileId}, not sure where this needs to come from
   //define pupper profile
   // --> contains match profile
   // ------> contains user profile
+  createPupperProfileByUserProfileIdAndMatchProfileId() {
+    if (this.userInputIsValid()) {
+      let pupProfileDetails = {
+        pupName: this.pupName,
+        pupBreed: this.pupBreed,
+        energyLevel: this.energyLevel,
+        lifeStage: this.lifeStage,
+        pupperSex: this.pupperSex,
+        pupperNeutered: this.pupperNeutered,
+        pupBirthdate: this.pupBirthdate
+      };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, private toastCtrl: ToastController) {
-
+      console.log(pupProfileDetails);
+      console.log("Create Dog Profile Button Clicked on Dog Profile Page");
+    }
   }
 
   //only allow lowercase letters, uppercase letters, and spaces to be accepted as valid input
@@ -59,13 +77,13 @@ export class DogProfilePage {
     this.navCtrl.push(DogProfilePicPage, {});
   }
 
-  createDogProfileBtnClick() {
+  userInputIsValid() {
     if (this.validateStringInput(this.pupName) || this.validateStringInput(this.pupBreed)) {
       let errorMsg = "Acceptable Input Limited to Letters and Spaces";
       console.log(errorMsg);
       this.presentToast(errorMsg);
 
-      return;
+      return false;
     }
 
     //check that a date has been entered and that it is in the proper format
@@ -82,25 +100,13 @@ export class DogProfilePage {
       console.log(errorMsg);
       this.presentToast(errorMsg);
 
-      return;
+      return false;
     }
+    return true;
+  }
 
-    let pupProfileDetails = {
-      pupName: this.pupName,
-      pupBreed: this.pupBreed,
-      energyLevel: this.energyLevel,
-      lifeStage: this.lifeStage,
-      pupperSex: this.pupperSex,
-      pupperNeutered: this.pupperNeutered,
-      pupBirthdate: this.pupBirthdate
-    };
-
-    console.log(pupProfileDetails);
-
-    //TODO: Send JSON Request With Dog Profile Data
-    //TODO: Have Matching Tab Selected Showing Blue When Nav to this page
-    console.log("Create Dog Profile Button Clicked on Dog Profile Page");
-
+  createDogProfileBtnClick() {
+    this.createPupperProfileByUserProfileIdAndMatchProfileId();
     this.navCtrl.push(TabsPage, {});
   }
 }

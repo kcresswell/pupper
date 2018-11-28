@@ -72,6 +72,11 @@
             <ion-input [(ngModel)]="pupBirthdate" [ngModelOptions]="{standalone: true}" type="date" value=""></ion-input>
           </ion-item>
 
+          <!-- <ion-item>
+            <ion-label>Birthdate</ion-label>
+            <ion-datetime displayFormat="MMM/DD/YYYY" [(ngModel)]="YYYY-MM-DD" [ngModelOptions]="{standalone: true}"></ion-datetime>
+          </ion-item> -->
+
           <button ion-button block color="primary" (click)="addDogProfilePic()">Add Photo</button>
           <button ion-button block color="primary" (click)="createDogProfileBtnClick()">Create Profile</button>
           </ion-list>
