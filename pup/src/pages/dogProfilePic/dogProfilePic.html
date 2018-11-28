@@ -1,22 +1,14 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Dog Profile Picture 
-    </ion-title>
-  </ion-navbar>
-</ion-header>
-
-<ion-header>
   <ion-navbar color="primary">
     <ion-title>
-      Upload Dog Profile Pic
+      Upload Pup Image
     </ion-title>
   </ion-navbar>
 </ion-header>
  
 <ion-content padding>
   <img src="{{pathForImage(lastImage)}}" style="width: 100%" [hidden]="lastImage === null">
-  <h3 [hidden]="lastImage !== null">Please Select Image!</h3>
+  <h3 [hidden]="lastImage !== null">Select an image of your pup to upload.</h3>
 </ion-content>
  
 <ion-footer>

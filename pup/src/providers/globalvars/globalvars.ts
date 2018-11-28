@@ -12,6 +12,8 @@ export class GlobalvarsProvider {
 
   jwtAccessToken: any;
   serverBaseUrl: any; 
+  fileToUpload: any; 
+  filename: any; 
 
   constructor(public http: HttpClient) {
     console.log('Hello GlobalvarsProvider Provider');
@@ -24,6 +26,24 @@ export class GlobalvarsProvider {
 
   public getJwtAccessToken() {
     return this.jwtAccessToken;
+  }
+
+  public setFileToUpload(value) {
+    this.fileToUpload = value;
+    console.log("Global Vars, File To Upload: " + this.fileToUpload); 
+  }
+
+  public getFileToUpload() {
+    return this.fileToUpload;
+  }
+
+  public setFilename(value) {
+    this.filename = value;
+    console.log("Global Vars, Pup Image Filename: " + this.filename); 
+  }
+
+  public getFilename() {
+    return this.filename;
   }
 }
 
