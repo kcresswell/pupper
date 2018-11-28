@@ -36,9 +36,14 @@
       <ion-input [(ngModel)]="lastName" [ngModelOptions]="{standalone: true}" type="text" value=""></ion-input>
     </ion-item>
 
-    <ion-item>
+    <!-- <ion-item>
       <ion-label fixed>Birthdate</ion-label>
       <ion-input [(ngModel)]="birthdate" [ngModelOptions]="{standalone: true}" type="date" value=""></ion-input>
+    </ion-item> -->
+
+    <ion-item>
+      <ion-label>Birthdate</ion-label>
+      <ion-datetime displayFormat="MMM/DD/YYYY" [(ngModel)]="YYYY-MM-DD" [ngModelOptions]="{standalone: true}"></ion-datetime>
     </ion-item>
 
     <ion-item>

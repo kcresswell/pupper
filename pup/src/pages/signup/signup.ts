@@ -45,14 +45,6 @@ export class SignupPage {
     return (!validStringFormat.test(strToCheck));
   }
 
-  //proper date format: MM/DD/YY
-  //returns true if the date is formatted correctly
-  validateDateInput(dateToCheck) {
-    let splitDate = dateToCheck.split('/');
-    var date = new Date(splitDate[2] + '/' + splitDate[0] + '/' + splitDate[1]);
-    return (date && (date.getMonth() + 1) == splitDate[0] && date.getDate() == Number(splitDate[1]) && date.getFullYear() == Number(splitDate[2]));
-  }
-
   validateEmail(emailIn) {
     //string@string.string
     let format = /\S+@\S+\.\S+/;
@@ -74,31 +66,6 @@ export class SignupPage {
 
     toast.present();
   }
-  //expected format: yyyy-MM-dd
-  formatBirthday(date) {
-    let splitDate = date.split("/");
-    let month = splitDate[0];
-    let day = splitDate[1];
-    let year = splitDate[2];
-
-    return year + "-" + month + "-" + day;
-  }
-
-  //Jan 1, 2014
-  // formatBirthdaySlider(date) {
-  //   if()
-  //   let splitDate = date.split(" ");
-  //   let month = splitDate[0];
-  //   let day = splitDate[1];
-  //   let dayWOComma = day.split(",");
-  //   let year = splitDate[2];
-
-  //   if(dayWOComma < 10) {
-  //     dayWOComma = "0" + dayWOComma; 
-  //   }
-
-  //   return year + "-" + month + "-" + dayWOComma;
-  // }
 
   userInputIsValid() {
     // Check if email is empty, make sure email is a valid format
@@ -136,8 +103,8 @@ export class SignupPage {
     }
 
     //check that a date has been entered and that it is in the proper format
-    if (!this.birthdate || !this.validateDateInput(this.birthdate)) {
-      let errorMsg = "Proper Date Format: MM/DD/YYYY";
+    if (!this.birthdate) {
+      let errorMsg = "Please enter your birthdate.";
       console.log(errorMsg);
       this.presentToast(errorMsg);
 
@@ -237,7 +204,6 @@ export class SignupPage {
   createUserProfile(userAccountObj, headersWithAuthToken) {
     if (this.userInputIsValid()) {
     let dateJoinFormatted = new Date().toISOString().slice(0, 10);
-    let birthdateFormatted = this.formatBirthday(this.birthdate);
 
     let autoFill = false;
 
@@ -261,7 +227,7 @@ export class SignupPage {
     let userProfileData = JSON.stringify({
       firstName: this.firstName,
       lastName: this.lastName,
-      birthdate: birthdateFormatted,
+      birthdate: this.birthdate,
       zip: this.zip,
       maritalStatus: this.maritalStatus,
       sex: this.sex,
