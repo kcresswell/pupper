@@ -127,7 +127,6 @@ export class SignupPage {
   signup() {
     console.log("Signup button clicked");
     this.createUserAccountAndProfile();
-    
   }
 
   createUserAccountAndProfile() {
@@ -165,6 +164,10 @@ export class SignupPage {
 
           let jsonResponseObj = JSON.parse((result['_body'])); //Parse response body string resp['_body']into JSON object to extract data
           let userAccountObj = jsonResponseObj['userAccounts'][0]; //Pass the userAccount in the response to createUserProfile()
+
+          //TODO: Verify that this is getting the right id
+          let userId = userAccountObj['id']; 
+          this.globalVarsProvider.setUserId(userId); 
 
           this.userLogin(signupData, userAccountObj);
         }

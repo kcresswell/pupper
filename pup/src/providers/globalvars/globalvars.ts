@@ -15,6 +15,7 @@ export class GlobalvarsProvider {
   fileToUpload: any; 
   filename: any; 
   userId: any; 
+  userProfileData: any; 
 
   constructor(public http: HttpClient) {
     console.log('Hello GlobalvarsProvider Provider');
@@ -54,6 +55,15 @@ export class GlobalvarsProvider {
 
   public getUserId() {
     return this.userId;
+  }
+
+  public setUserProfileData(value) {
+    this.userProfileData = value;
+    console.log("Global Vars, userProfileData: " + this.userProfileData); 
+  }
+
+  public getUserProfileData() {
+    return this.userProfileData;
   }
 }
 

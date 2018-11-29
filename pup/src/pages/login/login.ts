@@ -15,8 +15,8 @@ export class LoginPage {
   email: string;
   password: string;
 
-  constructor(public navCtrl: NavController, public http: Http, private toastCtrl: ToastController, public globalVarsProvider: GlobalvarsProvider) {
-    console.log('Login page constructor');
+  constructor(public navCtrl: NavController, public http: Http, private toastCtrl: ToastController, 
+    public globalVarsProvider: GlobalvarsProvider) {
   }
 
   login() {
@@ -99,6 +99,7 @@ retrieveUserProfileForLastLoginUpdate(authHeaders) {
 
       let userId = userProfileData['id']; 
       this.globalVarsProvider.setUserId(userId); 
+      this.globalVarsProvider.setUserProfileData(userProfileData); 
       
       this.updateLastLoginTimestampForUserProfile(userProfileData, authHeaders);
 
