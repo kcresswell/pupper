@@ -97,6 +97,9 @@ retrieveUserProfileForLastLoginUpdate(authHeaders) {
       let jsonResponseObj = JSON.parse((resp['_body'])); //Parse response body string resp['_body']into JSON object to extract data
       let userProfileData = jsonResponseObj['userProfiles'][0]; //User profile data is contained in 'userProfiles' as arraylist
 
+      let userId = userProfileData['id']; 
+      this.globalVarsProvider.setUserId(userId); 
+      
       this.updateLastLoginTimestampForUserProfile(userProfileData, authHeaders);
 
       //Navigate to the next page after updating the lastLogin for the user

@@ -19,6 +19,8 @@ export class DogProfilePage {
   pupperNeutered: any;
   pupBirthdate: Date;
   matchProfileId: any;
+  aboutMe: string; 
+  pupSize: any; 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, private toastCtrl: ToastController) {
 
@@ -40,7 +42,9 @@ export class DogProfilePage {
         lifeStage: this.lifeStage,
         pupperSex: this.pupperSex,
         pupperNeutered: this.pupperNeutered,
-        pupBirthdate: this.pupBirthdate
+        pupBirthdate: this.pupBirthdate,
+        aboutMe: this.aboutMe,
+        pupSize: this.pupSize
       };
 
       //TODO: get the user id -- integer (int64)
