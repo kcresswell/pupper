@@ -71,13 +71,20 @@
             </ion-list>
 
           <!--Neutered/Spayed-->
-          <ion-list>
+          <!-- <ion-list>
               <ion-item>
                 <ion-label>Is Neutered/Spayed?</ion-label>
                 <ion-select [(ngModel)]="pupperNeutered">
                   <ion-option value="yes">Yes</ion-option>
                   <ion-option value="no">No</ion-option>
                 </ion-select>
+              </ion-item>
+            </ion-list> -->
+
+            <ion-list>
+              <ion-item>
+                <ion-label>Is Neutered/Spayed?</ion-label>
+                <ion-toggle enabled checked="false" [(ngModel)]="pupperNeutered"></ion-toggle>
               </ion-item>
             </ion-list>
 

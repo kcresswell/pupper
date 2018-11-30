@@ -16,6 +16,7 @@ export class GlobalvarsProvider {
   filename: any; 
   userId: any; 
   userProfileData: any; 
+  headersWithAuthToken: any; 
 
   constructor(public http: HttpClient) {
     console.log('Hello GlobalvarsProvider Provider');
@@ -64,6 +65,16 @@ export class GlobalvarsProvider {
 
   public getUserProfileData() {
     return this.userProfileData;
+  }
+
+  
+  public setHeadersWithAuthToken(value) {
+    this.headersWithAuthToken = value;
+    console.log("Global Vars, headersWithAuthToken: " + this.headersWithAuthToken); 
+  }
+
+  public getHeadersWithAuthToken() {
+    return this.headersWithAuthToken;
   }
 }
 
