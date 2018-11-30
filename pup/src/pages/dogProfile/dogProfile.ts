@@ -20,7 +20,7 @@ export class DogProfilePage {
   lifeStage: any;
   pupperSex: any;
   pupperNeutered: any;
-  pupBirthdate: Date;
+  birthdate: Date;
   matchProfileId: any;
   aboutMe: string;
   pupSize: any;
@@ -71,13 +71,13 @@ export class DogProfilePage {
     }
 
     //check that a date has been entered and that it is in the proper format
-    if (!this.pupBirthdate || this.validateDateInput(this.pupBirthdate)) {
-      let errorMsg = "Proper Date Format: MM/DD/YYYY";
-      console.log(errorMsg);
-      this.presentToast(errorMsg);
+    // if (!this.birthdate || this.validateDateInput(this.birthdate)) {
+    //   let errorMsg = "Proper Date Format: MM/DD/YYYY";
+    //   console.log(errorMsg);
+    //   this.presentToast(errorMsg);
 
-      return false;
-    }
+    //   return false;
+    // }
 
     if (!this.energyLevel || !this.lifeStage || !this.pupperSex || !this.pupperNeutered) {
       let errorMsg = "Please complete entire form";
@@ -114,7 +114,7 @@ export class DogProfilePage {
           lifeStage: "Young",
           pupperSex: "F",
           pupperNeutered: true,
-          pupBirthdate: "2017-08-31",
+          birthdate: "2017-08-31",
           aboutMe: "All about Indy",
           pupSize: "Small",
           numDogs: 1,
@@ -131,7 +131,7 @@ export class DogProfilePage {
         lifeStage: this.lifeStage,
         pupperSex: this.pupperSex,
         pupperNeutered: this.pupperNeutered,
-        pupBirthdate: this.pupBirthdate,
+        birthdate: "2017-08-31",//this.birthdate,
         aboutMe: this.aboutMe,
         pupSize: this.pupSize,
         numDogs: 1,
@@ -156,7 +156,7 @@ export class DogProfilePage {
             let matchProfileCreated = "Match Profile Created! Please wait . . .";
             this.presentToast(matchProfileCreated);
 
-            this.navCtrl.push(TabsPage, {});
+            this.navCtrl.push(TabsPage, {matchProfileDetails});
           }
           else if (result['status'] == 400 || result['status'] == 404) {
             //REMOVE THIS LATER
