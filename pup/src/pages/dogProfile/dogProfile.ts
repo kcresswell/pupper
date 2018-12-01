@@ -9,6 +9,7 @@ import { internals } from 'rx';
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Http, Response, Headers } from '@angular/http';
 
+
 @Component({
   selector: 'page-dogProfile',
   templateUrl: 'dogProfile.html'
@@ -127,7 +128,7 @@ export class DogProfilePage {
       let matchProfileDetails = JSON.stringify({
         pupName: this.pupName,
         pupBreed: this.pupBreed,
-        energyLevel: this.energyLevel,
+        energyLevel: "HIGH", //hardcoded value for now
         lifeStage: this.lifeStage,
         pupperSex: this.pupperSex,
         pupperNeutered: this.pupperNeutered,
@@ -137,7 +138,7 @@ export class DogProfilePage {
         numDogs: 1,
         pupImage: "assets/imgs/indy.jpeg", //this.globalVarsProvider.getFileToUpload(), grab the image path from the global vars, assuming they went through this process in emulator in Xcode
         userProfile: userProfileData
-        //score? id? 
+        //score and id are not passed but calculated on the backend
       });
       console.log(matchProfileDetails);
 
