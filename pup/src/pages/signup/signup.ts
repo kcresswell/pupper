@@ -203,10 +203,7 @@ export class SignupPage {
     if (this.userInputIsValid()) {
     let dateJoinFormatted = new Date().toISOString().slice(0, 10);
 
-    let autoFill = false;
-
-    // [Log] {"username":"lovesToTest@test.com","password":"hi","firstName":"Hello","lastName":"Bob","birthdate":"1995-08-30","zip":"84095",
-    // "maritalStatus":"Single","sex":"M","dateJoin":"2018-11-26","lastLogin":"2018-11-26 2:58 PM","userAccount":["lovesToTest@test.com","hi"]} (main.js, line 311)
+    let autoFill = true;
 
     if (autoFill) {
       let userProfileData = JSON.stringify({
@@ -225,7 +222,7 @@ export class SignupPage {
     let userProfileData = JSON.stringify({
       firstName: this.firstName,
       lastName: this.lastName,
-      birthdate: "2000-05-05",// this.birthdate,
+      birthdate: "2000-05-05", //this.birthdate,
       zip: this.zip,
       maritalStatus: this.maritalStatus,
       sex: this.sex,
@@ -237,7 +234,7 @@ export class SignupPage {
     console.log(userProfileData);
 
     // this.http.post('http://localhost:5000/user', userProfileData, { headers: headersWithAuthToken }) //For running back-end in AWS
-    this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/account/account/register', userProfileData, { headers: headersWithAuthToken }) //For running back-end in AWS
+    this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/user', userProfileData, { headers: headersWithAuthToken }) //For running back-end in AWS
       .subscribe(result => {
         if (result['status'] == 200) {
           console.log(result);
