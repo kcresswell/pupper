@@ -15,18 +15,20 @@ import { Http, Response, Headers } from '@angular/http';
   templateUrl: 'dogProfile.html'
 })
 export class DogProfilePage {
+  aboutMe: string;
+  birthdate: string;
+  breed: string;
+  energyLevel: string;
+  lifeStage: any; 
+  names: string;
+  numDogs: 1;
+  profileImage: any;
+  sex: string;
+  size: string;
+  userProfile: any;
   pupName: string;
   pupBreed: string;
-  energyLevel: any;
-  lifeStage: any;
-  pupperSex: any;
-  pupperNeutered: any;
-  birthdate: Date;
-  matchProfileId: any;
-  aboutMe: string;
-  pupSize: any;
-  pupImage: any;
-  numDogs: any;
+
   userId: any; 
   formData: any; 
 
@@ -82,13 +84,13 @@ export class DogProfilePage {
     //   return false;
     // }
 
-    if (!this.energyLevel || !this.lifeStage || !this.pupperSex || !this.pupperNeutered) {
-      let errorMsg = "Please complete entire form";
-      console.log(errorMsg);
-      this.presentToast(errorMsg);
+    // if (!this.energyLevel || !this.lifeStage || !this.sex) {
+    //   let errorMsg = "Please complete entire form";
+    //   console.log(errorMsg);
+    //   this.presentToast(errorMsg);
 
-      return false;
-    }
+    //   return false;
+    // }
     return true;
   }
 
@@ -120,18 +122,28 @@ export class DogProfilePage {
       const headers = new Headers({ 'Content-Type': 'application/json' });
 
       let matchProfileDetails = JSON.stringify({
-        pupName: this.pupName,
-        pupBreed: this.pupBreed,
+        aboutMe: this.aboutMe,
+        birthdate: "2017-08-31", //this.birthdate format being wonky, TODO: grab value from user
+        breed: this.breed,
         energyLevel: "high", //hardcoded value for now
         lifeStage: this.lifeStage,
-        pupperSex: this.pupperSex,
-        pupperNeutered: this.pupperNeutered,
-        birthdate: "2017-08-31",//this.birthdate format being wonky, TODO: grab value from user
-        aboutMe: this.aboutMe,
-        pupSize: this.pupSize,
+        names: this.names,
         numDogs: 1,
-        pupImage: null, //this.globalVarsProvider.getFileToUpload(), grab the image path from the global vars, assuming they went through this process in emulator in Xcode
+        profileImage: null,
+        sex: this.sex,
+        size: this.size,
         userProfile: userProfileData
+        // pupName: this.pupName,
+        // pupBreed: this.pupBreed,
+        // energyLevel: "high", //hardcoded value for now
+        // lifeStage: this.lifeStage,
+        // sex: this.sex,
+        // birthdate: "2017-08-31",//this.birthdate format being wonky, TODO: grab value from user
+        // aboutMe: this.aboutMe,
+        // pupSize: this.pupSize,
+        // numDogs: 1,
+        // pupImage: null, //this.globalVarsProvider.getFileToUpload(), grab the image path from the global vars, assuming they went through this process in emulator in Xcode
+        // userProfile: userProfileData
         //score and id are not passed but calculated on the backend
       });
       console.log(matchProfileDetails);
@@ -151,7 +163,7 @@ export class DogProfilePage {
             let matchProfileCreated = "Match Profile Created! Please wait . . .";
             this.presentToast(matchProfileCreated);
 
-            this.uploadDogProfilePicFile(headers, headersWithAuthToken, this.pupImage, matchProfileDetails, this.globalVarsProvider.getFileToUpload());
+            this.uploadDogProfilePicFile(headers, headersWithAuthToken, this.profileImage, matchProfileDetails, this.globalVarsProvider.getFileToUpload());
 
             this.navCtrl.push(TabsPage, {matchProfileDetails});
           }

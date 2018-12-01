@@ -10,12 +10,12 @@
     <ion-list>   
         <ion-item>
             <ion-label fixed>Pup Name</ion-label>
-            <ion-input [(ngModel)]="pupName" [ngModelOptions]="{standalone: true}" type="text" value=""></ion-input>
+            <ion-input [(ngModel)]="names" [ngModelOptions]="{standalone: true}" type="text" value=""></ion-input>
           </ion-item>
 
           <ion-item>
             <ion-label fixed>Pup Breed</ion-label>
-            <ion-input [(ngModel)]="pupBreed" [ngModelOptions]="{standalone: true}" type="text" value=""></ion-input>
+            <ion-input [(ngModel)]="breed" [ngModelOptions]="{standalone: true}" type="text" value=""></ion-input>
           </ion-item>
 
           <!--Energy Level Dropdown-->
@@ -49,7 +49,7 @@
           <ion-list>
             <ion-item>
               <ion-label>Pup Size</ion-label>
-              <ion-select [(ngModel)]="pupSize">
+              <ion-select [(ngModel)]="size">
                 <ion-option value="toy">Toy</ion-option>
                 <ion-option value="small">Small</ion-option>
                 <ion-option value="mid">Mid</ion-option>
@@ -63,31 +63,12 @@
           <ion-list>
               <ion-item>
                 <ion-label>Gender</ion-label>
-                <ion-select [(ngModel)]="pupperSex">
+                <ion-select [(ngModel)]="sex">
                   <ion-option value="female">Female</ion-option>
                   <ion-option value="male">Male</ion-option>
                 </ion-select>
               </ion-item>
             </ion-list>
-
-          <!--Neutered/Spayed-->
-          <!-- <ion-list>
-              <ion-item>
-                <ion-label>Is Neutered/Spayed?</ion-label>
-                <ion-select [(ngModel)]="pupperNeutered">
-                  <ion-option value="yes">Yes</ion-option>
-                  <ion-option value="no">No</ion-option>
-                </ion-select>
-              </ion-item>
-            </ion-list> -->
-
-            <ion-list>
-              <ion-item>
-                <ion-label>Is Neutered/Spayed?</ion-label>
-                <ion-toggle enabled checked="false" [(ngModel)]="pupperNeutered"></ion-toggle>
-              </ion-item>
-            </ion-list>
-
           <!-- <ion-item>
             <ion-label fixed>Birthdate</ion-label>
             <ion-input [(ngModel)]="pupBirthdate" [ngModelOptions]="{standalone: true}" type="date" value=""></ion-input>
