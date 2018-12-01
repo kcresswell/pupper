@@ -125,7 +125,7 @@ export class DogProfilePage {
         aboutMe: this.aboutMe,
         birthdate: "2017-08-31", //this.birthdate format being wonky, TODO: grab value from user
         breed: this.breed,
-        energyLevel: "high", //hardcoded value for now
+        energyLevel: "HIGH", //hardcoded value for now
         lifeStage: this.lifeStage,
         names: this.names,
         numDogs: 1,
@@ -133,18 +133,6 @@ export class DogProfilePage {
         sex: this.sex,
         size: this.size,
         userProfile: userProfileData
-        // pupName: this.pupName,
-        // pupBreed: this.pupBreed,
-        // energyLevel: "high", //hardcoded value for now
-        // lifeStage: this.lifeStage,
-        // sex: this.sex,
-        // birthdate: "2017-08-31",//this.birthdate format being wonky, TODO: grab value from user
-        // aboutMe: this.aboutMe,
-        // pupSize: this.pupSize,
-        // numDogs: 1,
-        // pupImage: null, //this.globalVarsProvider.getFileToUpload(), grab the image path from the global vars, assuming they went through this process in emulator in Xcode
-        // userProfile: userProfileData
-        //score and id are not passed but calculated on the backend
       });
       console.log(matchProfileDetails);
 
