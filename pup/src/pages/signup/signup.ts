@@ -225,7 +225,7 @@ export class SignupPage {
     let userProfileData = JSON.stringify({
       firstName: this.firstName,
       lastName: this.lastName,
-      birthdate: this.birthdate,
+      birthdate: "2000-05-05",// this.birthdate,
       zip: this.zip,
       maritalStatus: this.maritalStatus,
       sex: this.sex,
@@ -237,7 +237,7 @@ export class SignupPage {
     console.log(userProfileData);
 
     // this.http.post('http://localhost:5000/user', userProfileData, { headers: headersWithAuthToken }) //For running back-end in AWS
-    this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/user', userProfileData, { headers: headersWithAuthToken }) //For running back-end in AWS
+    this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/account/account/register', userProfileData, { headers: headersWithAuthToken }) //For running back-end in AWS
       .subscribe(result => {
         if (result['status'] == 200) {
           console.log(result);

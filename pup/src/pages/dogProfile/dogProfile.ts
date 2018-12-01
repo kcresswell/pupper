@@ -27,6 +27,8 @@ export class DogProfilePage {
   pupSize: any;
   pupImage: any;
   numDogs: any;
+  userId: any; 
+  formData: any; 
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public alertCtrl: AlertController, private toastCtrl: ToastController,
@@ -91,52 +93,44 @@ export class DogProfilePage {
   }
 
   createDogProfileBtnClick() {
-    this.createMatchProfileForUserByUserProfileId();
+    this.createMatchProfile();
     console.log("Create Dog Profile Button Clicked on Dog Profile Page");
   }
 
-  //http request to POST to /matchProfile and not /pupperProfile
-  //JSON POST: createMatchProfileForUserByUserProfileId
-  public createMatchProfileForUserByUserProfileId() {
-    let autoFillFieldsForTesting = true;
+  // uploadFile POST 
+  // /upload --> Form Data ProfilePic, requestBody ImageUploadRequest -> MatchProfile
+  public uploadDogProfilePicFile(headers, headersWithAuthToken, file:Blob, matchProfile, filename) {
+    let formData = new FormData();
+    formData.append('file', file, filename); //formData.append('file', file, 'test.jpg');
 
+    let uploadDogProfilePicDetails = JSON.stringify({
+      formData: this.formData,
+      ImageUploadRequest: matchProfile
+    });
+
+    this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/upload', uploadDogProfilePicDetails, { headers: headersWithAuthToken }) 
+  }
+
+  public createMatchProfile() {
     if (this.userInputIsValid()) {
       //get user details from globalvars.ts
       let userProfileData = this.globalVarsProvider.getUserProfileData();
-      let userId = this.globalVarsProvider.getUserId();
+      this.userId = this.globalVarsProvider.getUserId();
 
       const headers = new Headers({ 'Content-Type': 'application/json' });
-
-      if (autoFillFieldsForTesting) {
-        let matchProfileDetails = JSON.stringify({
-          pupName: "Indy",
-          pupBreed: "Shiba",
-          energyLevel: "Medium",
-          lifeStage: "Young",
-          pupperSex: "F",
-          pupperNeutered: true,
-          birthdate: "2017-08-31",
-          aboutMe: "All about Indy",
-          pupSize: "Small",
-          numDogs: 1,
-          pupImage: "assets/imgs/indy.jpeg",
-          userProfile: userProfileData
-          //score? id? 
-        });
-      }
 
       let matchProfileDetails = JSON.stringify({
         pupName: this.pupName,
         pupBreed: this.pupBreed,
-        energyLevel: "HIGH", //hardcoded value for now
+        energyLevel: "high", //hardcoded value for now
         lifeStage: this.lifeStage,
         pupperSex: this.pupperSex,
         pupperNeutered: this.pupperNeutered,
-        birthdate: "2017-08-31",//this.birthdate,
+        birthdate: "2017-08-31",//this.birthdate format being wonky, TODO: grab value from user
         aboutMe: this.aboutMe,
         pupSize: this.pupSize,
         numDogs: 1,
-        pupImage: "assets/imgs/indy.jpeg", //this.globalVarsProvider.getFileToUpload(), grab the image path from the global vars, assuming they went through this process in emulator in Xcode
+        pupImage: null, //this.globalVarsProvider.getFileToUpload(), grab the image path from the global vars, assuming they went through this process in emulator in Xcode
         userProfile: userProfileData
         //score and id are not passed but calculated on the backend
       });
@@ -144,18 +138,20 @@ export class DogProfilePage {
 
       let headersWithAuthToken = this.globalVarsProvider.getHeadersWithAuthToken(); 
 
+      // createMatchProfileForUserByUserProfileId -- POST /user/{userId}/matchProfile
       // this.http.post('http://localhost:5000/matchProfile', matchProfileDetails, { headers: headersWithAuthToken }) //For running back-end in AWS
-      this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/matchProfile', matchProfileDetails, { headers: headersWithAuthToken }) //For running back-end in AWS
+      this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/user/' + this.userId +'/matchProfile', matchProfileDetails, { headers: headersWithAuthToken }) //For running back-end in AWS
         .subscribe(result => {
           console.log('Response status code: ' + result['status']);
           if (result['status'] == 200) {
             console.log(result);
-            let jsonResponseObj = JSON.parse((result['_body'])); //Parse response body string resp['_body']into JSON object to extract data
-            let userAccountObj = jsonResponseObj['userAccounts'][0]; //Pass the userAccount in the response to createUserProfile()
+            let jsonResponseObj = JSON.parse((result['_body'])); 
 
             //Success! navigate user to the next page
             let matchProfileCreated = "Match Profile Created! Please wait . . .";
             this.presentToast(matchProfileCreated);
+
+            this.uploadDogProfilePicFile(headers, headersWithAuthToken, this.pupImage, matchProfileDetails, this.globalVarsProvider.getFileToUpload());
 
             this.navCtrl.push(TabsPage, {matchProfileDetails});
           }
