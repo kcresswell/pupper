@@ -17,7 +17,7 @@ import { Http, Response, Headers } from '@angular/http';
 export class DogProfilePage {
   aboutMe: string;
   birthdate: string;
-  breed: string;
+  breed: any;
   energyLevel: string;
   lifeStage: any; 
   names: string;
@@ -99,6 +99,25 @@ export class DogProfilePage {
     console.log("Create Dog Profile Button Clicked on Dog Profile Page");
   }
 
+  //GET /pupper
+  findPupperBreedByName(headers, headersWithAuthToken){
+    let breed;
+    this.http.get('http://pupper.us-east-1.elasticbeanstalk.com/pupper?breed=' + this.breed, {headers: headersWithAuthToken})
+   .subscribe(result => {
+          console.log('Response status code: ' + result['status']);
+          if (result['status'] == 200) {
+            console.log(result);
+            let jsonResponseObj = JSON.parse((result['_body']));
+            breed = jsonResponseObj['breed'][0]; 
+            console.log(this.breed); 
+            console.log(breed); 
+          }
+        },
+          error => console.log(error)
+        );
+        return breed; 
+  }
+
   // uploadFile POST 
   // /upload --> Form Data ProfilePic, requestBody ImageUploadRequest -> MatchProfile
   public uploadDogProfilePicFile(headers, headersWithAuthToken, file:Blob, matchProfile, filename) {
@@ -120,11 +139,14 @@ export class DogProfilePage {
       this.userId = this.globalVarsProvider.getUserId();
 
       const headers = new Headers({ 'Content-Type': 'application/json' });
+      let headersWithAuthToken = this.globalVarsProvider.getHeadersWithAuthToken(); 
+
+      let breedResponse = this.findPupperBreedByName(headers, headersWithAuthToken);
 
       let matchProfileDetails = JSON.stringify({
         aboutMe: this.aboutMe,
         birthdate: "2017-08-31", //this.birthdate format being wonky, TODO: grab value from user
-        breed: this.breed,
+        breed: breedResponse,
         energyLevel: "HIGH", //hardcoded value for now
         lifeStage: this.lifeStage,
         names: this.names,
@@ -134,9 +156,8 @@ export class DogProfilePage {
         size: this.size,
         userProfile: userProfileData
       });
-      console.log(matchProfileDetails);
+      console.log("MATCHPROFILEDETAILS" + matchProfileDetails);
 
-      let headersWithAuthToken = this.globalVarsProvider.getHeadersWithAuthToken(); 
 
       // createMatchProfileForUserByUserProfileId -- POST /user/{userId}/matchProfile
       // this.http.post('http://localhost:5000/matchProfile', matchProfileDetails, { headers: headersWithAuthToken }) //For running back-end in AWS
