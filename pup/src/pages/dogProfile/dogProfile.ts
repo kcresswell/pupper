@@ -6,7 +6,7 @@ import { ToastController } from 'ionic-angular'
 import { DogProfilePicPage } from '../dogProfilePic/dogProfilePic';
 import { GlobalvarsProvider } from '../../providers/globalvars/globalvars';
 import { internals } from 'rx';
-import { HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Http, Response, Headers } from '@angular/http';
 
 
@@ -17,7 +17,7 @@ import { Http, Response, Headers } from '@angular/http';
 export class DogProfilePage {
   aboutMe: string;
   birthdate: string;
-  breed: any;
+  breed: string;
   energyLevel: string;
   lifeStage: any; 
   names: string;
@@ -26,8 +26,6 @@ export class DogProfilePage {
   sex: string;
   size: string;
   userProfile: any;
-  pupName: string;
-  pupBreed: string;
 
   userId: any; 
   formData: any; 
@@ -67,7 +65,7 @@ export class DogProfilePage {
   }
 
   userInputIsValid() {
-    if (this.validateStringInput(this.pupName) || this.validateStringInput(this.pupBreed)) {
+    if (this.validateStringInput(this.names) || this.validateStringInput(this.breed)) {
       let errorMsg = "Acceptable Input Limited to Letters and Spaces";
       console.log(errorMsg);
       this.presentToast(errorMsg);
@@ -107,15 +105,17 @@ export class DogProfilePage {
           console.log('Response status code: ' + result['status']);
           if (result['status'] == 200) {
             console.log(result);
+            //I made it so that endpoint just returns the Breed object instead of wrapped in a response object
+            // let jsonResponseObj = JSON.parse((result['_body']));
+            // breed = jsonResponseObj['breed'][0];
             let jsonResponseObj = JSON.parse((result['_body']));
-            breed = jsonResponseObj['breed'][0]; 
-            console.log(this.breed); 
-            console.log(breed); 
-          }
+            breed = jsonResponseObj[0].breed; 
+            console.log("JSON OBJ" + jsonResponseObj);
+          } 
         },
           error => console.log(error)
         );
-        return breed; 
+        return breed;
   }
 
   // uploadFile POST 
@@ -142,6 +142,8 @@ export class DogProfilePage {
       let headersWithAuthToken = this.globalVarsProvider.getHeadersWithAuthToken(); 
 
       let breedResponse = this.findPupperBreedByName(headers, headersWithAuthToken);
+      console.log("BREED RESPONSE: " + breedResponse); 
+      console.log("this.breed = " + this.breed); 
 
       let matchProfileDetails = JSON.stringify({
         aboutMe: this.aboutMe,
