@@ -17,7 +17,7 @@ import { Http, Response, Headers } from '@angular/http';
 export class DogProfilePage {
   aboutMe: string;
   birthdate: string;
-  breed: string;
+  breed: any;
   energyLevel: string;
   lifeStage: any; 
   names: string;
@@ -105,12 +105,9 @@ export class DogProfilePage {
           console.log('Response status code: ' + result['status']);
           if (result['status'] == 200) {
             console.log(result);
-            //I made it so that endpoint just returns the Breed object instead of wrapped in a response object
-            // let jsonResponseObj = JSON.parse((result['_body']));
-            // breed = jsonResponseObj['breed'][0];
-            let jsonResponseObj = JSON.parse((result['_body']));
-            breed = jsonResponseObj[0].breed; 
-            console.log("JSON OBJ" + jsonResponseObj);
+            let jsonObj = JSON.parse((result['_body']));
+            breed = jsonObj.name;
+            console.log("Breed: " + breed);
           } 
         },
           error => console.log(error)
