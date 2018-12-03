@@ -162,6 +162,7 @@ export class DogProfilePage {
       // this.http.post('http://localhost:5000/matchProfile', matchProfileDetails, { headers: headersWithAuthToken }) //For running back-end in AWS
       this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/user/' + this.userId +'/matchProfile', matchProfileDetails, { headers: headersWithAuthToken }) //For running back-end in AWS
         .subscribe(result => {
+          console.log(result['_body']);
           console.log('Response status code: ' + result['status']);
           if (result['status'] == 200) {
             console.log(result);
