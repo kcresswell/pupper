@@ -6,9 +6,33 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
-    <ion-item>
-        <ion-input placeholder="Your Message..." message></ion-input>
-        <button ion-button round>Send</button>
-      </ion-item>
+<ion-content class="allMessages">
+  <div class="container">
+    <p>Hello. How are you today?</p>
+    <span class="time-right">11:00</span>
+  </div>
+
+  <div class="container darker">
+    <p>Hey! I'm fine. Thanks for asking!</p>
+    <span class="time-left">11:01</span>
+  </div>
+
+  <div class="container">
+    <p>Sweet! So, what do you wanna do today?</p>
+    <span class="time-right">11:02</span>
+  </div>
+
+  <div class="container darker">
+    <p>Nah, I dunno. Play soccer.. or learn more coding perhaps?</p>
+    <span class="time-left">11:05</span>
+  </div>
+  <!-- <ion-item>
+    <ion-input placeholder="Your Message..." message></ion-input>
+  <button ion-button round>Send</button>
+  </ion-item> -->
+
+  <ion-item>
+    <ion-input type="message" placeholder="Your Message..."></ion-input>
+    <button ion-button round item-right class="sendBtn">Send</button>
+  </ion-item>
 </ion-content>
