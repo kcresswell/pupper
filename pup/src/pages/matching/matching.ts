@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AlertController } from 'ionic-angular';
 import { MessagingPage } from '../messaging/messaging';
+import { MessagePage } from '../message/message';
 // import { DogProfilePage } from '../DogProfilePage/DogProfilePage';
 
 @Component({
@@ -52,7 +53,7 @@ export class MatchingPage {
         this.name = "Indy";
         this.breedName = "Shiba Inu";
         this.ageWithUnits = "Young";
-        this.profileImage = "assets/imgs/indy.jpeg";
+        // this.profileImage = "assets/imgs/indy.jpeg";
 
         this.profileCard = [this.name, this.breedName, this.ageWithUnits, this.profileImage];
 
@@ -90,7 +91,7 @@ export class MatchingPage {
                     text: 'Let\'s Chat!',
                     handler: () => {
                         console.log('Lets Chat Clicked');
-                        this.navCtrl.push(MessagingPage, {});
+                        this.navCtrl.push(MessagePage, {});
                     }
                 }
             ]
