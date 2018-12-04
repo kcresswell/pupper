@@ -117,17 +117,17 @@ export class DogProfilePage {
 
   // uploadFile POST
   // /upload --> Form Data ProfilePic, requestBody ImageUploadRequest -> MatchProfile
-  public uploadDogProfilePicFile(headers, headersWithAuthToken, file:Blob, matchProfile, filename) {
-    let formData = new FormData();
-    formData.append('file', file, filename); //formData.append('file', file, 'test.jpg');
+  // public uploadDogProfilePicFile(headers, headersWithAuthToken, file:Blob, matchProfile, filename) {
+  //   let formData = new FormData();
+  //   formData.append('file', file, filename); //formData.append('file', file, 'test.jpg');
 
-    let uploadDogProfilePicDetails = JSON.stringify({
-      formData: this.formData,
-      ImageUploadRequest: matchProfile
-    });
+  //   let uploadDogProfilePicDetails = JSON.stringify({
+  //     formData: this.formData,
+  //     ImageUploadRequest: matchProfile
+  //   });
 
-    this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/upload', uploadDogProfilePicDetails, { headers: headersWithAuthToken })
-  }
+  //   this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/upload', uploadDogProfilePicDetails, { headers: headersWithAuthToken })
+  // }
 
   public createDogProfilButtonClickHandler() {
     if (this.userInputIsValid()) {
@@ -195,7 +195,7 @@ public createMatchProfileFromWithBreedObj(breedObj) {
       let matchProfileCreated = "Match Profile Created! Please wait . . .";
       this.presentToast(matchProfileCreated);
 
-      this.uploadDogProfilePicFile(headers, headersWithAuthToken, this.profileImage, matchProfileDetails, this.globalVarsProvider.getFileToUpload());
+      // this.uploadDogProfilePicFile(headers, headersWithAuthToken, this.profileImage, matchProfileDetails, this.globalVarsProvider.getFileToUpload());
 
       this.navCtrl.push(TabsPage, {matchProfileDetails});
     }
