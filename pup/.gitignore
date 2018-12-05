@@ -1,3 +1,6 @@
+# Specifies intentionally untracked files to ignore when using Git
+# http://git-scm.com/docs/gitignore
+
 *~
 *.sw[mnpcod]
 *.log
@@ -30,9 +33,3 @@ $RECYCLE.BIN/
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
-
-.temp
-<%= appPath %>/bower_components
-*.DS_Store
-
-app/scripts/configuration.js
