@@ -10,31 +10,29 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class GlobalvarsProvider {
 
-  jwtAccessToken: any;
-  serverBaseUrl: any; 
-  fileToUpload: any; 
-  filename: any; 
-  userId: any; 
-  userProfileData: any; 
-  headersWithAuthToken: any; 
-  userMatchProfile: any; 
+  serverBaseUrl: any;
+  fileToUpload: any;
+  filename: any;
+  userId: any;
+  userProfileData: any;
+  headersWithAuthToken: any;
+  userMatchProfile: any;
 
   constructor(public http: HttpClient) {
-    console.log('Hello GlobalvarsProvider Provider');
+    this.setServerBaseUrl();
   }
 
-  public setJwtAccessToken(value) {
-    this.jwtAccessToken = value;
-    console.log("Global Vars, JWT ACCESS TOKEN: " + this.jwtAccessToken); 
+  public setServerBaseUrl() {
+    this.serverBaseUrl = "http://pupper.us-east-1.elasticbeanstalk.com";
   }
 
-  public getJwtAccessToken() {
-    return this.jwtAccessToken;
+  public getServerBaseUrl() {
+    return this.serverBaseUrl;
   }
 
   public setFileToUpload(value) {
     this.fileToUpload = value;
-    console.log("Global Vars, File To Upload: " + this.fileToUpload); 
+    console.log("Global Vars, File To Upload: " + this.fileToUpload);
   }
 
   public getFileToUpload() {
@@ -43,7 +41,6 @@ export class GlobalvarsProvider {
 
   public setFilename(value) {
     this.filename = value;
-    console.log("Global Vars, Pup Image Filename: " + this.filename); 
   }
 
   public getFilename() {
@@ -52,7 +49,6 @@ export class GlobalvarsProvider {
 
   public setUserId(value) {
     this.userId = value;
-    console.log("Global Vars, UserId: " + this.userId); 
   }
 
   public getUserId() {
@@ -61,7 +57,6 @@ export class GlobalvarsProvider {
 
   public setUserProfileData(value) {
     this.userProfileData = value;
-    console.log("Global Vars, userProfileData: " + this.userProfileData); 
   }
 
   public getUserProfileData() {
@@ -70,22 +65,17 @@ export class GlobalvarsProvider {
 
   public setUserMatchProfile(value) {
     this.userMatchProfile = value;
-    console.log("Global Vars, userMatchProfile: " + this.userMatchProfile); 
   }
 
   public getUserMatchProfile() {
     return this.userMatchProfile;
   }
 
-  
   public setHeadersWithAuthToken(value) {
     this.headersWithAuthToken = value;
-    console.log("Global Vars, headersWithAuthToken: " + this.headersWithAuthToken); 
   }
 
   public getHeadersWithAuthToken() {
     return this.headersWithAuthToken;
   }
 }
-
-
