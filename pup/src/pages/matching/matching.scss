@@ -1,10 +1,13 @@
 page-matching {
-    // .ion- {
-    //     background-image: url("assets/imgs/gradient.jpg") no-repeat center center fixed;
-    //     -webkit-background-size: cover;
-    //     -moz-background-size: cover;
-    //     background-size: cover;
-    // }
+    ion-content {
+        background: url(../assets/imgs/gradient.jpg) no-repeat center center fixed;
+        background-size: cover;
+        height: 100%;
+        overflow: hidden;
+        .item-md, .item-ios {
+          background: none;
+        }
+    }
     .card-container {
         height: 90vw;
         width: 90vw;

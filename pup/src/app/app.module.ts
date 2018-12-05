@@ -8,6 +8,7 @@ import { SignupPage } from '../pages/signup/signup';
 
 import { MatchingPage } from '../pages/matching/matching';
 import { MessagingPage } from '../pages/messaging/messaging';
+import { MessagePage } from '../pages/message/message';
 import { SettingsPage } from '../pages/settings/settings';
 import { TabsPage } from '../pages/tabs/tabs';
 import { DogProfilePage} from '../pages/dogProfile/dogProfile';
@@ -31,6 +32,7 @@ import { GlobalvarsProvider } from '../providers/globalvars/globalvars';
     MyApp,
     MatchingPage,
     MessagingPage,
+    MessagePage, 
     SettingsPage,
     WelcomePage,
     LoginPage,
@@ -51,6 +53,7 @@ import { GlobalvarsProvider } from '../providers/globalvars/globalvars';
     MyApp,
     MatchingPage,
     MessagingPage,
+    MessagePage,
     SettingsPage,
     WelcomePage,
     LoginPage,
