@@ -139,7 +139,7 @@ export class DogProfilePage {
       let headersWithAuthToken = this.globalVarsProvider.getHeadersWithAuthToken();
 
       // let breedResponse = this.findPupperBreedByName(headers, headersWithAuthToken);
-      this.http.get('http://pupper.us-east-1.elasticbeanstalk.com/pupper?breed=' + this.breed, {headers: headersWithAuthToken})
+      this.http.get('http://pupper.us-east-1.elasticbeanstalk.com/pupper/breed?name=' + this.breed, {headers: headersWithAuthToken})
       .subscribe(result => {
         console.log('Response status code: ' + result['status']);
         if (result['status'] == 200) {
