@@ -177,6 +177,7 @@ public createMatchProfileFromWithBreedObj(breedObj) {
     userProfile: userProfileData
   });
   console.log("MATCHPROFILEDETAILS" + matchProfileDetails);
+  this.globalVarsProvider.setUserMatchProfile(matchProfileDetails); 
 
 
 

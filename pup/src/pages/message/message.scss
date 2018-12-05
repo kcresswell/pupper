@@ -1,16 +1,16 @@
 page-message {
     /* Chat containers */
-    ion-content {
-        background: url(../assets/imgs/gradient.jpg) no-repeat center center fixed;
-        background-size: cover;
-        height: 100%;
-        overflow: hidden;
-        .item-md, .item-ios {
-          background: none;
-        }
-    }
+    // ion-content {
+    //     background: url(../assets/imgs/gradient.jpg) no-repeat center center fixed;
+    //     background-size: cover;
+    //     height: 100%;
+    //     overflow: hidden;
+    //     .item-md, .item-ios {
+    //       background: none;
+    //     }
+    // }
 .container {
-    // background-image: url(../assets/imgs/gradient.jpg) no-repeat center center fixed;
+    background-color: #b5c3d1;
     border: 2px solid #ffffff;
     background-color: #ffffff;
     border-radius: 5px;

@@ -192,6 +192,9 @@ export class SignupPage {
           const headersWithAuth = new Headers({ 'Content-Type': 'application/json', 'Authorization': jwtAccessToken });
 
           this.createUserProfile(userAccountObj, headersWithAuth);
+
+          //set global variable for authHeaders upon login
+          this.globalVarsProvider.setHeadersWithAuthToken(headersWithAuth); 
         }
       },
         error => console.log(error)

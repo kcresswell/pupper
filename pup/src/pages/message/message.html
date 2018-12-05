@@ -26,13 +26,9 @@
     <p>Nah, I dunno. Play soccer.. or learn more coding perhaps?</p>
     <span class="time-left">11:05</span>
   </div>
-  <!-- <ion-item>
-    <ion-input placeholder="Your Message..." message></ion-input>
-  <button ion-button round>Send</button>
-  </ion-item> -->
 
   <ion-item>
-    <ion-input type="message" placeholder="Your Message..."></ion-input>
-    <button ion-button round item-right class="sendBtn">Send</button>
+    <ion-input type="message" placeholder="Your Message..." [(ngModel)]="message" [ngModelOptions]="{standalone: true}" type="text" value=""></ion-input>
+        <button ion-button round item-right class="sendbutton" (click)="onSendBtnClick()">Send</button>
   </ion-item>
 </ion-content>
