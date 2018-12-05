@@ -125,5 +125,4 @@ public sendFileToDogProfilePage() {
 public uploadImage() { 
   this.sendFileToDogProfilePage(); 
 }
-
 }

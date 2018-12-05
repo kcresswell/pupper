@@ -58,6 +58,9 @@ export class LoginPage {
           //If login was successful, retrieve user profile then update lastLogin for user
           const authHeaders = this.extractAuthHeadersFromLoginSuccessResponse(response);
           this.retrieveUserProfileForLastLoginUpdate(authHeaders);
+          
+          //set global variable for authHeaders upon login
+          this.globalVarsProvider.setHeadersWithAuthToken(authHeaders); 
         }
       },
       error => console.log(error)

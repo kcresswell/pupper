@@ -192,6 +192,9 @@ export class SignupPage {
           const headersWithAuth = new Headers({ 'Content-Type': 'application/json', 'Authorization': jwtAccessToken });
 
           this.createUserProfile(userAccountObj, headersWithAuth);
+
+          //set global variable for authHeaders upon login
+          this.globalVarsProvider.setHeadersWithAuthToken(headersWithAuth); 
         }
       },
         error => console.log(error)
@@ -203,10 +206,7 @@ export class SignupPage {
     if (this.userInputIsValid()) {
     let dateJoinFormatted = new Date().toISOString().slice(0, 10);
 
-    let autoFill = false;
-
-    // [Log] {"username":"lovesToTest@test.com","password":"hi","firstName":"Hello","lastName":"Bob","birthdate":"1995-08-30","zip":"84095",
-    // "maritalStatus":"Single","sex":"M","dateJoin":"2018-11-26","lastLogin":"2018-11-26 2:58 PM","userAccount":["lovesToTest@test.com","hi"]} (main.js, line 311)
+    let autoFill = true;
 
     if (autoFill) {
       let userProfileData = JSON.stringify({
@@ -225,7 +225,7 @@ export class SignupPage {
     let userProfileData = JSON.stringify({
       firstName: this.firstName,
       lastName: this.lastName,
-      birthdate: this.birthdate,
+      birthdate: "2000-05-05", //this.birthdate,
       zip: this.zip,
       maritalStatus: this.maritalStatus,
       sex: this.sex,

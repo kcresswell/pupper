@@ -5,192 +5,423 @@ import { AlertController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular'
 import { DogProfilePicPage } from '../dogProfilePic/dogProfilePic';
 import { GlobalvarsProvider } from '../../providers/globalvars/globalvars';
-import { internals } from 'rx';
-import { HttpHeaders, HttpParams } from '@angular/common/http';
+// import { internals } from 'rx';
+import { HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Http, Response, Headers } from '@angular/http';
+
 
 @Component({
   selector: 'page-dogProfile',
   templateUrl: 'dogProfile.html'
 })
 export class DogProfilePage {
-  pupName: string;
-  pupBreed: string;
-  energyLevel: any;
-  lifeStage: any;
-  pupperSex: any;
-  pupperNeutered: any;
-  pupBirthdate: Date;
-  matchProfileId: any;
   aboutMe: string;
-  pupSize: any;
-  pupImage: any;
-  numDogs: any;
+  birthdate: string;
+  breed: any;
+  energyLevel: string;
+  lifeStage: any;
+  names: string;
+  numDogs: 1;
+  profileImage: any;
+  sex: string;
+  size: string;
+  userProfile: any;
+
+  userId: any;
+  formData: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public alertCtrl: AlertController, private toastCtrl: ToastController,
     public globalVarsProvider: GlobalvarsProvider, public http: Http) {
+    }
+
+    //only allow lowercase letters, uppercase letters, and spaces to be accepted as valid input
+    //returns true if the input is good
+    validateStringInput(strToCheck) {
+      let validStringFormat = /^[a-zA-Z\s]*$/;
+      return (!validStringFormat.test(strToCheck));
+    }
+
+    //proper date format: MM/DD/YY
+    //returns true if the date is formatted correctly
+    validateDateInput(dateToCheck) {
+      let splitDate = dateToCheck.split('/');
+      var date = new Date(splitDate[2] + '/' + splitDate[0] + '/' + splitDate[1]);
+      return (date && (date.getMonth() + 1) == splitDate[0] && date.getDate() == Number(splitDate[1]) && date.getFullYear() == Number(splitDate[2]));
+    }
+
+    presentToast(msgToDisplay) {
+      let toast = this.toastCtrl.create({
+        message: msgToDisplay,
+        duration: 2500,
+        position: 'middle'
+      });
+
+      toast.present();
+    }
+
+    addDogProfilePic() {
+      this.navCtrl.push(DogProfilePicPage, {});
+    }
+
+    userInputIsValid() {
+      if (this.validateStringInput(this.names) || this.validateStringInput(this.breed)) {
+        let errorMsg = "Acceptable Input Limited to Letters and Spaces";
+        console.log(errorMsg);
+        this.presentToast(errorMsg);
+
+        return false;
+      }
+
+      //check that a date has been entered and that it is in the proper format
+      // if (!this.birthdate || this.validateDateInput(this.birthdate)) {
+      //   let errorMsg = "Proper Date Format: MM/DD/YYYY";
+      //   console.log(errorMsg);
+      //   this.presentToast(errorMsg);
+
+      //   return false;
+      // }
+
+      // if (!this.energyLevel || !this.lifeStage || !this.sex) {
+      //   let errorMsg = "Please complete entire form";
+      //   console.log(errorMsg);
+      //   this.presentToast(errorMsg);
+
+      //   return false;
+      // }
+      return true;
+    }
+
+    createDogProfileBtnClick() {
+      this.createDogProfilButtonClickHandler();
+      console.log("Create Dog Profile Button Clicked on Dog Profile Page");
+    }
+
+    //GET /pupper
+    findPupperBreedByName(headers, headersWithAuthToken){
+      let breed;
+      this.http.get('http://pupper.us-east-1.elasticbeanstalk.com/pupper?breed=' + this.breed, {headers: headersWithAuthToken})
+      .subscribe(result => {
+        console.log('Response status code: ' + result['status']);
+        if (result['status'] == 200) {
+          console.log(result);
+          let jsonObj = JSON.parse((result['_body']));
+          breed = jsonObj.name;
+          console.log("Breed: " + breed);
+        }
+      },
+      error => console.log(error)
+    );
+    return breed;
   }
 
-  //only allow lowercase letters, uppercase letters, and spaces to be accepted as valid input
-  //returns true if the input is good
-  validateStringInput(strToCheck) {
-    let validStringFormat = /^[a-zA-Z\s]*$/;
-    return (!validStringFormat.test(strToCheck));
-  }
+  // uploadFile POST
+  // /upload --> Form Data ProfilePic, requestBody ImageUploadRequest -> MatchProfile
+  public uploadDogProfilePicFile(headers, headersWithAuthToken, file:Blob, matchProfile, filename) {
+    let formData = new FormData();
+    formData.append('file', file, filename); //formData.append('file', file, 'test.jpg');
 
-  //proper date format: MM/DD/YY
-  //returns true if the date is formatted correctly
-  validateDateInput(dateToCheck) {
-    let splitDate = dateToCheck.split('/');
-    var date = new Date(splitDate[2] + '/' + splitDate[0] + '/' + splitDate[1]);
-    return (date && (date.getMonth() + 1) == splitDate[0] && date.getDate() == Number(splitDate[1]) && date.getFullYear() == Number(splitDate[2]));
-  }
-
-  presentToast(msgToDisplay) {
-    let toast = this.toastCtrl.create({
-      message: msgToDisplay,
-      duration: 2500,
-      position: 'middle'
+    let uploadDogProfilePicDetails = JSON.stringify({
+      formData: this.formData,
+      ImageUploadRequest: matchProfile
     });
 
-    toast.present();
+    this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/upload', uploadDogProfilePicDetails, { headers: headersWithAuthToken })
   }
 
-  addDogProfilePic() {
-    this.navCtrl.push(DogProfilePicPage, {});
-  }
-
-  userInputIsValid() {
-    if (this.validateStringInput(this.pupName) || this.validateStringInput(this.pupBreed)) {
-      let errorMsg = "Acceptable Input Limited to Letters and Spaces";
-      console.log(errorMsg);
-      this.presentToast(errorMsg);
-
-      return false;
-    }
-
-    //check that a date has been entered and that it is in the proper format
-    // if (!this.pupBirthdate || this.validateDateInput(this.pupBirthdate)) {
-    //   let errorMsg = "Proper Date Format: MM/DD/YYYY";
-    //   console.log(errorMsg);
-    //   this.presentToast(errorMsg);
-
-    //   return;
-    // }
-
-    if (!this.energyLevel || !this.lifeStage || !this.pupperSex || !this.pupperNeutered) {
-      let errorMsg = "Please complete entire form";
-      console.log(errorMsg);
-      this.presentToast(errorMsg);
-
-      return false;
-    }
-    return true;
-  }
-
-  createDogProfileBtnClick() {
-    this.createMatchProfileForUserByUserProfileId();
-    this.navCtrl.push(TabsPage, {});
-    console.log("Create Dog Profile Button Clicked on Dog Profile Page");
-  }
-
-  // 	But I’m saying when you click the button create the dog profile, hit the endpoint url to 
-  //  create a new match profile not pupper profile . And On my end for now I’ll automatically 
-  //  create a match profile and pupper profile. 
-  // 	Make the http request to POST to /matchProfile and not /pupperProfile. That’s all 
-  //  So I’m just making one post to matchprofile in the dogProfile.ts file for now
-
-  //JSON POST: createMatchProfileForUserByUserProfileId
-  public createMatchProfileForUserByUserProfileId() {
+  public createDogProfilButtonClickHandler() {
     if (this.userInputIsValid()) {
-      const headers = new Headers({ 'Content-Type': 'application/json' });
-
-      //TODO: get the user id -- integer (int64)
-      let userId = this.globalVarsProvider.getUserId();
-
-      let matchProfileDetails = JSON.stringify({
-        pupName: this.pupName,
-        pupBreed: this.pupBreed,
-        energyLevel: this.energyLevel,
-        lifeStage: this.lifeStage,
-        pupperSex: this.pupperSex,
-        pupperNeutered: this.pupperNeutered,
-        pupBirthdate: this.pupBirthdate,
-        aboutMe: this.aboutMe,
-        pupSize: this.pupSize,
-        numDogs: 1,
-        pupImage: this.pupImage
-        //score? id? 
-      });
-      console.log(matchProfileDetails);
+      //get user details from globalvars.ts
       let userProfileData = this.globalVarsProvider.getUserProfileData();
+      this.userId = this.globalVarsProvider.getUserId();
 
-      // this.http.post('http://localhost:5000/matchProfile', signupData, { headers: headers }) //For running back-end in AWS
-      this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/matchProfile', matchProfileDetails, { headers: headers }) //For running back-end in AWS
-        .subscribe(result => {
-          // // console.log(result['_body']);
-          // console.log('Response status code: ' + result['status']);
+      const headers = new Headers({ 'Content-Type': 'application/json' });
+      let headersWithAuthToken = this.globalVarsProvider.getHeadersWithAuthToken();
 
-          // if (result['status'] == 409) {
-
-          //   this.presentToast("A user account with your selected username already exists. Please login as an existing user or create a profile with a unique username.");
-          //   return;
-          // }
-          // else if (result['status'] == 200) {
-          //   console.log("User account created successfully.");
-
-          //   let jsonResponseObj = JSON.parse((result['_body'])); //Parse response body string resp['_body']into JSON object to extract data
-          //   let userAccountObj = jsonResponseObj['userAccounts'][0]; //Pass the userAccount in the response to createUserProfile()
-
-          //   //TODO: Verify that this is getting the right id
-          //   let userId = userAccountObj['id'];
-          //   this.globalVarsProvider.setUserId(userId);
-
-          //   this.userLogin(signupData, userAccountObj);
-          // }
-        },
-          error => console.log(error)
-        );
-    }
-
+      // let breedResponse = this.findPupperBreedByName(headers, headersWithAuthToken);
+      this.http.get('http://pupper.us-east-1.elasticbeanstalk.com/pupper/breed?name=' + this.breed, {headers: headersWithAuthToken})
+      .subscribe(result => {
+        console.log('Response status code: ' + result['status']);
+        if (result['status'] == 200) {
+          console.log(result);
+          // let jsonObj = JSON.parse((result['_body']));
+          let breedResponse = JSON.parse(result['_body']);
+          // breed = jsonObj.name;
+          this.createMatchProfileFromWithBreedObj(breedResponse);
+        }
+      },
+      error => console.log(error)
+    );
   }
 }
 
+public createMatchProfileFromWithBreedObj(breedObj) {
+
+  let userProfileData = this.globalVarsProvider.getUserProfileData();
+  this.userId = this.globalVarsProvider.getUserId();
+
+  const headers = new Headers({ 'Content-Type': 'application/json' });
+  let headersWithAuthToken = this.globalVarsProvider.getHeadersWithAuthToken();
+
+  let matchProfileDetails = JSON.stringify({
+    aboutMe: this.aboutMe,
+    birthdate: "2017-08-31", //this.birthdate format being wonky, TODO: grab value from user
+    breed: breedObj,
+    energyLevel: "HIGH", //hardcoded value for now
+    lifeStage: this.lifeStage,
+    names: this.names,
+    numDogs: 1,
+    profileImage: null,
+    sex: this.sex,
+    size: this.size,
+    userProfile: userProfileData
+  });
+  console.log("MATCHPROFILEDETAILS" + matchProfileDetails);
 
 
 
-  //TODO: Modify to return userProfile for above function
-  // retrieveUserProfileForLastLoginUpdate(authHeaders) {
-  //   this.http.get('http://pupper.us-east-1.elasticbeanstalk.com/user', {headers: authHeaders})
-  //   this.http.get('http://pupper.us-east-1.elasticbeanstalk.com/user?email=' + this.email, {headers: authHeaders})
-  //   // this.http.get('http://localhost:5000/user?email=' + this.email, {headers: authHeaders})
-  //   .subscribe(resp => {
-  //     if (resp['status'] == 403) {
-  //       this.presentToast("Your session has expired. Please log in again.");
-  //       return;
-  //     }
-  //     else if (resp['status'] == 400 || resp['status'] == 404 || resp['status'] == 422) {
-  //       let errorMsg = "Error loading User Profile data.";
-  //       this.presentToast(errorMsg);
-  //       return;
-  //     }
-  //     else if (resp['status'] == 200) {
-  //       console.log("response body: " + resp['_body']);
+  // createMatchProfileForUserByUserProfileId -- POST /user/{userId}/matchProfile
+  // this.http.post('http://localhost:5000/matchProfile', matchProfileDetails, { headers: headersWithAuthToken }) //For running back-end in AWS
+  this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/user/' + this.userId +'/matchProfile', matchProfileDetails, { headers: headersWithAuthToken }) //For running back-end in AWS
+  .subscribe(result => {
+    console.log(result);
+    console.log(result['_body']);
+    console.log('Response status code: ' + result['status']);
+    if (result['status'] == 200) {
+      console.log(result);
+      let jsonResponseObj = JSON.parse((result['_body']));
 
-  //       let jsonResponseObj = JSON.parse((resp['_body'])); //Parse response body string resp['_body']into JSON object to extract data
-  //       let userProfileData = jsonResponseObj['userProfiles'][0]; //User profile data is contained in 'userProfiles' as arraylist
+      //Success! navigate user to the next page
+      let matchProfileCreated = "Match Profile Created! Please wait . . .";
+      this.presentToast(matchProfileCreated);
 
-  //       let userId = userProfileData['id']; 
-  //       this.globalVarsProvider.setUserId(userId); 
+      this.uploadDogProfilePicFile(headers, headersWithAuthToken, this.profileImage, matchProfileDetails, this.globalVarsProvider.getFileToUpload());
 
-  //       this.updateLastLoginTimestampForUserProfile(userProfileData, authHeaders);
+      this.navCtrl.push(TabsPage, {matchProfileDetails});
+    }
+    else if (result['status'] == 400 || result['status'] == 404) {
+      //REMOVE THIS LATER
+      this.presentToast("There's an error with one of your matchProfile fields, this status code should never happen.");
+    }
+  },
+  error => {
+    console.log("ERROR: " + error);
+    console.log(error['_body']);
+  }
+);
+}
+}
+// import { Component } from '@angular/core';
+// import { NavController, NavParams } from 'ionic-angular';
+// import { TabsPage } from '../tabs/tabs';
+// import { AlertController } from 'ionic-angular';
+// import { ToastController } from 'ionic-angular'
+// import { DogProfilePicPage } from '../dogProfilePic/dogProfilePic';
+// import { GlobalvarsProvider } from '../../providers/globalvars/globalvars';
+// // import { internals } from 'rx';
+// import { HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
+// import { Http, Response, Headers } from '@angular/http';
 
-  //       //Navigate to the next page after updating the lastLogin for the user
-  //       this.navCtrl.push(TabsPage, userProfileData); //Pass userProfile object to next page using NavController.push()
-  //     }
-  //   },
-  //   error => console.log(error)
-  // );
 
-  // }
+// @Component({
+//   selector: 'page-dogProfile',
+//   templateUrl: 'dogProfile.html'
+// })
+// export class DogProfilePage {
+//   aboutMe: string;
+//   birthdate: string;
+//   breed: any;
+//   energyLevel: string;
+//   lifeStage: any;
+//   names: string;
+//   numDogs: 1;
+//   profileImage: any;
+//   sex: string;
+//   size: string;
+//   userProfile: any;
+
+//   userId: any;
+//   formData: any;
+
+//   constructor(public navCtrl: NavController, public navParams: NavParams,
+//     public alertCtrl: AlertController, private toastCtrl: ToastController,
+//     public globalVarsProvider: GlobalvarsProvider, public http: Http) {
+//     }
+
+//     //only allow lowercase letters, uppercase letters, and spaces to be accepted as valid input
+//     //returns true if the input is good
+//     validateStringInput(strToCheck) {
+//       let validStringFormat = /^[a-zA-Z\s]*$/;
+//       return (!validStringFormat.test(strToCheck));
+//     }
+
+//     //proper date format: MM/DD/YY
+//     //returns true if the date is formatted correctly
+//     validateDateInput(dateToCheck) {
+//       let splitDate = dateToCheck.split('/');
+//       var date = new Date(splitDate[2] + '/' + splitDate[0] + '/' + splitDate[1]);
+//       return (date && (date.getMonth() + 1) == splitDate[0] && date.getDate() == Number(splitDate[1]) && date.getFullYear() == Number(splitDate[2]));
+//     }
+
+//     presentToast(msgToDisplay) {
+//       let toast = this.toastCtrl.create({
+//         message: msgToDisplay,
+//         duration: 2500,
+//         position: 'middle'
+//       });
+
+//       toast.present();
+//     }
+
+//     addDogProfilePic() {
+//       this.navCtrl.push(DogProfilePicPage, {});
+//     }
+
+//     userInputIsValid() {
+//       if (this.validateStringInput(this.names) || this.validateStringInput(this.breed)) {
+//         let errorMsg = "Acceptable Input Limited to Letters and Spaces";
+//         console.log(errorMsg);
+//         this.presentToast(errorMsg);
+
+//         return false;
+//       }
+
+//       //check that a date has been entered and that it is in the proper format
+//       // if (!this.birthdate || this.validateDateInput(this.birthdate)) {
+//       //   let errorMsg = "Proper Date Format: MM/DD/YYYY";
+//       //   console.log(errorMsg);
+//       //   this.presentToast(errorMsg);
+
+//       //   return false;
+//       // }
+
+//       // if (!this.energyLevel || !this.lifeStage || !this.sex) {
+//       //   let errorMsg = "Please complete entire form";
+//       //   console.log(errorMsg);
+//       //   this.presentToast(errorMsg);
+
+//       //   return false;
+//       // }
+//       return true;
+//     }
+
+//     createDogProfileBtnClick() {
+//       this.createDogProfilButtonClickHandler();
+//       console.log("Create Dog Profile Button Clicked on Dog Profile Page");
+//     }
+
+//     //GET /pupper
+//     findPupperBreedByName(headers, headersWithAuthToken){
+//       let breed;
+//       this.http.get('http://pupper.us-east-1.elasticbeanstalk.com/pupper?breed=' + this.breed, {headers: headersWithAuthToken})
+//       .subscribe(result => {
+//         console.log('Response status code: ' + result['status']);
+//         if (result['status'] == 200) {
+//           console.log(result);
+//           let jsonObj = JSON.parse((result['_body']));
+//           breed = jsonObj.name;
+//           console.log("Breed: " + breed);
+//         }
+//       },
+//       error => console.log(error)
+//     );
+//     return breed;
+//   }
+
+//   // uploadFile POST
+//   // /upload --> Form Data ProfilePic, requestBody ImageUploadRequest -> MatchProfile
+//   // public uploadDogProfilePicFile(headers, headersWithAuthToken, file:Blob, matchProfile, filename) {
+//   //   let formData = new FormData();
+//   //   formData.append('file', file, filename); //formData.append('file', file, 'test.jpg');
+
+//   //   let uploadDogProfilePicDetails = JSON.stringify({
+//   //     formData: this.formData,
+//   //     ImageUploadRequest: matchProfile
+//   //   });
+
+//   //   this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/upload', uploadDogProfilePicDetails, { headers: headersWithAuthToken })
+//   // }
+
+//   public createDogProfilButtonClickHandler() {
+//     if (this.userInputIsValid()) {
+//       //get user details from globalvars.ts
+//       let userProfileData = this.globalVarsProvider.getUserProfileData();
+//       this.userId = this.globalVarsProvider.getUserId();
+
+//       const headers = new Headers({ 'Content-Type': 'application/json' });
+//       let headersWithAuthToken = this.globalVarsProvider.getHeadersWithAuthToken();
+
+//       // let breedResponse = this.findPupperBreedByName(headers, headersWithAuthToken);
+//       this.http.get('http://pupper.us-east-1.elasticbeanstalk.com/pupper?breed=' + this.breed, {headers: headersWithAuthToken})
+//       .subscribe(result => {
+//         console.log('Response status code: ' + result['status']);
+//         if (result['status'] == 200) {
+//           console.log(result);
+//           // let jsonObj = JSON.parse((result['_body']));
+//           let breedResponse = JSON.parse(result['_body']);
+//           // breed = jsonObj.name;
+//           this.createMatchProfileFromWithBreedObj(breedResponse);
+//         }
+//       },
+//       error => console.log(error)
+//     );
+//   }
+// }
+
+// public createMatchProfileFromWithBreedObj(breedObj) {
+
+//   let userProfileData = this.globalVarsProvider.getUserProfileData();
+//   this.userId = this.globalVarsProvider.getUserId();
+
+//   const headers = new Headers({ 'Content-Type': 'application/json' });
+//   let headersWithAuthToken = this.globalVarsProvider.getHeadersWithAuthToken();
+
+//   let matchProfileDetails = JSON.stringify({
+//     aboutMe: this.aboutMe,
+//     birthdate: "2017-08-31", //this.birthdate format being wonky, TODO: grab value from user
+//     breed: breedObj,
+//     energyLevel: "HIGH", //hardcoded value for now
+//     lifeStage: this.lifeStage,
+//     names: this.names,
+//     numDogs: 1,
+//     profileImage: null,
+//     sex: this.sex,
+//     size: this.size,
+//     userProfile: userProfileData
+//   });
+//   console.log("MATCHPROFILEDETAILS" + matchProfileDetails);
+//   this.globalVarsProvider.setUserMatchProfile(matchProfileDetails); 
+
+
+
+//   // createMatchProfileForUserByUserProfileId -- POST /user/{userId}/matchProfile
+//   // this.http.post('http://localhost:5000/matchProfile', matchProfileDetails, { headers: headersWithAuthToken }) //For running back-end in AWS
+//   this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/user/' + this.userId +'/matchProfile', matchProfileDetails, { headers: headersWithAuthToken }) //For running back-end in AWS
+//   .subscribe(result => {
+//     console.log(result);
+//     console.log(result['_body']);
+//     console.log('Response status code: ' + result['status']);
+//     if (result['status'] == 200) {
+//       console.log(result);
+//       let jsonResponseObj = JSON.parse((result['_body']));
+
+//       //Success! navigate user to the next page
+//       let matchProfileCreated = "Match Profile Created! Please wait . . .";
+//       this.presentToast(matchProfileCreated);
+
+//       // this.uploadDogProfilePicFile(headers, headersWithAuthToken, this.profileImage, matchProfileDetails, this.globalVarsProvider.getFileToUpload());
+
+//       this.navCtrl.push(TabsPage, {matchProfileDetails});
+//     }
+//     else if (result['status'] == 400 || result['status'] == 404) {
+//       //REMOVE THIS LATER
+//       this.presentToast("There's an error with one of your matchProfile fields, this status code should never happen.");
+//     }
+//   },
+//   error => {
+//     console.log("ERROR: " + error);
+//     console.log(error['_body']);
+//   }
+// );
+// }
+// }
