@@ -17,9 +17,9 @@ export class DogProfilePicPage {
   lastImage: string = null;
   loading: Loading;
 
-  constructor(public navCtrl: NavController, private camera: Camera, private transfer: Transfer, 
-    private file: File, private filePath: FilePath, public actionSheetCtrl: ActionSheetController, 
-    public toastCtrl: ToastController, public platform: Platform, public loadingCtrl: LoadingController, 
+  constructor(public navCtrl: NavController, private camera: Camera, private transfer: Transfer,
+    private file: File, private filePath: FilePath, public actionSheetCtrl: ActionSheetController,
+    public toastCtrl: ToastController, public platform: Platform, public loadingCtrl: LoadingController,
     public globalVarsProvider: GlobalvarsProvider) { }
 
   public presentActionSheet() {
@@ -55,7 +55,7 @@ export class DogProfilePicPage {
       saveToPhotoAlbum: false,
       correctOrientation: true
     };
-   
+
     // Get the data of an image
     this.camera.getPicture(options).then((imagePath) => {
       // Special handling for Android library
@@ -72,6 +72,7 @@ export class DogProfilePicPage {
         this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
       }
     }, (err) => {
+      console.log(err);
       this.presentToast('Error while selecting image.');
     });
   }
@@ -83,7 +84,7 @@ private createFileName() {
   newFileName =  n + ".jpg";
   return newFileName;
 }
- 
+
 // Copy the image to a local folder
 private copyFileToLocalDir(namePath, currentName, newFileName) {
   this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(success => {
@@ -92,7 +93,7 @@ private copyFileToLocalDir(namePath, currentName, newFileName) {
     this.presentToast('Error while storing file.');
   });
 }
- 
+
 private presentToast(text) {
   let toast = this.toastCtrl.create({
     message: text,
@@ -101,7 +102,7 @@ private presentToast(text) {
   });
   toast.present();
 }
- 
+
 // Always get the accurate path to your apps folder
 public pathForImage(img) {
   if (img === null) {
@@ -122,7 +123,7 @@ public sendFileToDogProfilePage() {
 //console log from xcode, it is passing the image data to the global vars upon clicking the 'upload' button
 // 2018-11-27 20:19:27.108624-0700 pup[12395:714047] Global Vars, File To Upload: file:///Users/mcresswell/Library/Developer/CoreSimulator/Devices/F4059D21-84F2-4017-B2B0-460C277232CE/data/Containers/Data/Application/A7DDADD8-28BA-44D1-AD3A-39FD6915A652/Library/NoCloud/1543375164243.jpg
 // 2018-11-27 20:19:27.108926-0700 pup[12395:714047] Global Vars, Pup Image Filename: 1543375164243.jpg
-public uploadImage() { 
-  this.sendFileToDogProfilePage(); 
+public uploadImage() {
+  this.sendFileToDogProfilePage();
 }
 }

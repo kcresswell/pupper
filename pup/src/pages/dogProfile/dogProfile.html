@@ -1,24 +1,21 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Pupper Profile
+      Create A New Pupper Profile
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-    <ion-list>   
+    <ion-list>
         <ion-item>
             <ion-label fixed>Pup Name</ion-label>
-            <ion-input [(ngModel)]="names" [ngModelOptions]="{standalone: true}" type="text" value=""></ion-input>
+            <ion-input [(ngModel)]="names" [ngModelOptions]="{standalone: true}" type="text"></ion-input>
           </ion-item>
-
           <ion-item>
-            <ion-label fixed>Pup Breed</ion-label>
-            <ion-input [(ngModel)]="breed" [ngModelOptions]="{standalone: true}" type="text" value=""></ion-input>
+            <ion-label fixed>Breed</ion-label>
+            <ion-input [(ngModel)]="breed" [ngModelOptions]="{standalone: true}" type="text"></ion-input>
           </ion-item>
-
-          
           <!--Energy Level Dropdown-->
           <ion-list>
               <ion-item>
@@ -65,8 +62,9 @@
               <ion-item>
                 <ion-label>Gender</ion-label>
                 <ion-select [(ngModel)]="sex">
-                  <ion-option value="F">Female</ion-option>
-                  <ion-option value="M">Male</ion-option>
+                  <ion-option value="FEMALE">Female</ion-option>
+                  <ion-option value="MALE">Male</ion-option>
+                  <ion-option value="UNKNOWN">Prefer Not To Answer</ion-option>
                 </ion-select>
               </ion-item>
             </ion-list>
@@ -76,18 +74,13 @@
           </ion-item> -->
           <ion-item>
             <ion-label>Birthdate</ion-label>
-            <ion-datetime displayFormat="MMM/DD/YYYY" [(ngModel)]="YYYY-MM-DD" [ngModelOptions]="{standalone: true}"></ion-datetime>
+            <ion-datetime displayFormat="MMM/DD/YYYY" [(ngModel)]="birthdate" [ngModelOptions]="{standalone: true}"></ion-datetime>
           </ion-item>
 
           <ion-item>
             <ion-label fixed>Pup Bio</ion-label>
-            <ion-input [(ngModel)]="aboutMe" [ngModelOptions]="{standalone: true}" type="text" value=""></ion-input>
+            <ion-input [(ngModel)]="aboutMe" [ngModelOptions]="{standalone: true}" type="text"></ion-input>
           </ion-item>
-
-          <!-- <ion-item>
-            <ion-label>Birthdate</ion-label>
-            <ion-datetime displayFormat="MMM/DD/YYYY" [(ngModel)]="YYYY-MM-DD" [ngModelOptions]="{standalone: true}"></ion-datetime>
-          </ion-item> -->
 
           <button ion-button round color="primary" class="btn" (click)="addDogProfilePic()">Add Photo</button>
           <button ion-button round color="primary" class="btn" (click)="createDogProfileBtnClick()">Create Profile</button>
