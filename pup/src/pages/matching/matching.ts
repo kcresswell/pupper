@@ -42,20 +42,24 @@ export class MatchingPage {
         public navCtrl: NavController) {
 
         // pupName, pupBreed, energyLevel, lifeStage, sex, neutered, birthdate, about me, pupsize, numDogs, image
-        // this.matchProfileDetails = navParams.get('matchProfileDetails');
+        this.matchProfileDetails = navParams.get('matchProfileDetails');
+        console.log("This.matchprofiledetails " + this.matchProfileDetails);
         // this.name = this.matchProfileDetails[0]; 
         // this.breedName = this.matchProfileDetails[1]; 
         // this.sex = this.matchProfileDetails[4]; 
         // let birthdate = this.matchProfileDetails[6]; 
         // this.lastActive = null; //TODO: figure out how to calculate this
 
+        this.profileCard = [this.name, this.breedName, this.sex, this.profileImage];
+
+
         //hardcode values for now
-        this.name = "Indy";
-        this.breedName = "Shiba Inu";
-        this.ageWithUnits = "Young";
+        // this.name = "Indy";
+        // this.breedName = "Shiba Inu";
+        // this.ageWithUnits = "Young";
         // this.profileImage = "assets/imgs/indy.jpeg";
 
-        this.profileCard = [this.name, this.breedName, this.ageWithUnits, this.profileImage];
+        // this.profileCard = [this.name, this.breedName, this.ageWithUnits, this.profileImage];
 
         for (let i = 0; i < this.images.length; i++) {
             this.attendants.push({
@@ -91,7 +95,7 @@ export class MatchingPage {
                     text: 'Let\'s Chat!',
                     handler: () => {
                         console.log('Lets Chat Clicked');
-                        this.navCtrl.push(MessagePage, {});
+                        this.navCtrl.push(MessagePage, { matchProfileDetails: this.matchProfileDetails });
                     }
                 }
             ]

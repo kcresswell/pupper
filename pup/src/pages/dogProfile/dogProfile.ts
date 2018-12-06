@@ -82,6 +82,7 @@ public createMatchProfileFromWithBreedObj(breedObj) {
       let jsonResponseObj = JSON.parse((result['_body']));
       let matchProfileObj = jsonResponseObj['matchProfiles'][0];
       let matchProfileId = matchProfileObj['id'];
+      this.globalVarsProvider.setUserMatchProfileId(matchProfileId); 
 
       this.uploadDogProfilePicFile(this.profileImage,
         matchProfileId, this.globalVarsProvider.getFileToUpload());

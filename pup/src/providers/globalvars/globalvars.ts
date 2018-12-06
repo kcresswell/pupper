@@ -17,6 +17,7 @@ export class GlobalvarsProvider {
   userProfileData: any;
   headersWithAuthToken: any;
   userMatchProfile: any;
+  userMatchProfileId: any; 
 
   constructor(public http: HttpClient) {
     this.setServerBaseUrl();
@@ -69,6 +70,14 @@ export class GlobalvarsProvider {
 
   public getUserMatchProfile() {
     return this.userMatchProfile;
+  }
+
+  public setUserMatchProfileId(value) {
+    this.userMatchProfileId = value;
+  }
+
+  public getUserMatchProfileId() {
+    return this.userMatchProfileId;
   }
 
   public setHeadersWithAuthToken(value) {

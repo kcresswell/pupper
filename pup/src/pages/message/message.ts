@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import { Http, Response, Headers } from '@angular/http';
 import { GlobalvarsProvider } from '../../providers/globalvars/globalvars';
@@ -16,8 +16,11 @@ export class MessagePage {
   message: string;
   timestamp: string; //"yyyy-MM-dd’T’HH:mm:ss’Z'"
 
-  constructor(public navCtrl: NavController, private toastCtrl: ToastController,
-    public http: Http, public globalVarsProvider: GlobalvarsProvider) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, private toastCtrl: ToastController,
+    public http: Http, public globalVarsProvider: GlobalvarsProvider) {
+      this.matchProfileReceiver = navParams.get("matchProfileDetails"); 
+      console.log("MATCH PROFILE DETAILS: " + this.matchProfileReceiver); 
+    }
 
   onSendBtnClick() {
     console.log("onSendBtnClick clicked to send message"); 
@@ -26,16 +29,23 @@ export class MessagePage {
 
   //sendMessageToMatch --- POST /message --- Query - sendFrom | Query - sendTo | Body - pupperMessage
   sendMessageToMatch() {
-    let sendFrom, sendTo; //TODO: these are strings required in the post, not sure what is expected to be passed
-    let pupperMessageBody = JSON.stringify({
-      matchProfileReceiver: this.matchProfileReceiver, //TODO: grab this actual value somehow
+    let sendFrom = this.globalVarsProvider.getUserMatchProfileId();
+    let sendTo; //matchProfileReceiverId
+    let pupperMessageBody = { 
+      matchProfileReceiver: this.matchProfileReceiver,
       matchProfileSender: this.globalVarsProvider.getUserMatchProfile(),
       message: this.message, 
       timestamp: this.timestamp
-    });
+    };
+
+    let messageBody =  JSON.stringify({
+      sendFrom: sendFrom,
+      sendTo: sendTo,
+      pupperMessage: pupperMessageBody
+    }); 
 
     const headers = new Headers({ 'Content-Type': 'application/json' });
-    this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/message', pupperMessageBody, { headers: headers })
+    this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/message', messageBody, { headers: headers })
       .subscribe(response => {
         // console.log(result['_body']);
         console.log('Response status code: ' + response['status']);
