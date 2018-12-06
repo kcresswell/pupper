@@ -42,8 +42,7 @@ export class MatchingPage {
         public navCtrl: NavController) {
 
         // pupName, pupBreed, energyLevel, lifeStage, sex, neutered, birthdate, about me, pupsize, numDogs, image
-        this.matchProfileDetails = navParams.get('matchProfileDetails');
-        console.log("This.matchprofiledetails " + this.matchProfileDetails);
+        
         // this.name = this.matchProfileDetails[0]; 
         // this.breedName = this.matchProfileDetails[1]; 
         // this.sex = this.matchProfileDetails[4]; 
@@ -95,6 +94,7 @@ export class MatchingPage {
                     text: 'Let\'s Chat!',
                     handler: () => {
                         console.log('Lets Chat Clicked');
+                        console.log("Match profile details from matching page " + this.matchProfileDetails);
                         this.navCtrl.push(MessagePage, { matchProfileDetails: this.matchProfileDetails });
                     }
                 }
