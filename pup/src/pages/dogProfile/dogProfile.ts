@@ -57,6 +57,8 @@ public createMatchProfileFromWithBreedObj(breedObj) {
 
   this.userId = this.globalVarsProvider.getUserId();
   let userProfileData = this.globalVarsProvider.getUserProfileData();
+  let userProfToPrint = JSON.stringify({userProfileData});
+  console.log("User profile data from dog profile: " + userProfToPrint); 
 
   let matchProfileDetails = JSON.stringify({
     aboutMe: this.aboutMe,
@@ -106,7 +108,7 @@ formData.append('profilePic', file); //formData.append('file', file, 'test.jpg')
 
 let authToken = this.globalVarsProvider.getHeadersWithAuthToken().get('Authorization');
 const formheadersWithAuth = new Headers({ 'Content-Type': 'multipart/form-data',
-                                      'Authorization': authToken });
+                                  'Authorization': authToken });
 
 
 // let uploadDogProfilePicDetails = JSON.stringify({
