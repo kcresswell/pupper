@@ -15,12 +15,12 @@ export class MessagePage {
   matchProfileReceiver: any;
   matchProfileSender: any;
   message: string;
-  timestamp: string; //"yyyy-MM-dd’T’HH:mm:ss’Z'"
+  timestamp: "2018-12-03T03:02:36Z"; //"yyyy-MM-dd’T’HH:mm:ss’Z'"
+  sendFrom: any;
+  sendTo: any; 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private toastCtrl: ToastController,
     public http: Http, public globalVarsProvider: GlobalvarsProvider) {
-    // this.matchProfileReceiver = navParams.get("matchProfileDetails"); 
-    // console.log("MATCH PROFILE DETAILS: " + this.matchProfileReceiver); 
     this.matchProfileReceiver = {
       "aboutMe": "Cute dog.", "birthdate": "2017-12-06", "breed": { "id": 10, "name": "Shiba Inu", "altName": "Shiba", "size": "SMALL" },
       "energyLevel": "LOW", "lifeStage": "YOUNG", "names": "Indy", "numDogs": 1, "profileImage": null, "sex": "MALE", "size": "MID",
@@ -35,13 +35,17 @@ export class MessagePage {
     console.log("onSendBtnClick clicked to send message");
     console.log("Message: " + this.message);
     this.sendMessageToMatch();
-
   }
 
   //sendMessageToMatch --- POST /message --- Query - sendFrom | Query - sendTo | Body - pupperMessage
   sendMessageToMatch() {
-    let sendFrom = this.globalVarsProvider.getUserMatchProfileId();
-    let sendTo; //matchProfileReceiverId
+    this.sendFrom = this.globalVarsProvider.getUserMatchProfileId();
+    if(this.sendFrom == Object){
+      let errorMsg = "Please create a profile for your pupper before matching. This can be added on the Settings tab.";
+      this.presentToast(errorMsg);
+    }
+    console.log("SendFrom: " + this.sendFrom); 
+    this.sendTo = 1; //userProfileId
     let pupperMessageBody = {
       matchProfileReceiver: this.matchProfileReceiver,
       matchProfileSender: this.globalVarsProvider.getUserMatchProfile(),
@@ -58,10 +62,19 @@ export class MessagePage {
     }
 
     let messageBody = JSON.stringify({
-      sendFrom: sendFrom,
-      sendTo: sendTo,
+      sendFrom: this.sendFrom,
+      sendTo: this.sendTo,
       pupperMessage: pupperMessageBody
-    }); 
+    });
+
+    console.log("Message Body: " + messageBody); 
+    // [Log] Message Body: {"sendTo":1,"pupperMessage":{"matchProfileReceiver":{"aboutMe":"Cute dog.","birthdate":"2017-12-06",
+    // "breed":{"id":10,"name":"Shiba Inu","altName":"Shiba","size":"SMALL"},"energyLevel":"LOW","lifeStage":"YOUNG",
+    // "names":"Indy","numDogs":1,"profileImage":null,"sex":"MALE","size":"MID","userProfile":{"id":1,"userAccount":
+    // {"id":1,"username":"test@test.com","password":"$2a$04$l1TV6PnY3kg0xtQBjQpgYeIbPttgHLotrOKMLPOPvJk4s304vUPIu"},
+    // "firstName":"Bob","lastName":"Smith","sex":"MALE","birthdate":"1992-04-10","maritalStatus":"SINGLE","zip":"84095",
+    // "dateJoin":"2018-11-16","lastLogin":"2018-12-05","profileImage":"https://s3.us-east-1.amazonaws.com/pupper-mobile-app/user_1_bob_2018-12-03T03:02:36Z"}}
+    // ,"message":"Hello"}} (main.js, line 441)
 
     const headers = new Headers({ 'Content-Type': 'application/json' });
     this.http.post('http://pupper.us-east-1.elasticbeanstalk.com/message', messageBody, { headers: headers })
@@ -71,6 +84,9 @@ export class MessagePage {
 
         if (response['status'] == 200) {
           //message sent
+        }
+        else if (response['status'] == 403) {
+          //TODO: add a popup here for session expiration, button goes back to login page
         }
         else {
           let errorMsg = "Something went wrong trying to send the message, please try again.";

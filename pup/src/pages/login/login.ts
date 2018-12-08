@@ -27,7 +27,7 @@ export class LoginPage {
           username: this.email,
           password: this.password
         });
-
+        
         this.http.post(this.globalVarsProvider.getServerBaseUrl() + '/login',
         loginData, { headers: headers }) //For running back-end in AWS
         .subscribe(response => {
@@ -35,7 +35,7 @@ export class LoginPage {
             this.presentToast("Invalid login credentials, please try again.");
           }
           else if (response['status'] == 200) {
-            this.presentToast("Login success. Please wait . . .");
+            this.presentToast("Login success! Happy Puppering.");
             this.extractAuthHeadersFromLoginSuccessResponse(response);
             this.retrieveUserProfileForLastLoginUpdate();
           }
@@ -123,10 +123,9 @@ validateEmailFormat(emailIn): boolean {
 presentToast(msgToDisplay) {
   let toast = this.toastCtrl.create({
     message: msgToDisplay,
-    duration: 3000,
-    position: 'middle'
+    duration: 2000,
+    position: 'top'
   });
-
   toast.present();
 }
 

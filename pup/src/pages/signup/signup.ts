@@ -124,7 +124,7 @@ userInputIsValid() {
 
   if (!this.password || !this.validatePasswordFormat(this.password)) {
     this.presentToast("A valid password is a minimum of 8 characters, with "
-    + "at least one letter, one number and one special character.");
+    + "at least one capital letter, one number and one special character.");
 
     return false;
   }

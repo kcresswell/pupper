@@ -12,10 +12,28 @@
             <ion-label fixed>Pup Name</ion-label>
             <ion-input [(ngModel)]="names" [ngModelOptions]="{standalone: true}" type="text"></ion-input>
           </ion-item>
-          <ion-item>
+          <!-- <ion-item>
             <ion-label fixed>Breed</ion-label>
             <ion-input [(ngModel)]="breed" [ngModelOptions]="{standalone: true}" type="text"></ion-input>
-          </ion-item>
+          </ion-item> -->
+          <ion-list>
+              <ion-item>
+                <ion-label>Breed</ion-label>
+                <ion-select [(ngModel)]="breed">
+                  <ion-option value="Aussie">Australian Sheepdog</ion-option>
+                  <ion-option value="Beagle">Beagle</ion-option>
+                  <ion-option value="Border Collie">Border Collie</ion-option>
+                  <ion-option value="Chihuahua">Chihuahua</ion-option>
+                  <ion-option value="Golden Retriever">Golden Retriever</ion-option>
+                  <ion-option value="Great Dane">Great Dane</ion-option>
+                  <ion-option value="Maltese">Maltese</ion-option>
+                  <ion-option value="Goldendoodle">Goldendoodle</ion-option>
+                  <ion-option value="Pomeranian">Pomeranian</ion-option>
+                  <ion-option value="Sheltie">Sheltie</ion-option>
+                  <ion-option value="Shiba">Shiba Inu</ion-option>
+                </ion-select>
+              </ion-item>
+            </ion-list>
           <!--Energy Level Dropdown-->
           <ion-list>
               <ion-item>
