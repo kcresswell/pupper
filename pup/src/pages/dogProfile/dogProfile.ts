@@ -153,16 +153,19 @@ export class DogProfilePage {
     return true;
   }
 
+  //Valid String Input Classified as: a-z, A-z
   isValidStringInput(strToCheck) {
     let validStringFormat = /^[a-zA-Z\s]*$/;
     return validStringFormat.test(strToCheck);
   }
 
+  //Valid About Me Input Classified as: a-z, A-z, digits, following symbols: _.,!"'
   isValidAboutMeInput(strToCheck) {
     let validStringFormat = /[A-Za-z0-9 _.,!"'/$]*/;
     return validStringFormat.test(strToCheck);
   }
 
+  //Valid Date Format is month/date/year
   validateDateInput(dateToCheck) {
     let splitDate = dateToCheck.split('/');
     var date = new Date(splitDate[2] + '/' + splitDate[0] + '/' + splitDate[1]);

@@ -36,44 +36,30 @@ export class MatchingPage {
         }
     };
 
-    images = ["assets/imgs/indy.jpeg", "assets/imgs/jax.jpeg", "assets/imgs/boston.jpeg"]
-
+   
     constructor(private sanitizer: DomSanitizer, public navParams: NavParams, public alertCtrl: AlertController,
         public navCtrl: NavController) {
+            this.grabCards();
+    }
 
-        // pupName, pupBreed, energyLevel, lifeStage, sex, neutered, birthdate, about me, pupsize, numDogs, image
-        
-        // this.name = this.matchProfileDetails[0]; 
-        // this.breedName = this.matchProfileDetails[1]; 
-        // this.sex = this.matchProfileDetails[4]; 
-        // let birthdate = this.matchProfileDetails[6]; 
-        // this.lastActive = null; //TODO: figure out how to calculate this
-
-        this.profileCard = [this.name, this.breedName, this.sex, this.profileImage];
-
-
-        //hardcode values for now
-        // this.name = "Indy";
-        // this.breedName = "Shiba Inu";
-        // this.ageWithUnits = "Young";
-        // this.profileImage = "assets/imgs/indy.jpeg";
-
-        // this.profileCard = [this.name, this.breedName, this.ageWithUnits, this.profileImage];
-
-        for (let i = 0; i < this.images.length; i++) {
+    grabCards() {
+        let images = ["assets/imgs/indy.jpeg", "assets/imgs/jax.jpg", "assets/imgs/boston.jpeg"]
+        let pupInfo = [new Array("Indy", " Shiba Inu", " Female"), new Array("Jax", " Pomeranian", " Male"), new Array("Boston", " Shiba Inu", " Male") ];
+    
+        for (let i = 0; i < images.length; i++) {
+            this.profileCard = pupInfo[0];
             this.attendants.push({
                 id: i + 1,
                 likeEvent: new EventEmitter(),
                 destroyEvent: new EventEmitter(),
-                asBg: sanitizer.bypassSecurityTrustStyle('url(' + this.images[i] + ')')
+                asBg: this.sanitizer.bypassSecurityTrustStyle('url(' + images[i] + ')')
             });
         }
-
         this.ready = true;
     }
 
     onCardInteract(event) {
-        if(event.like) {
+        if (event.like) {
             this.popupSendAMessageQuestion();
         }
         console.log(event);

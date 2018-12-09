@@ -35,6 +35,7 @@ export class MessagePage {
     console.log("onSendBtnClick clicked to send message");
     console.log("Message: " + this.message);
     this.sendMessageToMatch();
+    this.message = ""; 
   }
 
   //sendMessageToMatch --- POST /message --- Query - sendFrom | Query - sendTo | Body - pupperMessage
