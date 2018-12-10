@@ -110,7 +110,7 @@ export class DogProfilePage {
 
     let authToken = this.globalVarsProvider.getHeadersWithAuthToken().get('Authorization');
     const formheadersWithAuth = new Headers({
-      'Content-Type': 'multipart/form-data',
+      // 'Content-Type': 'multipart/form-data',
       'Authorization': authToken
     });
 
