@@ -49,10 +49,14 @@ export class LoginPage {
   Helper method that retrieves the Authoriation: Bearer headers from a successful login response.
   */
   extractAuthHeadersFromLoginSuccessResponse(response) {
-    const jwtAccessToken = response.headers.get("Authorization");
+      const jwtAccessToken = response.headers.get("Authorization");
+      let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': jwtAccessToken });
+      this.globalVarsProvider.setHeadersWithAuthToken(headers);
 
-    let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': jwtAccessToken });
-    this.globalVarsProvider.setHeadersWithAuthToken(headers);
+      //todo if the login is in correct it will have the following header:
+      //the repsonse body is empty if the password is incorrect
+      // this.presentToast("Invalid login credentials, please try again.");
+    
   }
 
   retrieveUserProfileForLastLoginUpdate() {

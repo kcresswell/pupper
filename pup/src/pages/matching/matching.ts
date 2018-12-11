@@ -43,7 +43,8 @@ export class MatchingPage {
     }
 
     grabCards() {
-        let images = ["assets/imgs/indy.jpeg", "assets/imgs/jax.jpg", "assets/imgs/boston.jpeg"]
+        let images = ["assets/imgs/indy.jpeg", "assets/imgs/jax.jpg", "assets/imgs/boston.jpeg", "assets/imgs/beagle.jpeg",
+        "assets/imgs/chihua.jpeg", "assets/imgs/collie.jpeg", "assets/imgs/doodle.jpeg", "assets/imgs/maltese.jpeg", "assets/imgs/sheltie.jpeg"]
         let pupInfo = [new Array("Indy", " Shiba Inu", " Female"), new Array("Jax", " Pomeranian", " Male"), new Array("Boston", " Shiba Inu", " Male") ];
     
         for (let i = 0; i < images.length; i++) {

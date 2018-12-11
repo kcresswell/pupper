@@ -5,7 +5,6 @@ import { AlertController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular'
 import { DogProfilePicPage } from '../dogProfilePic/dogProfilePic';
 import { GlobalvarsProvider } from '../../providers/globalvars/globalvars';
-// import { internals } from 'rx';
 import { HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Http, Response, Headers } from '@angular/http';
 
