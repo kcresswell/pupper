@@ -31,7 +31,7 @@ export class MessagePage {
     console.log("Message: " + this.message);
     const senderId = this.globalVarsProvider.getUserId(); //THIS IS UNDEFINED
     this.retrieveMatchProfilesAndSendMessage(senderUserProfileId, receiverUserProfileId);
-    this.message = "HELLO MESSAGES WORKING!";
+    this.message = "HELLO MESSAGES WORKING!"; //hitting the endpoint to send a message properly, more configuration to come
   }
 
   retrieveMatchProfilesAndSendMessage(senderUserProfileId, receiverUserProfileId) {

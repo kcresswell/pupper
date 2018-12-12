@@ -8,7 +8,6 @@ import { NavController } from 'ionic-angular';
 export class MessagingPage {
 
   constructor(public navCtrl: NavController) {
-
   }
 
 }

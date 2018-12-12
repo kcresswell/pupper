@@ -4,7 +4,7 @@ import { MessagingPage } from '../messaging/messaging';
 import { MatchingPage } from '../matching/matching';
 import { SettingsPage } from '../settings/settings';
 import { NavParams } from 'ionic-angular';
-import { Http, Response, Headers } from '@angular/http';
+import { Http } from '@angular/http';
 import { GlobalvarsProvider } from '../../providers/globalvars/globalvars';
 import { ToastController } from 'ionic-angular';
 
@@ -21,7 +21,8 @@ export class TabsPage {
 
   //http call to: 
   //look up match profile
-  //look up user login stuff
+  //look up user login info
+  //store these both in globals
   constructor(public navParams: NavParams, public http: Http, public globalVarsProvider: GlobalvarsProvider,
     private toastCtrl: ToastController) {
     this.userId = globalVarsProvider.getUserId();

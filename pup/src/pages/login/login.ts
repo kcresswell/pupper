@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
-import { HttpHeaders, HttpParams, HttpClient } from '@angular/common/http';
-import { Http, Response, Headers } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import { ToastController } from 'ionic-angular';
 import { GlobalvarsProvider } from '../../providers/globalvars/globalvars';
 
@@ -29,7 +28,7 @@ export class LoginPage {
       });
 
       this.http.post(this.globalVarsProvider.getServerBaseUrl() + '/login',
-        loginData, { headers: headers }) //For running back-end in AWS
+        loginData, { headers: headers })
         .subscribe(response => {
           if (response['status'] == 403) {
             this.presentToast("Invalid login credentials, please try again.");
@@ -45,18 +44,16 @@ export class LoginPage {
     }
   }
 
-  /*
-  Helper method that retrieves the Authoriation: Bearer headers from a successful login response.
-  */
+  //Retrieves Authorization from successful login
   extractAuthHeadersFromLoginSuccessResponse(response) {
-      const jwtAccessToken = response.headers.get("Authorization");
-      let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': jwtAccessToken });
-      this.globalVarsProvider.setHeadersWithAuthToken(headers);
+    const jwtAccessToken = response.headers.get("Authorization");
+    let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': jwtAccessToken });
+    this.globalVarsProvider.setHeadersWithAuthToken(headers);
 
-      //todo if the login is in correct it will have the following header:
-      //the repsonse body is empty if the password is incorrect
-      // this.presentToast("Invalid login credentials, please try again.");
-    
+    //TODO: if the login is in correct it will have the following header:
+    //the response body is empty if the password is incorrect
+    // this.presentToast("Invalid login credentials, please try again.");
+
   }
 
   retrieveUserProfileForLastLoginUpdate() {
@@ -72,8 +69,8 @@ export class LoginPage {
           return;
         }
         else if (resp['status'] == 200) {
-          let jsonResponseObj = JSON.parse((resp['_body'])); //Parse response body string resp['_body']into JSON object to extract data
-          let userProfileData = jsonResponseObj['userProfiles'][0]; //User profile data is contained in 'userProfiles' as arraylist
+          let jsonResponseObj = JSON.parse((resp['_body']));
+          let userProfileData = jsonResponseObj['userProfiles'][0];
 
           let userId = userProfileData['id'];
           this.globalVarsProvider.setUserId(userId);
@@ -141,5 +138,4 @@ export class LoginPage {
     const dayString = today.getDate() < 10 ? "0" + today.getDate() : today.getDate();
     return today.getFullYear() + "-" + monthString + "-" + dayString;
   }
-
 }

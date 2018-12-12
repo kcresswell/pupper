@@ -5,7 +5,6 @@ import { AlertController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular'
 import { DogProfilePicPage } from '../dogProfilePic/dogProfilePic';
 import { GlobalvarsProvider } from '../../providers/globalvars/globalvars';
-import { HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Http, Response, Headers } from '@angular/http';
 
 
@@ -67,7 +66,7 @@ export class DogProfilePage {
       energyLevel: this.energyLevel,
       lifeStage: this.lifeStage,
       names: this.names,
-      numDogs: 1,
+      numDogs: 1, //intentionally hard-coded to match backend
       profileImage: null,
       sex: this.sex,
       size: this.size,
@@ -110,11 +109,6 @@ export class DogProfilePage {
     const formheadersWithAuth = new Headers({
       'Authorization': authToken
     });
-
-
-    // let uploadDogProfilePicDetails = JSON.stringify({
-    //   profilePic: formData,
-    // });
 
     let imageUploadEndpoint = this.globalVarsProvider.getServerBaseUrl() + '/upload/user/' +
       this.userId + '/matchProfile/' + matchProfileId;
@@ -175,7 +169,6 @@ export class DogProfilePage {
       duration: 2500,
       position: 'middle'
     });
-
     toast.present();
   }
 

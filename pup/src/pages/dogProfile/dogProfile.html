@@ -12,10 +12,6 @@
             <ion-label fixed>Pup Name</ion-label>
             <ion-input [(ngModel)]="names" [ngModelOptions]="{standalone: true}" type="text"></ion-input>
           </ion-item>
-          <!-- <ion-item>
-            <ion-label fixed>Breed</ion-label>
-            <ion-input [(ngModel)]="breed" [ngModelOptions]="{standalone: true}" type="text"></ion-input>
-          </ion-item> -->
           <ion-list>
               <ion-item>
                 <ion-label>Breed</ion-label>
@@ -86,10 +82,6 @@
                 </ion-select>
               </ion-item>
             </ion-list>
-          <!-- <ion-item>
-            <ion-label fixed>Birthdate</ion-label>
-            <ion-input [(ngModel)]="pupBirthdate" [ngModelOptions]="{standalone: true}" type="date" value=""></ion-input>
-          </ion-item> -->
           <ion-item>
             <ion-label>Birthdate</ion-label>
             <ion-datetime displayFormat="MMM/DD/YYYY" [(ngModel)]="birthdate" [ngModelOptions]="{standalone: true}"></ion-datetime>
