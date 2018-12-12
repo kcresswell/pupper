@@ -55,7 +55,6 @@ export class DogProfilePage {
   }
 
   public createMatchProfileFromWithBreedObj(breedObj) {
-
     this.userId = this.globalVarsProvider.getUserId();
     let userProfileData = this.globalVarsProvider.getUserProfileData();
     let userProfToPrint = JSON.stringify({ userProfileData });
@@ -105,11 +104,10 @@ export class DogProfilePage {
   // /upload --> Form Data ProfilePic, requestBody ImageUploadRequest -> MatchProfile
   public uploadDogProfilePicFile(file: Blob, matchProfileId, imageFilePath) {
     let formData = new FormData();
-    formData.append('profilePic', file); //formData.append('file', file, 'test.jpg');
+    formData.append('profilePic', file);
 
     let authToken = this.globalVarsProvider.getHeadersWithAuthToken().get('Authorization');
     const formheadersWithAuth = new Headers({
-      // 'Content-Type': 'multipart/form-data',
       'Authorization': authToken
     });
 

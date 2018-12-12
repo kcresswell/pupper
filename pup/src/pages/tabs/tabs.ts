@@ -45,9 +45,9 @@ export class TabsPage {
         }
         else if (resp['status'] == 200) {
           let jsonResponseObj = JSON.parse((resp['_body']));
-          let userProfileData = jsonResponseObj['userProfiles'][0]; 
-          console.log("TABS User Profile: " + JSON.stringify(userProfileData)); 
-          this.zip = userProfileData.zip;
+          // let userProfileData = jsonResponseObj['userProfiles'][0]; 
+          // console.log("TABS User Profile: " + JSON.stringify(userProfileData)); 
+          // this.zip = userProfileData.zip;
           console.log("Zip code " + this.zip); 
         }
       }, error => console.log(error)
