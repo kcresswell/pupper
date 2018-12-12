@@ -7,9 +7,11 @@
 2. To start the application running locally in a web browser with multiple mobile platforms:
 
  ```ionic serve --lab```
+
 3. To build for iOS platform (running in Xcode):
 
  ```ionic cordova build iOS```
+
 4. To build for Android platform (running in Android Studio):
 
  ```ionic build Android```
