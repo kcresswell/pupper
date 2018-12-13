@@ -1,0 +1,55 @@
+page-message {
+    /* Chat containers */
+    // ion-content {
+    //     background: url(../assets/imgs/gradient.jpg) no-repeat center center fixed;
+    //     background-size: cover;
+    //     height: 100%;
+    //     overflow: hidden;
+    //     .item-md, .item-ios {
+    //       background: none;
+    //     }
+    // }
+.container {
+    background-color: #b5c3d1;
+    border: 2px solid #ffffff;
+    background-color: #ffffff;
+    border-radius: 5px;
+}
+
+/* Darker chat container */
+.darker {
+    border-color:  #ffffff;
+    background-color: #4998f3;
+}
+
+/* Clear floats */
+.container::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+/* Style time text */
+.time-right {
+    float: right;
+    color: rgb(0, 0, 0);
+}
+
+/* Style time text */
+.time-left {
+    float: left;
+    color: rgb(0, 0, 0);
+}
+
+.sendBtn {
+    padding-bottom: 10px; 
+    padding-top: 10px; 
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.allMessages {
+    padding-bottom: 50px;
+    padding-top: 50px;
+}
+}
