@@ -4,6 +4,7 @@ import { TabsPage } from '../tabs/tabs';
 import { ToastController } from 'ionic-angular';
 import { Http, Headers } from '@angular/http';
 import { GlobalvarsProvider } from '../../providers/globalvars/globalvars';
+import { environment as ENV } from '../../environments/environment';
 
 @IonicPage()
 @Component({
@@ -36,7 +37,7 @@ export class SignupPage {
         password: this.password
       });
 
-      this.http.post(this.globalVarsProvider.getServerBaseUrl() + '/account/register',
+      this.http.post(ENV.BASE_URL + '/account/register',
         signupData, { headers: headers })
         .subscribe(result => {
           if (result['status'] == 409) {
@@ -57,7 +58,7 @@ export class SignupPage {
   }
 
   userLogin(userCredentials, headers, userAccountObj) {
-    this.http.post(this.globalVarsProvider.getServerBaseUrl() + '/login',
+    this.http.post(ENV.BASE_URL + '/login',
       userCredentials, { headers: headers })
       .subscribe(response => {
         if (response['status'] == 403) {
@@ -96,7 +97,7 @@ export class SignupPage {
       console.log("THIS IS THE BIRTHDATE: " + this.birthdate);
       console.log(userProfileData);
 
-      this.http.post(this.globalVarsProvider.getServerBaseUrl() + '/user',
+      this.http.post(ENV.BASE_URL + '/user',
         userProfileData,
         { headers: this.globalVarsProvider.getHeadersWithAuthToken() })
         .subscribe(result => {

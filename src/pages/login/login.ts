@@ -4,6 +4,7 @@ import { TabsPage } from '../tabs/tabs';
 import { Http, Headers } from '@angular/http';
 import { ToastController } from 'ionic-angular';
 import { GlobalvarsProvider } from '../../providers/globalvars/globalvars';
+import { environment as ENV } from '../../environments/environment';
 
 @Component({
   selector: 'page-login',
@@ -27,7 +28,7 @@ export class LoginPage {
         password: this.password
       });
 
-      this.http.post(this.globalVarsProvider.getServerBaseUrl() + '/login',
+      this.http.post(ENV.BASE_URL + '/login',
         loginData, { headers: headers })
         .subscribe(response => {
             this.presentToast("Login success! Happy Puppering.");
@@ -50,7 +51,7 @@ export class LoginPage {
   }
 
   retrieveUserProfileForLastLoginUpdate() {
-    const retrieveUserProfileUrl = this.globalVarsProvider.getServerBaseUrl() + '/user?email=' + this.email;
+    const retrieveUserProfileUrl = ENV.BASE_URL + '/user?email=' + this.email;
     this.http.get(retrieveUserProfileUrl,
       { headers: this.globalVarsProvider.getHeadersWithAuthToken() })
       .subscribe(resp => {
@@ -80,7 +81,7 @@ export class LoginPage {
 
   updateLastLoginTimestampForUserProfile(userProfileObj) {
 
-    const updateLastLoginUrlString = this.globalVarsProvider.getServerBaseUrl() +
+    const updateLastLoginUrlString = ENV.BASE_URL +
       "/user/" + userProfileObj['id'] + "?lastLogin=" + this.getCurrentDateInValidFormat();
     this.http.put(updateLastLoginUrlString, userProfileObj, { headers: this.globalVarsProvider.getHeadersWithAuthToken() })
       .subscribe(resp => {

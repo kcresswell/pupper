@@ -6,7 +6,7 @@ import { ToastController } from 'ionic-angular'
 import { DogProfilePicPage } from '../dogProfilePic/dogProfilePic';
 import { GlobalvarsProvider } from '../../providers/globalvars/globalvars';
 import { Http, Response, Headers } from '@angular/http';
-
+import { environment as ENV } from '../../environments/environment';
 
 @Component({
   selector: 'page-dogProfile',
@@ -35,7 +35,7 @@ export class DogProfilePage {
 
   public createDogProfileBtnClick() {
     if (this.userInputIsValid()) {
-      this.http.get('http://pupper.us-east-1.elasticbeanstalk.com/pupper/breed?name=' + this.breed,
+      this.http.get(ENV.BASE_URL + '/pupper/breed?name=' + this.breed,
         { headers: this.globalVarsProvider.getHeadersWithAuthToken() })
         .subscribe(result => {
           console.log('Response status code: ' + result['status']);
@@ -75,7 +75,7 @@ export class DogProfilePage {
     console.log("MATCHPROFILEDETAILS" + matchProfileDetails);
 
     // createMatchProfileForUserByUserProfileId -- POST /user/{userId}/matchProfile
-    this.http.post(this.globalVarsProvider.getServerBaseUrl() + '/user/' + this.userId + '/matchProfile',
+    this.http.post(ENV.BASE_URL + '/user/' + this.userId + '/matchProfile',
       matchProfileDetails,
       { headers: this.globalVarsProvider.getHeadersWithAuthToken() }) //For running back-end in AWS
       .subscribe(result => {
@@ -110,7 +110,7 @@ export class DogProfilePage {
       'Authorization': authToken
     });
 
-    let imageUploadEndpoint = this.globalVarsProvider.getServerBaseUrl() + '/upload/user/' +
+    let imageUploadEndpoint = ENV.BASE_URL + '/upload/user/' +
       this.userId + '/matchProfile/' + matchProfileId;
     this.http.put(imageUploadEndpoint, formData,
       { headers: formheadersWithAuth })
