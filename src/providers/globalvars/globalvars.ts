@@ -10,25 +10,15 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class GlobalvarsProvider {
 
-  serverBaseUrl: any;
   fileToUpload: any;
   filename: any;
   userId: any;
   userProfileData: any;
   headersWithAuthToken: any;
   userMatchProfile: any;
-  userMatchProfileId: any; 
+  userMatchProfileId: any;
 
   constructor(public http: HttpClient) {
-    this.setServerBaseUrl();
-  }
-
-  public setServerBaseUrl() {
-    this.serverBaseUrl = "http://pupper.us-east-1.elasticbeanstalk.com";
-  }
-
-  public getServerBaseUrl() {
-    return this.serverBaseUrl;
   }
 
   public setFileToUpload(value) {

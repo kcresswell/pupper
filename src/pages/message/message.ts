@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import { Http, Response, Headers } from '@angular/http';
 import { GlobalvarsProvider } from '../../providers/globalvars/globalvars';
+import { environment as ENV } from '../../environments/environment';
 
 @Component({
   selector: 'page-message',
@@ -22,7 +23,7 @@ export class MessagePage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private toastCtrl: ToastController,
     public http: Http, public globalVarsProvider: GlobalvarsProvider) {
   }
-  // Match profile Id 1 belongs to userProfileId=5, 
+  // Match profile Id 1 belongs to userProfileId=5,
   // and matchProfileId 2 belongs to userProfileId=2
   onSendBtnClick() {
     const senderUserProfileId = 5;
@@ -35,7 +36,7 @@ export class MessagePage {
   }
 
   retrieveMatchProfilesAndSendMessage(senderUserProfileId, receiverUserProfileId) {
-    const getMatchProfileEndpointUrl = this.globalVarsProvider.getServerBaseUrl() + "/user/" + senderUserProfileId + "/matchProfile";
+    const getMatchProfileEndpointUrl = ENV.BASE_URL + "/user/" + senderUserProfileId + "/matchProfile";
 
     console.log("Hitting endpoint to retrieve match profile for a given user id: " + getMatchProfileEndpointUrl);
     this.http.get(getMatchProfileEndpointUrl, { headers: this.globalVarsProvider.getHeadersWithAuthToken() })
@@ -53,7 +54,7 @@ export class MessagePage {
   }
 
   retrieveMatchProfileReceiver(receiverUserId) {
-    const getMatchProfileEndpointUrl = this.globalVarsProvider.getServerBaseUrl() + "/user/" + receiverUserId + "/matchProfile";
+    const getMatchProfileEndpointUrl = ENV.BASE_URL + "/user/" + receiverUserId + "/matchProfile";
     console.log("Hitting endpoint to retrieve match profile for a given user id: " + getMatchProfileEndpointUrl);
     this.http.get(getMatchProfileEndpointUrl, { headers: this.globalVarsProvider.getHeadersWithAuthToken() })
       .subscribe(response => {
@@ -71,7 +72,7 @@ export class MessagePage {
 
   sendMessageToMatch(matchProfileReceiverObj) {
     //The following fields need to be parsed from their matchProfileObjects
-    // Match profile Id 1 belongs to userProfileId=5, 
+    // Match profile Id 1 belongs to userProfileId=5,
     // and matchProfileId 2 belongs to userProfileId=2
     this.sendFrom = 1;
     this.sendTo = 2;
@@ -83,7 +84,7 @@ export class MessagePage {
       timestamp: null
     });
 
-    const sendMessageUrl = this.globalVarsProvider.getServerBaseUrl() + "/message?sendFrom=" +
+    const sendMessageUrl = ENV.BASE_URL + "/message?sendFrom=" +
       this.sendFrom + "&sendTo=" + this.sendTo;
 
     this.http.post(sendMessageUrl, pupperMessageBody,

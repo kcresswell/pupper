@@ -7,6 +7,7 @@ import { NavParams } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { GlobalvarsProvider } from '../../providers/globalvars/globalvars';
 import { ToastController } from 'ionic-angular';
+import { environment as ENV } from '../../environments/environment';
 
 @Component({
   templateUrl: 'tabs.html'
@@ -17,23 +18,23 @@ export class TabsPage {
   tab2Root = MatchingPage;
   tab3Root = MessagingPage;
   userId: any;
-  zip: any; 
+  zip: any;
 
-  //http call to: 
+  //http call to:
   //look up match profile
   //look up user login info
   //store these both in globals
   constructor(public navParams: NavParams, public http: Http, public globalVarsProvider: GlobalvarsProvider,
     private toastCtrl: ToastController) {
     this.userId = globalVarsProvider.getUserId();
-    this.findUserProfileById(); 
-    this.getMatchProfilesByUserZip(); 
+    this.findUserProfileById();
+    this.getMatchProfilesByUserZip();
   }
 
   //findUserProfileById
   // GET /user/{userId}
   findUserProfileById() {
-    this.http.get('http://pupper.us-east-1.elasticbeanstalk.com/user/' + this.userId,
+    this.http.get(ENV.BASE_URL + '/user/' + this.userId,
       { headers: this.globalVarsProvider.getHeadersWithAuthToken() })
       .subscribe(resp => {
         if (resp['status'] == 403) {
@@ -46,10 +47,10 @@ export class TabsPage {
         }
         else if (resp['status'] == 200) {
           let jsonResponseObj = JSON.parse((resp['_body']));
-          // let userProfileData = jsonResponseObj['userProfiles'][0]; 
-          // console.log("TABS User Profile: " + JSON.stringify(userProfileData)); 
+          // let userProfileData = jsonResponseObj['userProfiles'][0];
+          // console.log("TABS User Profile: " + JSON.stringify(userProfileData));
           // this.zip = userProfileData.zip;
-          console.log("Zip code " + this.zip); 
+          console.log("Zip code " + this.zip);
         }
       }, error => console.log(error)
       );
@@ -58,7 +59,7 @@ export class TabsPage {
   //getMatchProfilesByUserZip
   //GET /matchProfile
   getMatchProfilesByUserZip(){
-    this.http.get('http://pupper.us-east-1.elasticbeanstalk.com/matchProfile?zip=' + this.zip,
+    this.http.get(ENV.BASE_URL + '/matchProfile?zip=' + this.zip,
       { headers: this.globalVarsProvider.getHeadersWithAuthToken() })
       .subscribe(resp => {
         if (resp['status'] == 403) {
@@ -71,7 +72,7 @@ export class TabsPage {
         }
         else if (resp['status'] == 200) {
           let jsonResponseObj = JSON.parse((resp['_body']));
-          // let matchProfileData = jsonResponseObj['matchProfile'][0]; //TODO: figure out what the object name is here 
+          // let matchProfileData = jsonResponseObj['matchProfile'][0]; //TODO: figure out what the object name is here
           console.log("TABS Match Profile: " + JSON.stringify(jsonResponseObj));  //TABS Match Profile: []
           // this.globalVarsProvider.setUserMatchProfile(); //TODO: fill this in when returning right matchProfile obj
         }
