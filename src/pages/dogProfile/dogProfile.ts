@@ -25,7 +25,6 @@ export class DogProfilePage {
   size: string;
   userProfile: any;
 
-  userId: any;
   formData: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -54,7 +53,7 @@ export class DogProfilePage {
   }
 
   public createMatchProfileFromWithBreedObj(breedObj) {
-    this.userId = this.globalVarsProvider.getUserId();
+    const userProfileId = this.globalVarsProvider.getUserId();
     let userProfileData = this.globalVarsProvider.getUserProfileData();
     let userProfToPrint = JSON.stringify({ userProfileData });
     console.log("User profile data from dog profile: " + userProfToPrint);
@@ -75,7 +74,7 @@ export class DogProfilePage {
     console.log("MATCHPROFILEDETAILS" + matchProfileDetails);
 
     // createMatchProfileForUserByUserProfileId -- POST /user/{userId}/matchProfile
-    this.http.post(ENV.BASE_URL + '/user/' + this.userId + '/matchProfile',
+    this.http.post(ENV.BASE_URL + '/user/' + userProfileId + '/matchProfile',
       matchProfileDetails,
       { headers: this.globalVarsProvider.getHeadersWithAuthToken() }) //For running back-end in AWS
       .subscribe(result => {
@@ -100,18 +99,18 @@ export class DogProfilePage {
       );
   }
 
-  // /upload --> Form Data ProfilePic, requestBody ImageUploadRequest -> MatchProfile
   public uploadDogProfilePicFile(file: Blob, matchProfileId, imageFilePath) {
     let formData = new FormData();
     formData.append('profilePic', file);
 
+    //Extract the 'Authorization' header to send multipart/form-data http request
     let authToken = this.globalVarsProvider.getHeadersWithAuthToken().get('Authorization');
     const formheadersWithAuth = new Headers({
       'Authorization': authToken
     });
 
     let imageUploadEndpoint = ENV.BASE_URL + '/upload/user/' +
-      this.userId + '/matchProfile/' + matchProfileId;
+      this.globalVarsProvider.getUserId() + '/matchProfile/' + matchProfileId;
     this.http.put(imageUploadEndpoint, formData,
       { headers: formheadersWithAuth })
       .subscribe(result => {
